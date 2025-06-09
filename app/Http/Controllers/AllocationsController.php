@@ -26,13 +26,11 @@ class AllocationsController extends Controller
     {
         $plantId = wh_locs::where('id_whlocs', $request->query('id_whlocs'))->value('id_whlocs');
 
-        $query = allocations::with('spareparts');
-
-        if(!$plantId || $plantId == ''){
-            $allocations = $query->get();
+        if(!$plantId || $plantId == 'all'){
+            $allocations = allocations::with('spareparts', 'warehouses')->get();
         }
         else{
-            $query->whereHas('warehouses', function ($q) use ($plantId) {
+            $allocations = allocations::with('spareparts')->whereHas('warehouses', function ($q) use ($plantId) {
                 $q->where('id_whlocs', $plantId);
             })->get();
         }
@@ -43,7 +41,9 @@ class AllocationsController extends Controller
 
         $plants = wh_locs::all();
 
-        return view('leader.listspareparts', compact('query', 'plants'));
+        $allocations = collect($allocations);
+
+        return view('leader.listspareparts', compact('allocations', 'plants'));
     }
 
     /**
@@ -54,6 +54,7 @@ class AllocationsController extends Controller
 
         $choices = warehouses::select(DB::raw("CONCAT(wh_type, ' - ', (SELECT location FROM whlocs WHERE whlocs.id_whlocs = warehouses.id_whlocs)) AS wh_display"), 'id_wh')->get()->pluck('wh_display', 'id_wh');
         return view('leader.registparts', compact('choices'));
+
     }
 
     /**
@@ -136,6 +137,9 @@ class AllocationsController extends Controller
 
 
         return response()->json($allocations);
+
+        $whloc = warehouses::where('id_wh', $parts)->with('whlocs')->first();
+        return response()->json($whloc);
     }
 
     /**

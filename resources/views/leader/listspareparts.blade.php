@@ -415,6 +415,7 @@
                         <form method="GET" action="{{route('leader.listspareparts')}}">
                             <select name="id_whlocs" onchange="this.form.submit()">
                                 <option value="">List Spareparts</option>
+                                <option value="all">All Plants</option>
                                 @foreach ($plants as $plant)
                                     <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
                                 @endforeach
@@ -447,7 +448,7 @@
             <a href="#">Keluar</a>
         </div>
         <div class="header" id="plantId">
-            <h4>List Spareparts {{ $plants->firstWhere('id_whlocs', request('id_whlocs'))?->location ?? 'Unknown' }}</h4>
+            <h4>List Spareparts {{ $plants->firstWhere('id_whlocs', request('id_whlocs'))?->location ?? 'All Plants' }}</h4>
             <button onclick="resetFilters()">Reset Filter</button>
         </div>
         <div class="table-sect">
@@ -518,7 +519,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($query as $parts)
+                    @forelse($allocations as $parts)
                         <tr>
                             <td onclick="overlayOn('{{ $parts->id_alct }}')"></td>
                             <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->id_alct }}</td>
@@ -597,7 +598,7 @@
                 <span><h4>Manufacturing: </h4><p><span id="mfg"></span></p></span>
                 <span><h4>Part Usage: </h4><p><span id="usage"></span></p></span>
                 <span><h4>Note: </h4><p><span id="note"></span></p></span>
-                <span><h4>Part Location: </h4><p><span id="wh_type"></span></p></span>
+                <span><h4>Part Location: </h4><p><span id="wh_type"></span><span id="wh_loc"></span></p></span>
                 <span><h4>Inbound Stock: </h4><p><span id="f_stock"></span></p></span>
                 <span><h4>Stock Balance: </h4><p><span id="e_stock"></span></p></span>
                 <span><h4>Safety Stock: </h4><p><span id="s_stock"></span></p></span>
@@ -657,11 +658,14 @@
                 document.getElementById("e_stock").textContent = data.e_stock;
                 document.getElementById("s_stock").textContent = data.s_stock;
                 document.getElementById("reminder").textContent = data.reminder;
+                document.getElementById("wh_loc").textContent = data.warehouses.whlocs.location;
                 document.getElementById("price").textContent = "Rp. " + Number(data.spareparts.price).toLocaleString('id-ID', { minimumFractionDigits: 2 });
+
+                
+
 
                 //console.log("Data asli dari API:", text); // Lihat apakah ini JSON valid atau HTML/error
             });
-
         
         let overlay = document.getElementById("overlay");
 
