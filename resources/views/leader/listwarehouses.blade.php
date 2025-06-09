@@ -39,7 +39,7 @@
     }
 
     .side-nav{
-        left: -30vh;
+        left: -35vh;
         position: fixed;
         height: 100vh;
         width: 30vh;
@@ -59,7 +59,7 @@
     }
 
     .side-nav-links span{
-        display: block;
+        display: flex;
         margin-top: 1vh;
         margin-left: 2vh;
         max-width: 22vh;
@@ -80,6 +80,20 @@
         text-decoration: none;
         color: #424242;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-left: 1vh;
+    }
+
+    .side-nav-links form{
+        margin-left: 1vh;
+    }
+
+    .side-nav-links select{
+        border: none;
+        background-color: transparent;
+        color: #424242;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: medium;
+        cursor: pointer;
     }
 
     .side-nav img{
@@ -93,7 +107,6 @@
 
     .main{
         height: auto;
-        left: 5vh;
         position: absolute;
         transition: .5s;
     }
@@ -115,10 +128,11 @@
         color: #7B95F9;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         right: 0;
-        top: 2.3%;
+        top: 2.5vh;
         margin-right: 5vh;
-        position: fixed;
+        position: absolute;
         transition: .25s;
+        z-index: 1;
     }
 
     .top-nav a:hover{
@@ -139,13 +153,14 @@
     .header button{
         padding: 5px;
         right: 1.5%;
-        position: fixed;
+        position: absolute;
         margin-top: 2vh;
         background-color: #ebebeb;
         border: #424242 1px solid;
         cursor: pointer;
         transition: .5s;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+        z-index: 1;
     }
 
     .header button:hover{
@@ -155,9 +170,11 @@
     .table-sect{
         margin-top: 10vh;
         max-width: 100%;
+        max-height: 50vh;
         overflow: auto;
-        max-height: 70vh;
         margin-left: 3px;
+        margin-bottom: 10vh;
+        white-space: nowrap;
     }
 
     .table-sect table{
@@ -165,13 +182,15 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #424242;
         width: 200%;
+        height: 100%;
+        gap: 0;
     }
 
     .table-sect th{
-       background-color: #b9b9b9;
+       background-color: #7B95F9;
        position: sticky;
        overflow-y: auto;
-       z-index: 1;
+       z-index: 0;
        top: 0;
        height: 3vh;
     }
@@ -189,7 +208,7 @@
     }
 
     .table-sect th:nth-child(11){
-        width: 15vh;
+        width: 20vh;
      }
 
     .table-sect th:nth-child(3), .table-sect th:nth-child(5), .table-sect th:nth-child(6){
@@ -221,6 +240,8 @@
        border: #969696 1px solid;
        padding: 5px;
        cursor: pointer;
+       text-align: center;
+       background-color: #f8f8f8;
     }
 
     .table-sect td i{
@@ -248,6 +269,12 @@
         padding: 3px;
     }
 
+    .table-sect h4{
+        color: #424242;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-left: 2.5vh;
+    }
+
     .overlay{
         display: none;
         position: fixed;
@@ -257,16 +284,20 @@
         right: 0;
         background-color: #ebebeb;
         z-index: 2;
-        padding: 5px;
         overflow: auto;
         border-left: #969696 3px solid;
-        z-index: 1;
+        opacity: 0;
+        transition: all .5s;
     }
 
     .overlay-top{
         height: 5vh;
         display: block;
         margin-bottom: 5vh;
+        position: sticky;
+        top: 0;
+        background-color: #ebebeb;
+        padding: 5px;
     }
 
     .overlay-top h3{
@@ -277,7 +308,7 @@
 
     .overlay-top i{
         color: #424242;
-        top: 2.7vh;
+        top: 2vh;
         right: 2.5vh;
         position: absolute;
         padding: 5px;
@@ -381,6 +412,9 @@
         padding: 5px;
     }
 
+    .custom-font{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
 </style>
 <body>
     <div class="btn">
@@ -392,18 +426,25 @@
             <div>
                 <img src="{{asset('logo.png')}}" alt="Logo">
                 <div class="side-nav-links">
-                    <span><i class="fas fa-home"></i><a href="#"> Dashboard</a></span>
+                    <span><i class="fas fa-home"></i><a href="{{route('leader.dashboard')}}"> Dashboard</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Sparepart</h4>
-                    <span><i class="fas fa-list"></i><a href="{{route('leader.listspareparts')}}"> List Sparepart</a></span>
-                    <span class="active"><i class="fas fa-list"></i><a href="{{route('leader.plant1')}}"> Plant 1</a></span>
-                    <span><i class="fas fa-box-open"></i><a href="{{route('leader.registparts')}}"> Register Sparepart</a></span>
+                    <span><i class="fas fa-list"></i>
+                        <form method="GET" action="{{route('leader.listspareparts')}}">
+                            <select name="id_whlocs" onchange="this.form.submit()">
+                                <option value="all" disabled selected>List Spareparts</option>
+                                @foreach ($plants as $plant)
+                                    <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </span>
+                    <span><i class="fas fa-file-signature"></i><a href="{{route('leader.registparts')}}"> Register Sparepart</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
-                    <span><i class="fas fa-warehouse"></i><a href="#"> List Warehouse</a></span>
-                    <span><i class="fas fa-file-signature"></i><a href="{{route('leader.registwh')}}"> Register Warehouse</a></span>
+                    <span class="active"><i class="fas fa-warehouse"></i><a href="{{route('leader.listwarehouses')}}"> List Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
@@ -423,8 +464,8 @@
             <h3>Hello Leader</h3>
             <a href="#">Keluar</a>
         </div>
-        <div class="header">
-            <h4>List Spareparts</h4>
+        <div class="header" id="plantId">
+            <h4>List Warehouses {{ $plants->firstWhere('id_whlocs', request('id_whlocs'))?->location ?? 'All Plants' }}</h4>
             <button onclick="resetFilters()">Reset Filter</button>
         </div>
         <div class="table-sect">
@@ -438,91 +479,67 @@
                             </span>
                         </th>
                         <th>
-                            Part ID
+                            Plant Location
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            Part Name
+                            Warehouse Type
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            Part Type
+                            Shelf Counts
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            MFG
+                            Shelf IDs/Names
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            Usage
+                            Cabinet Counts
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            Note
+                            Cabinet IDs/Names
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(6)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            Stock Balance
+                            Capacity
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(7)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            Safety Stock
+                            Temperature Control
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
-                        <th>
-                            Reminder
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(9)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($plant2 as $parts)
+                    @forelse($warehouses as $wh)
                         <tr>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')"></td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->id_alct }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_name ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_type ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->mfg ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->usage }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->note }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->e_stock }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->s_stock }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->reminder }}</td>
-                            <td>
-                                <span style="float: left;">
-                                    <i class="fas fa-pencil-alt" style="background-color: #48ff00;"></i>
-                                    <form action="{{ route('parts.edit', $parts->id_alct) }}" method="GET">
-                                        <button type="submit">Edit</button>
-                                    </form>
-                                </span>
-                                <span style="float: right;">
-                                    <i class="fas fa-trash" style="background-color: #ff0000;"></i>
-                                    <form action="{{ route('parts.destroy', $parts->id_alct) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Hapus</button>
-                                    </form>
-                                </span>
-                            </td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')"></td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ optional($wh->whlocs)->location ?? 'Not Found' }}</td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->wh_type }}</td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->shelf_count }}</td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->shelf_ids }}</td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->cabs_count }}</td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->cabs_ids }}</td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->capacity }} Items</td>
+                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->temp_ctrl }}</td>
                         </tr>
                     @empty
                         <td colspan="11">Empty</td>
@@ -535,75 +552,46 @@
                 <p>No:</p><input type="text" placeholder="Input.." onkeyup="filterTable(0, this.value)">
             </div>
             <div class="filter-overlay" id="filter-1">
-                <p>Part ID:</p><input type="text" placeholder="Input.." onkeyup="filterTable(1, this.value)">
+                <p>Plant Location:</p><input type="text" placeholder="Input.." onkeyup="filterTable(1, this.value)">
             </div>
             <div class="filter-overlay" id="filter-2">
-                <p>Part Name:</p><input type="text" placeholder="Input.." onkeyup="filterTable(2, this.value)">
+                <p>Warehouse Type:</p><input type="text" placeholder="Input.." onkeyup="filterTable(2, this.value)">
             </div>
             <div class="filter-overlay" id="filter-3">
-                <p>Part Type:</p><input type="text" placeholder="Input.." onkeyup="filterTable(3, this.value)">
+                <p>Shelf Counts:</p><input type="text" placeholder="Input.." onkeyup="filterTable(3, this.value)">
             </div>
             <div class="filter-overlay" id="filter-4">
-                <p>Manufacturing:</p><input type="text" placeholder="Input.." onkeyup="filterTable(4, this.value)">
+                <p>Shelf IDs/Names:</p><input type="text" placeholder="Input.." onkeyup="filterTable(4, this.value)">
             </div>
             <div class="filter-overlay" id="filter-5">
-                <p>Usage:</p><input type="text" placeholder="Input.." onkeyup="filterTable(5, this.value)">
+                <p>Cabinet Counts:</p><input type="text" placeholder="Input.." onkeyup="filterTable(5, this.value)">
             </div>
             <div class="filter-overlay" id="filter-6">
-                <p>Note:</p><input type="text" placeholder="Input.." onkeyup="filterTable(6, this.value)">
+                <p>Cabinet IDs/Names:</p><input type="text" placeholder="Input.." onkeyup="filterTable(6, this.value)">
             </div>
             <div class="filter-overlay" id="filter-7">
-                <p>Stock Balance:</p><input type="text" placeholder="Input.." onkeyup="filterTable(7, this.value)">
+                <p>Capacity:</p><input type="text" placeholder="Input.." onkeyup="filterTable(7, this.value)">
             </div>
             <div class="filter-overlay" id="filter-8">
-                <p>Safety Stock:</p><input type="text" placeholder="Input.." onkeyup="filterTable(8, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-9">
-                <p>Reminder:</p><input type="text" placeholder="Input.." onkeyup="filterTable(9, this.value)">
+                <p>Temperature Control:</p><input type="text" placeholder="Input.." onkeyup="filterTable(8, this.value)">
             </div>
         </div>
         <div class="overlay" id="overlay">
             <div class="overlay-top">
-                <h3>Spareparts Information</h3>
+                <h3>Warehouse Information</h3>
                 <i class="fas fa-close" onclick="overlayOff()"></i>
             </div>
             <div class="overlay-main">
-                <span><h4>Part ID: </h4><p><span id="part_id"></span></p></span>
-                <span><h4>Part Name: </h4><p><span id="part_name"></span></p></span>
-                <span><h4>Part Type: </h4><p><span id="part_type"></span></p></span>
-                <span><h4>Manufacturing: </h4><p><span id="mfg"></span></p></span>
-                <span><h4>Part Usage: </h4><p><span id="usage"></span></p></span>
-                <span><h4>Note: </h4><p><span id="note"></span></p></span>
-                <span><h4>Part Location: </h4><p><span id="wh_type"></span></p></span>
-                <span><h4>Inbound Stock: </h4><p><span id="f_stock"></span></p></span>
-                <span><h4>Stock Balance: </h4><p><span id="e_stock"></span></p></span>
-                <span><h4>Safety Stock: </h4><p><span id="s_stock"></span></p></span>
-                <span><h4>Reminder: </h4><p><span id="reminder"></span></p></span>
-                <span><h4>Price Per Quantity: </h4><p><span id="price"></span></p></span>
-                <span><h4>Supplier: </h4><p><span id="spl_name"></span></p></span>
-            </div>
-            <div class="overlay-note">
-                <h3>Part Movement Information</h3>
-                <div class="part-out">
-                    <h4>Part Out</h4>
-                    <span><h4>Last Date Out: </h4><p></p></span>
-                    <span><h4>Stock Out: </h4><p></p></span>
-                    <span><h4>Part Usage: </h4><p></p></span>
-                    <span><h4>PIC WH: </h4><p></p></span>
-                    <span><h4>PIC Maintenance/Genba: </h4><p></p></span>
-                    <span><h4>Note: </h4><p></p></span>
-                </div>
-                <div class="part-in">
-                    <h4>Part In</h4>
-                    <span><h4>Last Date In: </h4><p></p></span>
-                    <span><h4>Stock In: </h4><p></p></span>
-                    <span><h4>Part Usage: </h4><p></p></span>
-                    <span><h4>PIC WH: </h4><p></p></span>
-                    <span><h4>PIC Order Request: </h4><p></p></span>
-                    <span><h4>Note: </h4><p></p></span>
-                    <span><h4>Price: </h4><p></p></span>
-                    <span><h4>Supplier: </h4><p></p></span>
-                </div>
+                <span><h4>Plant Location: </h4><p><span id="plt_loc"></span></p></span>
+                <span><h4>Warehouse Type: </h4><p><span id="wh_type"></span></p></span>
+                <span><h4>Shelf Counts: </h4><p><span id="sc"></span></p></span>
+                <span><h4>Shelf IDs/Names: </h4><p><span id="si"></span></p></span>
+                <span><h4>Cabinet Counts: </h4><p><span id="cc"></span></p></span>
+                <span><h4>Cabinet IDs/Names: </h4><p><span id="ci"></span></p></span>
+                <span><h4>Capacity: </h4><p><span id="cpt"></span></p></span>
+                <span><h4>Temperature Control: </h4><p><span id="temp_ctrl"></span></p></span>
+                <span><h4>Plant Manager: </h4><p><span id="pm"></span></p></span>
+                <span><h4>Manager Contact Information: </h4><p><span id="mci"></span></p></span>
             </div>
         </div>
     </section>
@@ -615,37 +603,48 @@
     }
 
     function closeNav(){
-        document.getElementById("side-nav").style.left = "-30vh";
-        document.getElementById("main").style.left = "5vh";
+        document.getElementById("side-nav").style.left = "-35vh";
+        document.getElementById("main").style.left = "0";
     }
     
-    function overlayOn(id_alct) {
-        fetch(`/parts/${id_alct}`)
+    function overlayOn(id_wh) {
+        fetch(`/wh/${id_wh}`)
             .then(response => response.json()) // Bukan `.json()` untuk melihat isi asli
             .then(data => {
-                document.getElementById("part_id").textContent = data.id_alct;
-                document.getElementById("part_name").textContent = data.spareparts.part_name;
-                document.getElementById("part_type").textContent = data.spareparts.part_type;
-                document.getElementById("mfg").textContent = data.spareparts.mfg;
-                document.getElementById("usage").textContent = data.usage;
-                document.getElementById("note").textContent = data.note;
-                document.getElementById("wh_type").textContent = data.warehouses.wh_type;
-                document.getElementById("f_stock").textContent = data.f_stock;
-                document.getElementById("e_stock").textContent = data.e_stock;
-                document.getElementById("s_stock").textContent = data.s_stock;
-                document.getElementById("reminder").textContent = data.reminder;
-                document.getElementById("price").textContent = "Rp. " + Number(data.spareparts.price).toLocaleString('id-ID', { minimumFractionDigits: 2 });
+                document.getElementById("plt_loc").textContent = data.whlocs.location;
+                document.getElementById("wh_type").textContent = data.wh_type;
+                document.getElementById("sc").textContent = data.shelf_count;
+                document.getElementById("si").textContent = data.shelf_ids;
+                document.getElementById("cc").textContent = data.cabs_count;
+                document.getElementById("ci").textContent = data.cabs_ids;
+                document.getElementById("cpt").textContent = data.capacity;
+                document.getElementById("temp_ctrl").textContent = data.temp_ctrl;
+                document.getElementById("pm").textContent = data.whlocs.manager;
+                document.getElementById("mci").textContent = data.whlocs.ctc_info;
+
 
                 //console.log("Data asli dari API:", text); // Lihat apakah ini JSON valid atau HTML/error
             });
-
         
-        document.getElementById("overlay").style.display = "block";
+        let overlay = document.getElementById("overlay");
+
+        overlay.style.display = "block"; // Pastikan elemen terlihat sebelum transisi
+        setTimeout(() => {
+            overlay.style.opacity = "1"; // Efek fade-in
+        }, 200); // Delay sedikit agar transisi bisa aktif
+
+        //document.getElementById("td-list").style.backgroundColor = "#7B95F9";
         //console.log("Overlay sekarang seharusnya aktif!");
     }
 
-    function overlayOff(){
-        document.getElementById("overlay").style.display = "none";
+    function overlayOff() {
+        let overlay = document.getElementById("overlay");
+
+        overlay.style.opacity = "0"; // Buat efek fade-out lebih dulu
+
+        setTimeout(() => {
+            overlay.style.display = "none"; // Sembunyikan setelah transisi selesai
+        }, 500); // Sesuaikan dengan durasi transition
     }
 
     function toggleFilter(index) {

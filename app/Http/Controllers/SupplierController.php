@@ -2,20 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\allocations;
+use App\Models\suppliers;
 use Illuminate\Http\Request;
 
-class Plant2Controller extends Controller
+class SupplierController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $plant2 = allocations::whereHas('warehouses', function ($query){
-            $query->where('id_whlocs', 2);
-        })->get();
-        return view('leader.plant2', compact('plant2'));
+        $supplier = suppliers::all();
+
+        return view('leader.listsuppliers', compact('supplier'));
     }
 
     /**

@@ -73,9 +73,15 @@ class WarehousesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($wh)
     {
-        //
+        $warehouses = warehouses::where('id_wh', $wh)->with('whlocs')->first();
+
+        if (!$warehouses) {
+            return response()->json(['error' => 'Warehouse not found'], 404);
+        }
+
+        return response()->json($warehouses);
     }
 
     /**
