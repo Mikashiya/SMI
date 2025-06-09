@@ -38,7 +38,7 @@
     }
 
     .side-nav{
-        left: -30vh;
+        left: -35vh;
         position: fixed;
         height: 100vh;
         width: 30vh;
@@ -58,7 +58,7 @@
     }
 
     .side-nav-links span{
-        display: block;
+        display: flex;
         margin-top: 1vh;
         margin-left: 2vh;
         max-width: 22vh;
@@ -79,6 +79,19 @@
         text-decoration: none;
         color: #424242;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-left: 1vh;
+    }
+
+    .side-nav-links form{
+        margin-left: 1vh;
+    }
+
+    .side-nav-links select{
+        border: none;
+        background-color: transparent;
+        color: #424242;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: medium;
     }
 
     .side-nav img{
@@ -92,7 +105,6 @@
 
     .main{
         height: auto;
-        left: 5vh;
         position: absolute;
         transition: .5s;
         overflow: hidden;
@@ -144,7 +156,7 @@
         width: 150vh;
     }
 
-    form{
+    .form-sect form{
         margin-left: auto;
         margin-right: auto;
     }
@@ -203,7 +215,7 @@
         background-color: rgba(107, 107, 107, 0.3);
     }
 
-    input[type=text], input[type=date], textarea, select{
+    input[type=text], input[type=date], textarea, .form-sect select{
         width: 100%;
         padding: 12px;
         border: 2px solid #424242;
@@ -237,7 +249,16 @@
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Sparepart</h4>
-                    <span class="active"><i class="fas fa-list"></i><a href="{{route('leader.listspareparts')}}"> List Sparepart</a></span>
+                    <span><i class="fas fa-list"></i>
+                        <form method="GET" action="{{route('leader.listspareparts')}}">
+                            <select name="id_whlocs" onchange="this.form.submit()">
+                                <option value="" disabled selected>List Spareparts</option>
+                                @foreach ($plants as $plant)
+                                    <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </span>
                     <span><i class="fas fa-box-open"></i><a href="{{route('leader.registparts')}}"> Register Sparepart</a></span>
                 </div>
                 <div class="side-nav-links">
@@ -345,8 +366,8 @@
     }
 
     function closeNav(){
-        document.getElementById("side-nav").style.left = "-30vh";
-        document.getElementById("main").style.left = "5vh";
+        document.getElementById("side-nav").style.left = "-35vh";
+        document.getElementById("main").style.left = "0";
     }
 </script>
 </html>

@@ -38,7 +38,7 @@
     }
 
     .side-nav{
-        left: -30vh;
+        left: -35vh;
         position: fixed;
         height: 100vh;
         width: 30vh;
@@ -105,7 +105,6 @@
 
     .main{
         height: auto;
-        left: 5vh;
         position: absolute;
         transition: .5s;
     }
@@ -196,7 +195,7 @@
                     <span><i class="fas fa-list"></i>
                         <form method="GET" action="{{route('leader.listspareparts')}}">
                             <select name="id_whlocs" onchange="this.form.submit()">
-                                <option value="">List Spareparts</option>
+                                <option value="" disabled selected>List Spareparts</option>
                                 @foreach ($plants as $plant)
                                     <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
                                 @endforeach
@@ -254,8 +253,8 @@
     }
 
     function closeNav(){
-        document.getElementById("side-nav").style.left = "-30vh";
-        document.getElementById("main").style.left = "5vh";
+        document.getElementById("side-nav").style.left = "-35vh";
+        document.getElementById("main").style.left = "0";
     }
 </script>
 </html>

@@ -8,8 +8,11 @@ use App\Models\spareparts;
 use App\Models\wh_locs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class AllocationsController extends Controller
 {
@@ -119,15 +122,18 @@ class AllocationsController extends Controller
             'reminder'=>$request->f_stock < $request->s_stock ? 'NG' : 'OK'
         ]);
        
+        Alert::success('Success', 'New part have been added');
 
-        return redirect()->back()->with('success', 'OK');
+        return redirect()->back()->with('success', 'New part has been added');
+        
+        dd(session()->all());
     }
 
     /**
      * Display the specified resource.
      */
     public function show($parts) {
-        $allocations = allocations::where('id_alct', $parts)->with('spareparts', 'warehouses')->first();
+        $allocations = allocations::where('id_alct', $parts)->with('spareparts', 'warehouses.whlocs')->first();
 
         if (!$allocations) {
             return response()->json(['error' => 'Allocation not found'], 404);
@@ -137,9 +143,6 @@ class AllocationsController extends Controller
 
 
         return response()->json($allocations);
-
-        $whloc = warehouses::where('id_wh', $parts)->with('whlocs')->first();
-        return response()->json($whloc);
     }
 
     /**
@@ -187,9 +190,13 @@ class AllocationsController extends Controller
             $allocations->save();
         });
 
-       
+        //Session::put('plant_filter', request()->get('id_whlocs'));
 
-        return redirect()->route('parts.index')->with('success', 'Data berhasil diperbarui!');
+        return redirect()->back();
+
+        //return redirect()->route('leader.listspareparts', request()->query());
+
+        //return redirect()->route('leader.listspareparts', ['id_whlocs' => Session::get('plant_filter')])->with('success', 'Data berhasil diperbarui!');
     }
 
     /**

@@ -39,7 +39,7 @@
     }
 
     .side-nav{
-        left: -30vh;
+        left: -35vh;
         position: fixed;
         height: 100vh;
         width: 30vh;
@@ -93,6 +93,7 @@
         color: #424242;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-size: medium;
+        cursor: pointer;
     }
 
     .side-nav img{
@@ -106,7 +107,6 @@
 
     .main{
         height: auto;
-        left: 5vh;
         position: absolute;
         transition: .5s;
     }
@@ -128,10 +128,11 @@
         color: #7B95F9;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         right: 0;
-        top: 2.3%;
+        top: 2.5vh;
         margin-right: 5vh;
-        position: fixed;
+        position: absolute;
         transition: .25s;
+        z-index: 1;
     }
 
     .top-nav a:hover{
@@ -152,13 +153,14 @@
     .header button{
         padding: 5px;
         right: 1.5%;
-        position: fixed;
+        position: absolute;
         margin-top: 2vh;
         background-color: #ebebeb;
         border: #424242 1px solid;
         cursor: pointer;
         transition: .5s;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+        z-index: 1;
     }
 
     .header button:hover{
@@ -168,9 +170,11 @@
     .table-sect{
         margin-top: 10vh;
         max-width: 100%;
+        max-height: 50vh;
         overflow: auto;
-        max-height: 70vh;
         margin-left: 3px;
+        margin-bottom: 10vh;
+        white-space: nowrap;
     }
 
     .table-sect table{
@@ -178,10 +182,12 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #424242;
         width: 200%;
+        height: 100%;
+        gap: 0;
     }
 
     .table-sect th{
-       background-color: #b9b9b9;
+       background-color: #7B95F9;
        position: sticky;
        overflow-y: auto;
        z-index: 1;
@@ -202,7 +208,7 @@
     }
 
     .table-sect th:nth-child(11){
-        width: 15vh;
+        width: 20vh;
      }
 
     .table-sect th:nth-child(3), .table-sect th:nth-child(5), .table-sect th:nth-child(6){
@@ -234,6 +240,8 @@
        border: #969696 1px solid;
        padding: 5px;
        cursor: pointer;
+       text-align: center;
+       background-color: #f8f8f8;
     }
 
     .table-sect td i{
@@ -261,6 +269,12 @@
         padding: 3px;
     }
 
+    .table-sect h4{
+        color: #424242;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-left: 2.5vh;
+    }
+
     .overlay{
         display: none;
         position: fixed;
@@ -270,10 +284,8 @@
         right: 0;
         background-color: #ebebeb;
         z-index: 2;
-        padding: 5px;
         overflow: auto;
         border-left: #969696 3px solid;
-        z-index: 1;
         opacity: 0;
         transition: all .5s;
     }
@@ -282,6 +294,10 @@
         height: 5vh;
         display: block;
         margin-bottom: 5vh;
+        position: sticky;
+        top: 0;
+        background-color: #ebebeb;
+        padding: 5px;
     }
 
     .overlay-top h3{
@@ -292,7 +308,7 @@
 
     .overlay-top i{
         color: #424242;
-        top: 2.7vh;
+        top: 2vh;
         right: 2.5vh;
         position: absolute;
         padding: 5px;
@@ -396,6 +412,9 @@
         padding: 5px;
     }
 
+    .custom-font{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
 </style>
 <body>
     <div class="btn">
@@ -414,20 +433,18 @@
                     <span class="active"><i class="fas fa-list"></i>
                         <form method="GET" action="{{route('leader.listspareparts')}}">
                             <select name="id_whlocs" onchange="this.form.submit()">
-                                <option value="">List Spareparts</option>
-                                <option value="all">All Plants</option>
+                                <option value="all" disabled selected>List Spareparts</option>
                                 @foreach ($plants as $plant)
                                     <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
                                 @endforeach
                             </select>
                         </form>
                     </span>
-                    <span><i class="fas fa-box-open"></i><a href="{{route('leader.registparts')}}"> Register Sparepart</a></span>
+                    <span><i class="fas fa-file-signature"></i><a href="{{route('leader.registparts')}}"> Register Sparepart</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
                     <span><i class="fas fa-warehouse"></i><a href="#"> List Warehouse</a></span>
-                    <span><i class="fas fa-file-signature"></i><a href="{{route('leader.registwh')}}"> Register Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
@@ -451,109 +468,113 @@
             <h4>List Spareparts {{ $plants->firstWhere('id_whlocs', request('id_whlocs'))?->location ?? 'All Plants' }}</h4>
             <button onclick="resetFilters()">Reset Filter</button>
         </div>
-        <div class="table-sect">
-            <table>
-                <thead>
-                    <tr>
-                        <th>
-                            No
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(0)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Part ID
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Part Name
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Part Type
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            MFG
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Usage
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Note
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(6)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Stock Balance
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(7)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Safety Stock
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Reminder
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(9)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($allocations as $parts)
-                        <tr>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')"></td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->id_alct }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_name ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_type ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->mfg ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->usage }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->note }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->e_stock }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->s_stock }}</td>
-                            <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->reminder }}</td>
-                            <td>
-                                <span style="float: left;">
-                                    <i class="fas fa-pencil-alt" style="background-color: #48ff00;"></i>
-                                    <form action="{{ route('parts.edit', $parts->id_alct) }}" method="GET">
-                                        <button type="submit">Edit</button>
-                                    </form>
-                                </span>
-                                <span style="float: right;">
-                                    <i class="fas fa-trash" style="background-color: #ff0000;"></i>
-                                    <form action="{{ route('parts.destroy', $parts->id_alct) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Hapus</button>
-                                    </form>
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <td colspan="11">Empty</td>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        @foreach($plants as $plant)
+            @if(request('id_whlocs') == 'all' || request('id_whlocs') == $plant->id_whlocs)
+                <div class="table-sect">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>
+                                    No
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(0)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Part ID
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Part Name
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Part Type
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    MFG
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Usage
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Note
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(6)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Stock Balance
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(7)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Safety Stock
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>
+                                    Reminder
+                                    <span class="filter-container">
+                                        <span class="filter-icon" onclick="toggleFilter(9)"><i class="fas fa-filter"></i></span>
+                                    </span>
+                                </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($allocations->where('warehouses.id_whlocs', $plant->id_whlocs) as $parts)
+                                <tr>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')"></td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->id_alct }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_name ?? 'Not Found' }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_type ?? 'Not Found' }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->mfg ?? 'Not Found' }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->usage }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->note }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->e_stock }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->s_stock }}</td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->reminder }}</td>
+                                    <td style="cursor:default;">
+                                        <span style="float: left;">
+                                            <i class="fas fa-pencil-alt" style="background-color: #48ff00;"></i>
+                                            <form action="{{ route('parts.edit', $parts->id_alct) }}" method="GET">
+                                                <button type="submit">Edit</button>
+                                            </form>
+                                        </span>
+                                        <span style="float: right;">
+                                            <i class="fas fa-trash" style="background-color: #ff0000;"></i>
+                                            <form action="{{ route('parts.destroy', $parts->id_alct) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="delete-btn" data-id="{{ $parts->id_alct }}">Hapus</button>
+                                            </form>
+                                        </span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <td colspan="11">Empty</td>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+        @endforeach
         <div>
             <div class="filter-overlay" id="filter-0">
                 <p>No:</p><input type="text" placeholder="Input.." onkeyup="filterTable(0, this.value)">
@@ -588,7 +609,7 @@
         </div>
         <div class="overlay" id="overlay">
             <div class="overlay-top">
-                <h3>Spareparts Information</h3>
+                <h3>Spareparts Information <span id="wh_loc"></span></h3>
                 <i class="fas fa-close" onclick="overlayOff()"></i>
             </div>
             <div class="overlay-main">
@@ -598,7 +619,7 @@
                 <span><h4>Manufacturing: </h4><p><span id="mfg"></span></p></span>
                 <span><h4>Part Usage: </h4><p><span id="usage"></span></p></span>
                 <span><h4>Note: </h4><p><span id="note"></span></p></span>
-                <span><h4>Part Location: </h4><p><span id="wh_type"></span><span id="wh_loc"></span></p></span>
+                <span><h4>Part Location: </h4><p><span>Warehouse</span><span id="wh_type"></span></p></span>
                 <span><h4>Inbound Stock: </h4><p><span id="f_stock"></span></p></span>
                 <span><h4>Stock Balance: </h4><p><span id="e_stock"></span></p></span>
                 <span><h4>Safety Stock: </h4><p><span id="s_stock"></span></p></span>
@@ -639,8 +660,8 @@
     }
 
     function closeNav(){
-        document.getElementById("side-nav").style.left = "-30vh";
-        document.getElementById("main").style.left = "5vh";
+        document.getElementById("side-nav").style.left = "-35vh";
+        document.getElementById("main").style.left = "0";
     }
     
     function overlayOn(id_alct) {
@@ -658,10 +679,8 @@
                 document.getElementById("e_stock").textContent = data.e_stock;
                 document.getElementById("s_stock").textContent = data.s_stock;
                 document.getElementById("reminder").textContent = data.reminder;
-                document.getElementById("wh_loc").textContent = data.warehouses.whlocs.location;
                 document.getElementById("price").textContent = "Rp. " + Number(data.spareparts.price).toLocaleString('id-ID', { minimumFractionDigits: 2 });
-
-                
+                document.getElementById("wh_loc").textContent = data.warehouses.whlocs.location;
 
 
                 //console.log("Data asli dari API:", text); // Lihat apakah ini JSON valid atau HTML/error
@@ -742,5 +761,30 @@
             filter.style.display = "none";
         });
     }
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        //console.log("Event listener aktif!"); // Debug sebelum eksekusi
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            let partId = this.getAttribute('data-id');
+            let form = this.closest("form");
+            Swal.fire({
+                title: "WARNING",
+                html: `<p>Part ID <strong>${partId}</strong></p><p>Will be deleted permanently</p></p><p>Proceed with caution</p>`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel",
+                customClass:{
+                    popup: 'custom-font'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Jalankan penghapusan menggunakan form
+                }
+            });
+        });
+    });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>

@@ -38,7 +38,7 @@
     }
 
     .side-nav{
-        left: -30vh;
+        left: -35vh;
         position: fixed;
         height: 100vh;
         width: 30vh;
@@ -83,7 +83,6 @@
     }
 
     .side-nav-links form{
-        margin-left: 1vh;
         margin: none;
     }
 
@@ -93,6 +92,8 @@
         color: #424242;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-size: medium;
+        margin-left: 1vh;
+        cursor: pointer;
     }
 
     .side-nav img{
@@ -106,10 +107,10 @@
 
     .main{
         height: auto;
-        left: 5vh;
         position: absolute;
         transition: .5s;
         overflow: hidden;
+        width: 100%;
     }
 
     .top-nav{
@@ -143,8 +144,8 @@
         margin-top: 10vh;
         margin-left: 2.5vh;
         border: #424242 2px solid;
-        width: auto;
         padding: 10px;
+        margin-right: 7.5vh;
     }
 
     .header h4{
@@ -154,13 +155,11 @@
 
     .form-sect{
         margin-top: 5vh;
-        margin-left: 2.5vh;
-        width: 150vh;
     }
 
     .form-sect form{
-        margin-left: auto;
-        margin-right: auto;
+        margin-left: 2.5vh;
+        margin-right: 7.5vh;
     }
 
     .upper-row{
@@ -217,7 +216,7 @@
         background-color: rgba(107, 107, 107, 0.3);
     }
 
-    .form-sect input[type=text], input[type=date], textarea, select{
+    .form-sect input[type=text], input[type=date], textarea, .form-sect select{
         width: 100%;
         padding: 12px;
         border: 2px solid #424242;
@@ -226,18 +225,13 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #1f1f1f;
     }
+
+    .custom-font{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
 </style>
 <body>
-    @if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif
-    @if(session('success'))
-    <div class="alert alert-danger">
-        {{ session('success') }}
-    </div>
-    @endif
+    @include('sweetalert::alert')
     <div class="btn">
         <div><span><i class="fas fa-angle-left" onclick="closeNav()"></i></span></div>
         <div><span><i class="fas fa-angle-right" onclick="openNav()"></i></span></div>
@@ -247,16 +241,16 @@
             <div>
                 <img src="{{asset('logo.png')}}" alt="Logo">
                 <div class="side-nav-links">
-                    <span><i class="fas fa-home"></i><a href="#"> Dashboard</a></span>
+                    <span><i class="fas fa-home"></i><a href="{{route('leader.dashboard')}}"> Dashboard</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Sparepart</h4>
                     <span><i class="fas fa-list"></i>
-                        <form method="GET" action="{{route('leader.listspareparts')}}" class="side-nav-links">
-                            <select name="id_whlocs" onchange="this.form.submit()" class="side-nav-links">>
-                                <option value="" class="side-nav-links">List Spareparts</option>
+                        <form method="GET" action="{{route('leader.listspareparts')}}">
+                            <select name="id_whlocs" onchange="this.form.submit()">
+                                <option value="" disabled selected>List Spareparts</option>
                                 @foreach ($plants as $plant)
-                                    <option value="{{ $plant->id_whlocs }}" class="side-nav-links">{{ $plant->location }}</option>
+                                    <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
                                 @endforeach
                             </select>
                         </form>
@@ -303,19 +297,19 @@
                     </div>
                     <div class="col">
                         <label for="pic_wh">PIC WH</label><br>
-                        <input type="text" placeholder="Input" name="pic_wh" style="width: 20vh;">
+                        <input type="text" placeholder="Input" name="pic_wh">
                     </div>
                     <div class="col">
                         <label for="pic_order">PIC Order</label><br>
-                        <input type="text" placeholder="Input" name="pic_order" style="width: 20vh;">
+                        <input type="text" placeholder="Input" name="pic_order">
                     </div>
                     <div class="col">
                         <label for="spl_name">Supplier</label><br>
-                        <input type="text" placeholder="Input" name="spl_name" style="width: 30vh;">
+                        <input type="text" placeholder="Input" name="spl_name">
                     </div>
                     <div class="col">
                         <label for="usage">Usage</label><br>
-                        <input type="text" placeholder="Input" name="usage" style="width: 30vh;">
+                        <input type="text" placeholder="Input" name="usage">
                     </div>
                 </div>
                 <div class="middle-row">
@@ -343,7 +337,7 @@
                 <div class="lower-row">
                     <div class="col">
                         <label for="price">Price</label><br>
-                        <input type="text" placeholder="Input" name="price" style="width: 30vh;">
+                        <input type="text" placeholder="Input" name="price">
                     </div>
                     <div class="col">
                         <label for="f_stock">Inbound Stock</label><br>
@@ -355,15 +349,16 @@
                     </div>
                     <div class="col">
                         <label for="note">Note</label><br>
-                        <textarea name="note" id="" placeholder="Input" style="width: 80vh;"></textarea>
+                        <textarea name="note" id="" placeholder="Input"></textarea>
                     </div>
                 </div>
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" class="regist-btn">
                 <input type="reset" value="Clear">
             </form>
         </div>
     </section>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     function openNav(){
         document.getElementById("side-nav").style.left = "0";
@@ -371,8 +366,32 @@
     }
 
     function closeNav(){
-        document.getElementById("side-nav").style.left = "-30vh";
-        document.getElementById("main").style.left = "5vh";
+        document.getElementById("side-nav").style.left = "-35vh";
+        document.getElementById("main").style.left = "0";
     }
+
+    document.querySelectorAll('.regist-btn').forEach(button => {
+        //console.log("Event listener aktif!"); // Debug sebelum eksekusi
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            let partId = this.getAttribute('data-id');
+            let form = this.closest("form");
+            Swal.fire({
+                title: "WARNING",
+                html: `<p>Ensure to cross check the information</p><p>Proceed with caution</p>`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel",
+                customClass:{
+                    popup: 'custom-font'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Jalankan penghapusan menggunakan form
+                }
+            });
+        });
+    });
 </script>
 </html>

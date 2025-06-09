@@ -22,4 +22,8 @@ class allocations extends Model
     protected $keyType = 'string';
 
     protected $table = 'allocations';
+
+    public function stc_mvt(){
+        return $this->hasMany(stockmovements::class);
+    }
 }
