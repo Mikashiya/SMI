@@ -231,7 +231,6 @@
     }
 </style>
 <body>
-    @include('sweetalert::alert')
     <div class="btn">
         <div><span><i class="fas fa-angle-left" onclick="closeNav()"></i></span></div>
         <div><span><i class="fas fa-angle-right" onclick="openNav()"></i></span></div>
@@ -359,7 +358,57 @@
     </section>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: "SUCCESS",
+            text: "{{ session('success') }}",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false,
+            customClass:{
+                popup: 'custom-font'
+            }
+        });
+    </script>
+    @php session()->forget('success'); @endphp
+@endif
+
+@if(session('error'))
+    <script>
+        Swal.fire({
+            title: "WARNING",
+            text: "{{ session('error') }}",
+            icon: "warning",
+            timer: 3000,
+            showConfirmButton: false,
+            customClass:{
+                popup: 'custom-font'
+            }
+        });
+    </script>
+    @php session()->forget('success'); @endphp
+@endif
+
+@if($errors->any())
+    <script>
+        Swal.fire({
+            title: "Oops!",
+            text: "{{ implode(', ', $errors->all()) }}",
+            icon: "error",
+            showConfirmButton: true,
+            customClass:{
+                popup: 'custom-font'
+            }
+        });
+    </script>
+@endif
+
 <script>
+
+    //console.log(typeof Swal !== "undefined" ? "SweetAlert2 loaded!" : "SweetAlert2 NOT loaded!");
+
+
     function openNav(){
         document.getElementById("side-nav").style.left = "0";
         document.getElementById("main").style.left = "35vh";
@@ -388,7 +437,7 @@
                 }
             }).then((result) => {
                 if (result.isConfirmed) {
-                    form.submit(); // Jalankan penghapusan menggunakan form
+                    form.submit(); 
                 }
             });
         });

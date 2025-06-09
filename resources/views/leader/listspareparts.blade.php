@@ -653,6 +653,22 @@
         </div>
     </section>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: "SUCCESS",
+            text: "{{ session('success') }}",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false,
+            customClass:{
+                popup: 'custom-font'
+            }
+        });
+    </script>
+    @php session()->forget('success'); @endphp
+@endif
 <script>
     function openNav(){
         document.getElementById("side-nav").style.left = "0";
@@ -786,5 +802,4 @@
         });
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>

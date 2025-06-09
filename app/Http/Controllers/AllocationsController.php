@@ -67,7 +67,7 @@ class AllocationsController extends Controller
     {
         // Validate
         $request->validate([
-            'part_id'=>'required',
+            'part_id'=>'required|max:9|min:9',
             'part_name'=>'required',
             'part_type'=>'required',
             'mfg'=>'required',
@@ -80,6 +80,25 @@ class AllocationsController extends Controller
             'price'=>'required|numeric',
             'f_stock'=>'required|numeric',
             's_stock'=>'required|numeric'
+        ], [
+            'part_id.required' => 'Part ID must be filled',
+            'part_id.max' => 'Part ID must not exceed 9 letters',
+            'part_id.min' => 'Part ID must not below 9 letters',
+            'part_name.required' => 'Part Name must be filled',
+            'part_type.required' => 'Part Type must be filled',
+            'mfg.required' => 'Part Manufacture must be filled',
+            'date_in.required' => 'Part Inbound Date must be filled',
+            'pic_wh.required' => 'PIC Warehouse Name must be filled',
+            'pic_order.required' => 'PIC Order Name must be filled',
+            'spl_name.required' => 'Supplier Name must be filled',
+            'usage.required' => 'Part Usage must be filled',
+            'loc.required' => 'Warehouse Location must be filled',
+            'price.required' => 'Part Price must be filled',
+            'f_stock.required' => 'Part Inbound Stock must be filled',
+            's_stock.required' => 'Part Safety Stock must be filled',
+            'price.numeric' => 'Part Price must be numeric',
+            'f_stock.numeric' => 'Part Inbound Stock must be numeric',
+            's_stock.numeric' => 'Part Safety Stock must be numeric',
         ]);
 
         DB::beginTransaction();
@@ -105,7 +124,7 @@ class AllocationsController extends Controller
         }
 
         if (allocations::where('id_alct', $request->part_id)->exists()) {
-            return redirect()->back()->with('error', 'ID Allocation sudah ada, gunakan ID yang berbeda!');
+            return redirect()->back()->with('error', 'ID Part already exist');
         }
 
         $warehouses = warehouses::where('id_wh', $request->loc)->first();
@@ -122,7 +141,6 @@ class AllocationsController extends Controller
             'reminder'=>$request->f_stock < $request->s_stock ? 'NG' : 'OK'
         ]);
        
-        Alert::success('Success', 'New part have been added');
 
         return redirect()->back()->with('success', 'New part has been added');
         
@@ -211,6 +229,6 @@ class AllocationsController extends Controller
         }
 
         $allocation->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Data have been destroyed');
     }
 }
