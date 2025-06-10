@@ -193,7 +193,7 @@
                 <div class="side-nav-links">
                     <h4>Manajemen Sparepart</h4>
                     <span><i class="fas fa-list"></i>
-                        <form method="GET" action="{{route('leader.listspareparts')}}">
+                        <form method="GET" action="{{route('parts.index')}}">
                             <select name="id_whlocs" onchange="this.form.submit()">
                                 <option value="all" disabled selected>List Spareparts</option>
                                 @foreach ($plants as $plant)
@@ -202,16 +202,15 @@
                             </select>
                         </form>
                     </span>
-                    <span><i class="fas fa-file-signature"></i><a href="{{route('leader.registparts')}}"> Register Sparepart</a></span>
+                    <span><i class="fas fa-file-signature"></i><a href="{{route('parts.create')}}"> Register Sparepart</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
-                    <span><i class="fas fa-warehouse"></i><a href="{{route('leader.listwarehouses')}}"> List Warehouse</a></span>
+                    <span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
-                    <span><i class="fas fa-users"></i><a href="#"> List Supplier</a></span>
-                    <span><i class="fas fa-user-plus"></i><a href="#"> Register Supplier</a></span>
+                    <span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Aktivitas</h4>

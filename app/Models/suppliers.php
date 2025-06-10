@@ -11,4 +11,8 @@ class suppliers extends Model
     protected $primaryKey = 'id_spl';
 
     protected $table = 'supplier';
+
+    public function spareparts(){
+        return $this->hasMany(spareparts::class);
+    }
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('part_type', 30);
             $table->string('mfg', 30);
             $table->decimal('price', 12, 2);
+            $table->unsignedBigInteger('id_spl');
+            $table->foreign('id_spl')->references('id_spl')->on('supplier');
             $table->timestamps();
         });
     }

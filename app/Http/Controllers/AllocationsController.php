@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\allocations;
 use App\Models\warehouses;
 use App\Models\spareparts;
+use App\Models\suppliers;
 use App\Models\wh_locs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,7 +57,9 @@ class AllocationsController extends Controller
     {
 
         $choices = warehouses::select(DB::raw("CONCAT(wh_type, ' - ', (SELECT location FROM whlocs WHERE whlocs.id_whlocs = warehouses.id_whlocs)) AS wh_display"), 'id_wh')->get()->pluck('wh_display', 'id_wh');
-        return view('leader.registparts', compact('choices'));
+
+        $spl = suppliers::get()->pluck('spl_name', 'id_spl');
+        return view('leader.registparts', compact('choices', 'spl'));
 
     }
 
@@ -74,7 +77,7 @@ class AllocationsController extends Controller
             'date_in'=>'required',
             'pic_wh'=>'required',
             'pic_order'=>'required',
-            'spl_name'=>'required',
+            'spl'=>'required',
             'usage'=>'required',
             'loc'=>'required',
             'price'=>'required|numeric',
@@ -90,7 +93,7 @@ class AllocationsController extends Controller
             'date_in.required' => 'Part Inbound Date must be filled',
             'pic_wh.required' => 'PIC Warehouse Name must be filled',
             'pic_order.required' => 'PIC Order Name must be filled',
-            'spl_name.required' => 'Supplier Name must be filled',
+            'spl.required' => 'Supplier Name must be filled',
             'usage.required' => 'Part Usage must be filled',
             'loc.required' => 'Warehouse Location must be filled',
             'price.required' => 'Part Price must be filled',
@@ -103,12 +106,15 @@ class AllocationsController extends Controller
 
         DB::beginTransaction();
         try{
+
+            $supplier = suppliers::where('id_spl', $request->spl)->first();
             //Sparepart
             $spareparts = spareparts::create([
                 'part_name'=>$request->part_name,
                 'part_type'=>$request->part_type,
                 'mfg'=>$request->mfg,
-                'price'=>$request->price
+                'price'=>$request->price,
+                'id_spl'=>$supplier->id_spl
             ]);
             
             //dd('Debug setelah sparepart:', $spareparts);
@@ -151,7 +157,7 @@ class AllocationsController extends Controller
      * Display the specified resource.
      */
     public function show($parts) {
-        $allocations = allocations::where('id_alct', $parts)->with('spareparts', 'warehouses.whlocs')->first();
+        $allocations = allocations::where('id_alct', $parts)->with('spareparts.supplier', 'warehouses.whlocs')->first();
 
         if (!$allocations) {
             return response()->json(['error' => 'Allocation not found'], 404);
@@ -169,13 +175,16 @@ class AllocationsController extends Controller
     public function edit($parts)
     {
         $choices = warehouses::select(DB::raw("CONCAT(wh_type, ' - ', (SELECT location FROM whlocs WHERE whlocs.id_whlocs = warehouses.id_whlocs)) AS wh_display"), 'id_wh')->get()->pluck('wh_display', 'id_wh');
-        
+
+        $spl = suppliers::get()->pluck('spl_name', 'id_spl');
 
         $parts = allocations::where('id_alct', $parts)->first();
 
         $selectedLoc = $parts->warehouses->id_wh ?? null;
 
-        return view('leader.conjureparts', compact('choices', 'parts', 'selectedLoc'));
+        $selectedSpl = $parts->spareparts->supplier->id_spl ?? null;
+
+        return view('leader.conjureparts', compact('choices', 'parts', 'selectedLoc', 'spl', 'selectedSpl'));
     }
 
     /**
@@ -187,13 +196,14 @@ class AllocationsController extends Controller
         DB::transaction(function () use ($request, $parts) {
             $allocations = allocations::where('id_alct', $parts)->with('spareparts', 'warehouses')->first();
             $warehouses = warehouses::where('id_wh', $request->loc)->first();
-
+            $supplier = suppliers::where('id_spl', $request->spl)->first();
             //Spareparts
             $spareparts = spareparts::where('id_part', $allocations->id_part)->first();
             $spareparts->part_name = $request->part_name;
             $spareparts->part_type = $request->part_type;
             $spareparts->mfg = $request->mfg;
             $spareparts->price = $request->price;
+            $spareparts->id_spl = $supplier->id_spl;
             $spareparts->save();
 
             //Allocations
@@ -210,7 +220,7 @@ class AllocationsController extends Controller
 
         //Session::put('plant_filter', request()->get('id_whlocs'));
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Part have been updated');
 
         //return redirect()->route('leader.listspareparts', request()->query());
 

@@ -224,18 +224,12 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #1f1f1f;
     }
+
+    .custom-font{
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
 </style>
 <body>
-    @if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif
-    @if(session('success'))
-    <div class="alert alert-danger">
-        {{ session('success') }}
-    </div>
-    @endif
     <div class="btn">
         <div><span><i class="fas fa-angle-left" onclick="closeNav()"></i></span></div>
         <div><span><i class="fas fa-angle-right" onclick="openNav()"></i></span></div>
@@ -250,7 +244,7 @@
                 <div class="side-nav-links">
                     <h4>Manajemen Sparepart</h4>
                     <span class="active"><i class="fas fa-list"></i>
-                        <form method="GET" action="{{route('leader.listspareparts')}}">
+                        <form method="GET" action="{{route('parts.index')}}">
                             <select name="id_whlocs" onchange="this.form.submit()">
                                 <option value="all" disabled selected>List Spareparts</option>
                                 @foreach ($plants as $plant)
@@ -259,16 +253,15 @@
                             </select>
                         </form>
                     </span>
-                    <span><i class="fas fa-file-signature"></i><a href="{{route('leader.registparts')}}"> Register Sparepart</a></span>
+                    <span><i class="fas fa-file-signature"></i><a href="{{route('parts.create')}}"> Register Sparepart</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
-                    <span><i class="fas fa-warehouse"></i><a href="{{route('leader.listwarehouses')}}"> List Warehouse</a></span>
+                    <span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
-                    <span><i class="fas fa-users"></i><a href="#"> List Supplier</a></span>
-                    <span><i class="fas fa-user-plus"></i><a href="#"> Register Supplier</a></span>
+                    <span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Aktivitas</h4>
@@ -288,8 +281,8 @@
         </div>
         <div class="form-sect">
             <form action="{{ route('parts.update', $parts->id_alct) }}" method="POST">
-                @csrf
                 @method('PUT')
+                @csrf
                 <div class="upper-row">
                     <div class="col">
                         <label for="part_id">Part ID</label><br>
@@ -301,7 +294,15 @@
                     </div>
                     <div class="col">
                         <label for="spl_name">Supplier</label><br>
-                        <input type="text" value="{{ $parts->spl_name }}" name="spl_name">
+                        <select name="spl">
+                            <option value="{{ old('spl', $selectedSpl) }}">
+                                {{ $spl[old('spl', $selectedSpl)] ?? 'Select Supplier' }}
+                            </option>
+
+                            @foreach ($spl as $spl=>$spl_name)
+                                <option value="{{$spl}}">{{$spl_name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="col">
                         <label for="usage">Usage</label><br>
@@ -352,12 +353,30 @@
                         <textarea name="note" id="" value="{{ $parts->note }}" style="width: 80vh;"></textarea>
                     </div>
                 </div>
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit" class="regist-btn">
                 <input type="reset" onclick="window.history.back()" value="Back">
             </form>
         </div>
     </section>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: "SUCCESS",
+            text: "{{ session('success') }}",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false,
+            customClass:{
+                popup: 'custom-font'
+            }
+        });
+    </script>
+    @php session()->forget('success'); @endphp
+@endif
+
 <script>
     function openNav(){
         document.getElementById("side-nav").style.left = "0";
@@ -368,5 +387,29 @@
         document.getElementById("side-nav").style.left = "-35vh";
         document.getElementById("main").style.left = "0";
     }
+
+    document.querySelectorAll('.regist-btn').forEach(button => {
+        //console.log("Event listener aktif!"); // Debug sebelum eksekusi
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            let partId = this.getAttribute('data-id');
+            let form = this.closest("form");
+            Swal.fire({
+                title: "WARNING",
+                html: `<p>Ensure to cross check the information</p><p>Proceed with caution</p>`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel",
+                customClass:{
+                    popup: 'custom-font'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); 
+                }
+            });
+        });
+    });
 </script>
 </html>

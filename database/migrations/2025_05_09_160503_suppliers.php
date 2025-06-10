@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('supplier', function (Blueprint $table) {
             $table->id('id_spl');
             $table->string('spl_name', 30);
-            $table->text('ctc_info');
+            $table->text('ctc_info')->nullable();
         });
     }
 

@@ -181,7 +181,6 @@
         border: #969696 2px solid;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #424242;
-        width: 200%;
         height: 100%;
         gap: 0;
     }
@@ -193,30 +192,6 @@
        z-index: 0;
        top: 0;
        height: 3vh;
-    }
-
-    .table-sect th:nth-child(1){
-        width: 6vh;
-    }
-
-    .table-sect th:nth-child(8), .table-sect th:nth-child(9), .table-sect th:nth-child(10){
-        width: 15vh;
-    }
-
-    .table-sect th:nth-child(2){
-        width: 10vh;
-    }
-
-    .table-sect th:nth-child(11){
-        width: 20vh;
-     }
-
-    .table-sect th:nth-child(3), .table-sect th:nth-child(5), .table-sect th:nth-child(6){
-        width: 30vh;
-    }
-
-    .table-sect th:nth-child(4), .table-sect th:nth-child(7){
-        width: 50vh;
     }
 
     .table-sect tbody{
@@ -239,7 +214,6 @@
     .table-sect td{
        border: #969696 1px solid;
        padding: 5px;
-       cursor: pointer;
        text-align: center;
        background-color: #f8f8f8;
     }
@@ -444,11 +418,11 @@
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
-                    <span class="active"><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span>
+                    <span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
-                    <span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span>
+                    <span class="active"><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Aktivitas</h4>
@@ -464,7 +438,7 @@
             <a href="#">Keluar</a>
         </div>
         <div class="header" id="plantId">
-            <h4>List Warehouses {{ $plants->firstWhere('id_whlocs', request('id_whlocs'))?->location ?? 'All Plants' }}</h4>
+            <h4>List Suppliers</h4>
             <button onclick="resetFilters()">Reset Filter</button>
         </div>
         <div class="table-sect">
@@ -478,67 +452,42 @@
                             </span>
                         </th>
                         <th>
-                            Plant Location
+                            Nama Supplier
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
-                            Warehouse Type
+                            Contact Information
                             <span class="filter-container">
                                 <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
-                        <th>
-                            Shelf Counts
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Shelf IDs/Names
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Cabinet Counts
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Cabinet IDs/Names
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(6)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Capacity
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(7)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
-                        <th>
-                            Temperature Control
-                            <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
-                            </span>
-                        </th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($warehouses as $wh)
+                    @forelse($supplier as $spl)
                         <tr>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')"></td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ optional($wh->whlocs)->location ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->wh_type }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->shelf_count }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->shelf_ids }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->cabs_count }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->cabs_ids }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->capacity }} Items</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->temp_ctrl }}</td>
+                            <td></td>
+                            <td>{{ $spl->spl_name }}</td>
+                            <td>{{ $spl->ctc_info }}</td>
+                            <td style="cursor:default;">
+                                <span style="float: left;">
+                                    <i class="fas fa-pencil-alt" style="background-color: #48ff00;"></i>
+                                    <form action="{{ route('supplier.edit', $spl->id_spl) }}" method="GET">
+                                        <button type="submit">Edit</button>
+                                    </form>
+                                </span>
+                                <span style="float: right;">
+                                    <i class="fas fa-trash" style="background-color: #ff0000;"></i>
+                                    <form action="{{ route('supplier.destroy', $spl->id_spl) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="delete-btn" data-id="{{ $spl->id_spl }}">Hapus</button>
+                                    </form>
+                                </span>
+                            </td>
                         </tr>
                     @empty
                         <td colspan="11">Empty</td>
@@ -546,55 +495,24 @@
                 </tbody>
             </table>
         </div>
-        <div>
-            <div class="filter-overlay" id="filter-0">
-                <p>No:</p><input type="text" placeholder="Input.." onkeyup="filterTable(0, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-1">
-                <p>Plant Location:</p><input type="text" placeholder="Input.." onkeyup="filterTable(1, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-2">
-                <p>Warehouse Type:</p><input type="text" placeholder="Input.." onkeyup="filterTable(2, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-3">
-                <p>Shelf Counts:</p><input type="text" placeholder="Input.." onkeyup="filterTable(3, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-4">
-                <p>Shelf IDs/Names:</p><input type="text" placeholder="Input.." onkeyup="filterTable(4, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-5">
-                <p>Cabinet Counts:</p><input type="text" placeholder="Input.." onkeyup="filterTable(5, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-6">
-                <p>Cabinet IDs/Names:</p><input type="text" placeholder="Input.." onkeyup="filterTable(6, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-7">
-                <p>Capacity:</p><input type="text" placeholder="Input.." onkeyup="filterTable(7, this.value)">
-            </div>
-            <div class="filter-overlay" id="filter-8">
-                <p>Temperature Control:</p><input type="text" placeholder="Input.." onkeyup="filterTable(8, this.value)">
-            </div>
-        </div>
-        <div class="overlay" id="overlay">
-            <div class="overlay-top">
-                <h3>Warehouse Information</h3>
-                <i class="fas fa-close" onclick="overlayOff()"></i>
-            </div>
-            <div class="overlay-main">
-                <span><h4>Plant Location: </h4><p><span id="plt_loc"></span></p></span>
-                <span><h4>Warehouse Type: </h4><p><span id="wh_type"></span></p></span>
-                <span><h4>Shelf Counts: </h4><p><span id="sc"></span></p></span>
-                <span><h4>Shelf IDs/Names: </h4><p><span id="si"></span></p></span>
-                <span><h4>Cabinet Counts: </h4><p><span id="cc"></span></p></span>
-                <span><h4>Cabinet IDs/Names: </h4><p><span id="ci"></span></p></span>
-                <span><h4>Capacity: </h4><p><span id="cpt"></span></p></span>
-                <span><h4>Temperature Control: </h4><p><span id="temp_ctrl"></span></p></span>
-                <span><h4>Plant Manager: </h4><p><span id="pm"></span></p></span>
-                <span><h4>Manager Contact Information: </h4><p><span id="mci"></span></p></span>
-            </div>
-        </div>
     </section>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: "SUCCESS",
+            text: "{{ session('success') }}",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false,
+            customClass:{
+                popup: 'custom-font'
+            }
+        });
+    </script>
+    @php session()->forget('success'); @endphp
+@endif
 <script>
     function openNav(){
         document.getElementById("side-nav").style.left = "0";
@@ -604,46 +522,6 @@
     function closeNav(){
         document.getElementById("side-nav").style.left = "-35vh";
         document.getElementById("main").style.left = "0";
-    }
-    
-    function overlayOn(id_wh) {
-        fetch(`/wh/${id_wh}`)
-            .then(response => response.json()) // Bukan `.json()` untuk melihat isi asli
-            .then(data => {
-                document.getElementById("plt_loc").textContent = data.whlocs.location;
-                document.getElementById("wh_type").textContent = data.wh_type;
-                document.getElementById("sc").textContent = data.shelf_count;
-                document.getElementById("si").textContent = data.shelf_ids;
-                document.getElementById("cc").textContent = data.cabs_count;
-                document.getElementById("ci").textContent = data.cabs_ids;
-                document.getElementById("cpt").textContent = data.capacity;
-                document.getElementById("temp_ctrl").textContent = data.temp_ctrl;
-                document.getElementById("pm").textContent = data.whlocs.manager;
-                document.getElementById("mci").textContent = data.whlocs.ctc_info;
-
-
-                //console.log("Data asli dari API:", text); // Lihat apakah ini JSON valid atau HTML/error
-            });
-        
-        let overlay = document.getElementById("overlay");
-
-        overlay.style.display = "block"; // Pastikan elemen terlihat sebelum transisi
-        setTimeout(() => {
-            overlay.style.opacity = "1"; // Efek fade-in
-        }, 200); // Delay sedikit agar transisi bisa aktif
-
-        //document.getElementById("td-list").style.backgroundColor = "#7B95F9";
-        //console.log("Overlay sekarang seharusnya aktif!");
-    }
-
-    function overlayOff() {
-        let overlay = document.getElementById("overlay");
-
-        overlay.style.opacity = "0"; // Buat efek fade-out lebih dulu
-
-        setTimeout(() => {
-            overlay.style.display = "none"; // Sembunyikan setelah transisi selesai
-        }, 500); // Sesuaikan dengan durasi transition
     }
 
     function toggleFilter(index) {
