@@ -222,7 +222,7 @@
     </section>
     <section class="main" id="main">
         <div class="top-nav">
-            <h3>Hello Leader</h3>
+            <h3>Hello Leader ID: {{ Auth::user()->username }}</h3>
             <a href="#">Keluar</a>
         </div>
         <div class="header">
@@ -230,7 +230,7 @@
         </div>
         <div class="comp-profile">
             <div>
-                <img src="comp.jpg" alt="Company Photo">
+                <img src="{{asset('comp.jpg')}}" alt="Company Photo">
             </div>
             <div class="title">
                 <h4>Tentang Perusahaan</h4>
