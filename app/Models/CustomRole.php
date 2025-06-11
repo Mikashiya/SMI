@@ -14,9 +14,9 @@ class CustomRole extends Model
         'is_active',
     ];
 
-    public function users()
+    public function user()
     {
         return $this->hasMany(CustomUser::class);
     }
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id'; // Assuming 'id' is the primary key in your custom_roles table
 }

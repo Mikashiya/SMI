@@ -123,19 +123,22 @@
         margin-left: 2.5vh;
     }
 
-    .top-nav a{
+    .top-nav button{
         text-decoration: none;
         color: #7B95F9;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         right: 0;
-        top: 2.5vh;
+        top: 2.3%;
         margin-right: 5vh;
-        position: absolute;
+        position: fixed;
         transition: .25s;
-        z-index: 1;
+        background-color: transparent;
+        border: none;
+        font-size: 15px;
+        cursor: pointer;
     }
 
-    .top-nav a:hover{
+    .top-nav button:hover{
         color: #1f1f1f;
     }
 
@@ -434,8 +437,11 @@
     </section>
     <section class="main" id="main">
         <div class="top-nav">
-            <h3>Hello Leader</h3>
-            <a href="#">Keluar</a>
+            <h3>Hello Leader ID: {{ Auth::user()->username }}</h3>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
         </div>
         <div class="header" id="plantId">
             <h4>List Suppliers</h4>
@@ -568,5 +574,28 @@
             filter.style.display = "none";
         });
     }
+
+    document.querySelectorAll('.logout-btn').forEach(button => {
+        //console.log("Event listener aktif!"); // Debug sebelum eksekusi
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            let partId = this.getAttribute('data-id');
+            let form = this.closest("form");
+            Swal.fire({
+                title: "WARNING",
+                html: `<p>Are you sure want to logout?</p>`,
+                showCancelButton: true,
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel",
+                customClass:{
+                    popup: 'custom-font'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Jalankan penghapusan menggunakan form
+                }
+            });
+        });
+    });
 </script>
 </html>

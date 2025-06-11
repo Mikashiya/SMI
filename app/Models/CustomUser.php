@@ -21,16 +21,16 @@ class CustomUser extends Authenticatable
 
     public function role()
     {
-        return $this->belongsTo(CustomRole::class, 'id_role');
+        return $this->belongsTo(CustomRole::class, 'id_role', 'id');
     }
 
     public function isLeader()
     {
-        return $this->role === 'leader';
+        return $this->role && $this->role->role_name === 'leader';
     }
 
     public function isUser()
     {
-        return $this->role === 'user';
+        return $this->role && $this->role->role_name === 'user';
     }
 }

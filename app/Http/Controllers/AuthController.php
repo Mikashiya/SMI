@@ -34,10 +34,20 @@ class AuthController extends Controller
          // Debug untuk melihat konfigurasi auth providers
         //dd(Auth::attempt($credentials)); // Debug apakah login berhasil
 
-
+        
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
+            // Log aktivitas login
+            \App\Models\ActivityLog::record(
+                $user->id,
+                $user->role->role_name ?? 'guest',
+                'login',
+                null,
+                'User logged in'
+            );
+
+            // Redirect sesuai role
             if ($user->role->role_name == 'leader') {
                 return redirect()->route('leader.dashboard');
             } elseif ($user->role->role_name == 'user') {
@@ -45,7 +55,7 @@ class AuthController extends Controller
             }
         }
 
-
+        
         // If authentication is successful, redirect to the intended page or dashboard
         // If authentication fails, redirect back with an error
 
@@ -57,7 +67,15 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        // Log out the user and redirect to login page
+        $user = Auth::user();
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'logout',
+            null,
+            'User logged out'
+        );
+
         Auth::logout();
         return redirect('/login');
     }
