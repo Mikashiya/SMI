@@ -106,7 +106,7 @@
     }
 
     .main{
-        height: auto;
+        height: 100vh;
         position: absolute;
         transition: .5s;
     }
@@ -130,7 +130,7 @@
         right: 0;
         top: 2.3%;
         margin-right: 5vh;
-        position: fixed;
+        position: absolute;
         transition: .25s;
         background-color: transparent;
         border: none;

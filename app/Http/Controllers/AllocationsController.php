@@ -8,6 +8,7 @@ use App\Models\spareparts;
 use App\Models\suppliers;
 use App\Models\wh_locs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -147,6 +148,25 @@ class AllocationsController extends Controller
             'reminder'=>$request->f_stock < $request->s_stock ? 'NG' : 'OK'
         ]);
        
+        // Log activity
+        $data = allocations::where('id_alct', $request->part_id)->with('spareparts', 'warehouses')->first();
+
+        $user = Auth::user();
+
+        // Log aktivitas create
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'create',
+            $data->id_alct,
+            'Adding sparepart and allocation'
+        );
+
+
+
+
+
+
 
         return redirect()->back()->with('success', 'New part has been added');
         
@@ -218,6 +238,20 @@ class AllocationsController extends Controller
             $allocations->save();
         });
 
+        // Log activity
+        $data = allocations::where('id_alct', $request->part_id)->with('spareparts', 'warehouses')->first();
+
+        $user = Auth::user();
+
+        // Log aktivitas edit
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'edit',
+            $data->id_alct,
+            'Editing sparepart and allocation'
+        );
+
         //Session::put('plant_filter', request()->get('id_whlocs'));
 
         return redirect()->back()->with('success', 'Part have been updated');
@@ -237,8 +271,22 @@ class AllocationsController extends Controller
         if (!$allocation) {
             return response()->json(['error' => 'Allocation not found'], 404);
         }
+         // Log activity
 
+        $user = Auth::user();
+
+        // Log aktivitas delete
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'delete',
+            $allocation->id_alct,
+            'Deleting sparepart and allocation'
+        );
+        
         $allocation->delete();
+
+       
         return redirect()->back()->with('success', 'Data have been destroyed');
     }
 }

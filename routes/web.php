@@ -10,18 +10,19 @@ use Illuminate\Support\Facades\Auth;
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-Route::resource('/parts', AllocationsController::class);
-
-Route::resource('/wh', WarehousesController::class);
-
-Route::resource('/supplier', SupplierController::class);
-
-Route::get('/dashboard/leader', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
-Route::get('/dashboard/staff', function() { return view('dashboard_staff'); })->middleware('auth')->name('dashboard.staff');
 
 Route::get('/unauthorized', function () {
     return view('unauthorized');
 })->name('unauthorized');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard/leader', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
+    Route::get('/dashboard/staff', function() { return view('staff.dashboard'); })->middleware('auth')->name('staff.dashboard');
+    Route::resource('/parts', AllocationsController::class);
+    Route::resource('/wh', WarehousesController::class);
+    Route::resource('/supplier', SupplierController::class);
+});
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

@@ -59,7 +59,7 @@ class AuthController extends Controller
         // If authentication is successful, redirect to the intended page or dashboard
         // If authentication fails, redirect back with an error
 
-        return back()->withErrors(['login' => 'Username or password is incorrect.']);
+        return back()->with('error', 'Username or password is incorrect.');
     }
 
     /**

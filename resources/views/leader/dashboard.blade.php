@@ -104,7 +104,7 @@
     }
 
     .main{
-        height: auto;
+        height: 100vh;
         position: absolute;
         transition: .5s;
     }
@@ -128,7 +128,7 @@
         right: 0;
         top: 2.3%;
         margin-right: 5vh;
-        position: fixed;
+        position: absolute;
         transition: .25s;
         background-color: transparent;
         border: none;
@@ -167,7 +167,8 @@
         padding: 1px;
         width: 15%;
         text-align: center;
-        margin-left: 70vh;
+        margin-left: auto;
+        margin-right: auto;
         margin-bottom: 5vh;
         border-radius: 20px;
     }
@@ -177,7 +178,8 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         text-align: justify;
         width: 90%;
-        margin-left: 5vh;
+        margin-left: auto;
+        margin-right: auto;
         line-height: 3vh;
     }
 
