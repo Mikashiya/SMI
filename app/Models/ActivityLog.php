@@ -20,4 +20,11 @@ class ActivityLog extends Model
             'user_agent'  => request()->userAgent(),
         ]);
     }
+
+    protected $table = 'activity_logs';
+    protected $primaryKey = 'id';
+    public function custom_users()
+    {
+        return $this->belongsTo(CustomUser::class, 'user_id', 'id');
+    }
 }

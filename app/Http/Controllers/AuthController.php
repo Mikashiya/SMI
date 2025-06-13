@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\ActivityLog;
 use App\Models\CustomUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +12,20 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+
+        
+
+        $actlogs = ActivityLog::with('custom_users')->get();
+
+        return view('leader.actlog', compact('actlogs'));
+    }
+
     /**
      * Show the login form.
      */
@@ -23,6 +39,7 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
+        //dd($request->all());
         // Validate and authenticate the user
         // Redirect to intended page or dashboard
         $request->validate([
@@ -30,14 +47,18 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
+        
+
         $credentials = ['username' => $request->username, 'password' => $request->password];
          // Debug untuk melihat konfigurasi auth providers
         //dd(Auth::attempt($credentials)); // Debug apakah login berhasil
 
-        
+        //dd(['username_in_request' => $request->username, 'credentials_before_auth' => $credentials]);
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
 
+            $user = Auth::user();
+            //Auth::login($user);
+            //dd(Auth::user());
             // Log aktivitas login
             \App\Models\ActivityLog::record(
                 $user->id,
@@ -48,17 +69,17 @@ class AuthController extends Controller
             );
 
             // Redirect sesuai role
-            if ($user->role->role_name == 'leader') {
+            if ($user->role->role_name == 'Leader') {
                 return redirect()->route('leader.dashboard');
-            } elseif ($user->role->role_name == 'user') {
-                return redirect()->route('staff.dashboard');
+            } elseif ($user->role->role_name == 'Staff') {
+                return redirect()->route('leader.dashboard');
             }
         }
-
-        
+        //dd($request->all());
+        //dd($credentials); // Debug untuk melihat data user yang berhasil login
         // If authentication is successful, redirect to the intended page or dashboard
         // If authentication fails, redirect back with an error
-
+        //dd(Auth::user());
         return back()->with('error', 'Username or password is incorrect.');
     }
 

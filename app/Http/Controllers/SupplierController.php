@@ -22,7 +22,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        //
+        return view('leader.registspl');
     }
 
     /**
@@ -30,7 +30,14 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'spl_name' => 'required|string|max:255',
+            'ctc_info' => 'required|string|max:255',
+        ]);
+
+        suppliers::create($validatedData);
+
+        return redirect()->route('supplier.index')->with('success', 'Supplier created successfully.');
     }
 
     /**
@@ -44,24 +51,37 @@ class SupplierController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($spl)
     {
-        //
+        $supplier = suppliers::findOrFail($spl);
+
+        return view('leader.conjurespl', compact('supplier'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $spl)
     {
-        //
+        $validatedData = $request->validate([
+            'spl_name' => 'required|string|max:255',
+            'ctc_info' => 'required|string|max:255',
+        ]);
+
+        $supplier = suppliers::findOrFail($spl);
+        $supplier->update($validatedData);
+
+        return redirect()->route('supplier.index')->with('success', 'Supplier updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($spl)
     {
-        //
+        $supplier = suppliers::findOrFail($spl);
+        $supplier->delete();
+
+        return redirect()->route('supplier.index')->with('success', 'Supplier deleted successfully.');
     }
 }

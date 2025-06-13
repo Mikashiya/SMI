@@ -1,0 +1,109 @@
+/* Overlay styles for displaying additional information */
+.overlay{
+    display: none;
+    position: fixed;
+    width: 50vh;
+    max-height: 100%;
+    top: 0;
+    right: 0;
+    background-color: #ebebeb;
+    z-index: 2;
+    overflow: auto;
+    border-left: #969696 3px solid;
+    opacity: 0;
+    transition: all .5s;
+}
+
+.overlay-top{
+    height: 5vh;
+    display: block;
+    margin-bottom: 5vh;
+    position: sticky;
+    top: 0;
+    background-color: #ebebeb;
+    padding: 5px;
+}
+
+.overlay-top h3{
+    float: left;
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.overlay-top i{
+    color: #424242;
+    top: 2vh;
+    right: 2.5vh;
+    position: absolute;
+    padding: 5px;
+    border-radius: 2px;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.overlay-top i:hover{
+    background-color: rgba(107, 107, 107, 0.3);
+}
+
+.overlay-main{
+    display: block;
+    height: auto;
+    margin-bottom: 3vh;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #f8f8f8;
+}
+
+.overlay-main span{
+    margin: .5vh;
+}
+
+.overlay-main h4{
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.overlay-main p{
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: justify;
+    width: 95%;
+}
+
+.overlay-note{
+    height: auto;
+    display: block;
+}
+
+.part-out{
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #f8f8f8;
+    margin-bottom: 3vh;
+}
+
+.part-in{
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #f8f8f8;
+    margin-bottom: 3vh;
+}
+
+.overlay-note span{
+    margin: .5vh;
+}
+
+.overlay-note h3{
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.overlay-note h4{
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.overlay-note p{
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

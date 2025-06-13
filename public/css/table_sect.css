@@ -1,0 +1,83 @@
+.table-sect{
+    margin-top: 10vh;
+    max-height: 50vh;
+    margin-left: 3px;
+    margin-bottom: 10vh;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: auto;
+}
+
+.table-sect table{
+    border: #969696 2px solid;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #424242;
+    width: 200%;
+    height: 100%;
+    gap: 0;
+}
+
+.table-sect th{
+    background-color: #7B95F9;
+    position: sticky;
+    overflow-y: auto;
+    z-index: 0;
+    top: 0;
+    height: 3vh;
+}
+
+.table-sect tbody{
+    counter-reset: rowNumber;
+}
+
+.table-sect tbody tr td:first-child::before{
+    content: counter(rowNumber);
+    counter-increment: rowNumber;
+}
+
+.table-sect tbody button{
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.table-sect td{
+    border: #969696 1px solid;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #f8f8f8;
+}
+
+.table-sect td i{
+    padding: 5px; 
+    color: #f8f8f8; 
+    border-radius: 5px;
+}
+
+.table-sect td span{
+    display: flex; 
+    max-height: 3vh;
+    padding: 5px;
+    transition: .5s;
+    border-radius: 5px;
+}
+
+.table-sect td span:hover{
+    background-color: rgba(107, 107, 107, 0.3);
+}
+
+.table-sect td a{
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-decoration: none;
+    padding: 3px;
+}
+
+.table-sect h4{
+    color: #424242;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-left: 2.5vh;
+}

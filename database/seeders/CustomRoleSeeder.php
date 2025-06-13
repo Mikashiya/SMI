@@ -15,8 +15,8 @@ class CustomRoleSeeder extends Seeder
     {
         // Insert custom roles into the 'custom_roles' table
         DB::table('custom_roles')->insert([
-            ['role_name' => 'leader', 'description' => 'Has full access to all features and settings.', 'is_active' => true],
-            ['role_name' => 'user', 'description' => 'Can edit content but has limited access to settings.', 'is_active' => true],
+            ['role_name' => 'Leader', 'description' => 'Has full access to all features and settings.', 'is_active' => true],
+            ['role_name' => 'Staff', 'description' => 'Can edit content but has limited access to settings.', 'is_active' => true],
         ]);
     }
 }

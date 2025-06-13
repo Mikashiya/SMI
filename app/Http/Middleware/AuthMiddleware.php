@@ -16,13 +16,13 @@ class AuthMiddleware
      */
     public function handle($request, Closure $next)
     {
-        dd('Middleware AUTH berjalan! User:', Auth::user());
+        //dd('Middleware AUTH berjalan! User:', Auth::user());
         if (!Auth::check()) {
             return redirect()->route('login'); // Redirect kalau belum login
         }
 
         $user = Auth::user();
-        dd($user->id, $request->path());
+        //dd($user->id, $request->path());
         // Log aktivitas akses halaman
         \App\Models\ActivityLog::record(
             $user->id,

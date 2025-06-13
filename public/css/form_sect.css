@@ -1,0 +1,85 @@
+.form-sect{
+    margin-top: 5vh;
+    width: auto;
+}
+
+.form-sect form{
+    margin-left: 2.5vh;
+    margin-right: 7.5vh;
+}
+
+.upper-row-parts{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 30px;
+}
+
+.upper-row-parts:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.upper-row{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.upper-row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.middle-row{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.middle-row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.lower-row{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.lower-row:after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.form-sect label{
+    color: #1f1f1f;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.form-sect input[type=submit], input[type=reset]{
+    color: #1f1f1f;
+    padding: 9px 18px;
+    font-style: oblique;
+    cursor: pointer;
+    float: right;
+    margin: 20px;
+}
+
+.form-sect input[type=submit]:hover, input[type=reset]:hover{
+    background-color: rgba(107, 107, 107, 0.3);
+}
+
+.form-sect input[type=text], input[type=date], textarea, .form-sect select{
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #424242;
+    box-sizing: border-box;
+    resize: vertical;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #1f1f1f;
+}

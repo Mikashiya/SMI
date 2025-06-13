@@ -24,13 +24,18 @@ class CustomUser extends Authenticatable
         return $this->belongsTo(CustomRole::class, 'id_role', 'id');
     }
 
-    public function isLeader()
+    public function activityLogs()
     {
-        return $this->role && $this->role->role_name === 'leader';
+        return $this->hasMany(ActivityLog::class, 'user_id', 'id');
     }
 
-    public function isUser()
+    public function isLeader()
     {
-        return $this->role && $this->role->role_name === 'user';
+        return $this->role && $this->role->role_name === 'Leader';
+    }
+
+    public function isStaff()
+    {
+        return $this->role && $this->role->role_name === 'Staff';
     }
 }

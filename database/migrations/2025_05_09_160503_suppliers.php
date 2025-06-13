@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_spl');
             $table->string('spl_name', 30);
             $table->text('ctc_info')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -90,7 +90,7 @@
 <body>
     <section>
         <div>
-            <img src="{{asset('logo.png')}}" alt="Logo" style="width: 320px; display: block; margin: 0 auto; margin-bottom: 20px;">
+            <img src="{{asset('img/logo.png')}}" alt="Logo" style="width: 320px; display: block; margin: 0 auto; margin-bottom: 20px;">
         </div>
         <div class="login-container">
             <form method="POST" action="{{ route('auth.login') }}">

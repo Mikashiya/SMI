@@ -13,7 +13,7 @@ class CustomUserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('custom_users')->insert(
+        DB::table('custom_users')->insert([
             [
                 'username' => '00649',
                 'password' => bcrypt('test123'),
@@ -21,15 +21,15 @@ class CustomUserSeeder extends Seeder
             ],
             [
                 'username' => '00650',
-                'password' => bcrypt('test123'),
+                'password' => bcrypt('test120'),
                 'id_role' => 2, // Assuming 2 is the ID for the 'user' role
             ],
             [
                 'username' => '00651',
-                'password' => bcrypt('test123'),
+                'password' => bcrypt('test121'),
                 'id_role' => 2, // Another user
             ],
-        );
+        ]);
         // Note: Passwords should be hashed in a real application
         // You can use Hash::make('test123') to hash the passwords before inserting
         // Example: DB::table('users')->insert(['username' => '00649', 'password' => Hash::make('test123'), 'id_role' => 1]);
