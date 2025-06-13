@@ -216,10 +216,12 @@
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
                     <span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span>
+                    <span><i class="fas fa-plus"></i><a href="{{route('wh.create')}}"> Tambah Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
                     <span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span>
+                    <span><i class="fas fa-user-plus"></i><a href="{{route('supplier.create')}}"> Tambah Supplier</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Aktivitas</h4>

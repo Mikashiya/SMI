@@ -64,10 +64,10 @@ class WarehousesController extends Controller
         }
         catch (\Exception $e) {
             DB::rollBack(); // Batalkan semua perubahan jika ada error
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Error:' . $e->getMessage());
         }
 
-        return redirect()->back()->with('success', 'OK');
+        return redirect()->back()->with('success', 'Warehouse created successfully');
     }
 
     /**
@@ -87,24 +87,83 @@ class WarehousesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($wh)
     {
-        //
+        $warehouse = warehouses::where('id_wh', $wh)->with('whlocs')->first();
+
+        if (!$warehouse) {
+            return redirect()->back()->with('error', 'Warehouse not found');
+        }
+
+        $selectedLoc = $warehouse->id_whlocs ?? null;
+
+        $selectedType = $warehouse->wh_type ?? null;
+
+        $choices = wh_locs::pluck('location', 'id_whlocs');
+        return view('leader.conjurewh', compact('warehouse', 'choices', 'selectedLoc', 'selectedType'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $wh)
     {
-        //
+        $warehouse = warehouses::where('id_wh', $wh)->first();
+
+        if (!$warehouse) {
+            return redirect()->back()->with('error', 'Warehouse not found');
+        }
+
+        $request->validate([
+            'wh_type' => 'required',
+            'shelf_count' => 'required|numeric',
+            'shelf_ids' => 'required',
+            'cabs_count' => 'required|numeric',
+            'cabs_ids' => 'required',
+            'capacity' => 'required|numeric',
+            'temp_ctrl' => 'required',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $warehouse->update([
+                'wh_type' => $request->wh_type,
+                'shelf_count' => $request->shelf_count,
+                'shelf_ids' => $request->shelf_ids,
+                'cabs_count' => $request->cabs_count,
+                'cabs_ids' => $request->cabs_ids,
+                'capacity' => $request->capacity,
+                'temp_ctrl' => $request->temp_ctrl,
+            ]);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack(); // Batalkan semua perubahan jika ada error
+            return redirect()->back()->with('error', 'Error:' . $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Warehouse updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($wh)
     {
-        //
+        $warehouse = warehouses::where('id_wh', $wh)->first();
+
+        if (!$warehouse) {
+            return redirect()->back()->with('error', 'Warehouse not found');
+        }
+
+        DB::beginTransaction();
+        try {
+            $warehouse->delete();
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack(); // Batalkan semua perubahan jika ada error
+            return redirect()->back()->with('error', 'Error:' . $e->getMessage());
+        }
+
+        return redirect()->back()->with('success', 'Warehouse deleted successfully');
     }
 }

@@ -302,6 +302,9 @@
                     <div class="col">
                         <label for="wh_type">WH Type</label><br>
                         <select name="wh_type">
+                            <option value="{{ old('wh_type', $selectedType) }}">
+                                {{ $whType[old('wh_type', $selectedType)] ?? 'Select Type' }}
+                            </option>
                             <option value="Mechanic">Mechanic</option>
                             <option value="Electric">Electric</option>
                         </select>
@@ -317,6 +320,9 @@
                     <div class="col">
                         <label for="loc">Plant Location</label><br>
                         <select name="loc">
+                            <option value="{{ old('loc', $selectedLoc) }}">
+                                {{ $loc[old('loc', $selectedLoc)] ?? 'Select Location' }}
+                            </option>
                             @foreach ($choices as $loc=>$location)
                                 <option value="{{$loc}}">{{$location}}</option>
                             @endforeach

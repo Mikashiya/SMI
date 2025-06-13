@@ -448,10 +448,12 @@
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
                     <span class="active"><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span>
+                    <span><i class="fas fa-plus"></i><a href="{{route('wh.create')}}"> Register Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
                     <span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span>
+                    <span><i class="fas fa-user-plus"></i><a href="{{route('supplier.create')}}"> Register Supplier</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Aktivitas</h4>
@@ -531,6 +533,7 @@
                                 <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -545,6 +548,22 @@
                             <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->cabs_ids }}</td>
                             <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->capacity }} Items</td>
                             <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->temp_ctrl }}</td>
+                            <td style="cursor:default;">
+                                <span style="float: left;">
+                                    <i class="fas fa-pencil-alt" style="background-color: #48ff00;"></i>
+                                    <form action="{{ route('wh.edit', $wh->id_wh) }}" method="GET">
+                                        <button type="submit">Edit</button>
+                                    </form>
+                                </span>
+                                <span style="float: right;">
+                                    <i class="fas fa-trash" style="background-color: #ff0000;"></i>
+                                    <form action="{{ route('wh.destroy', $wh->id_wh) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="delete-btn" data-id="{{ $wh->id_wh }}">Hapus</button>
+                                    </form>
+                                </span>
+                            </td>
                         </tr>
                     @empty
                         <td colspan="11">Empty</td>
@@ -697,6 +716,30 @@
             filter.style.display = "none";
         });
     }
+
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        //console.log("Event listener aktif!"); // Debug sebelum eksekusi
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            let partId = this.getAttribute('data-id');
+            let form = this.closest("form");
+            Swal.fire({
+                title: "WARNING",
+                html: `<p>Part ID <strong>${partId}</strong></p><p>Will be deleted permanently</p></p><p>Proceed with caution</p>`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel",
+                customClass:{
+                    popup: 'custom-font'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Jalankan penghapusan menggunakan form
+                }
+            });
+        });
+    });
 
     document.querySelectorAll('.logout-btn').forEach(button => {
         //console.log("Event listener aktif!"); // Debug sebelum eksekusi

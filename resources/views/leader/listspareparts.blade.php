@@ -448,6 +448,7 @@
                 <div class="side-nav-links">
                     <h4>Manajemen Warehouse</h4>
                     <span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span>
+                    <span><i class="fas fa-plus"></i><a href="{{route('wh.create')}}"> Register Warehouse</a></span>
                 </div>
                 <div class="side-nav-links">
                     <h4>Manajemen Supplier</h4>
