@@ -6,10 +6,10 @@
         top: 0;
         height: 100vh;
         width: auto;
-        background-color: #1f1f1f;
+        background-color: #f8f8f8;
         border-right: #969696 3px solid;
         padding: 5vh;
-        z-index: 0;
+        z-index: 1;
         transition: all .5s ease-in-out;
         overflow: auto;
     }
@@ -88,31 +88,29 @@
         position: fixed;
         top: 0;
         height: auto;
-        padding: 1vh;
-        width: 100%;
+        max-width: 100%;
         border-bottom: #969696 3px solid;
-        z-index: 0;
+        z-index: 1;
         transition: all .5s ease-in-out;
-        background-color: #1f1f1f;
+        background-color: #f8f8f8;
+        display: flex;
     }
 
     .top-nav h3{
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #7B95F9;
         margin-left: 7.5vh;
-        position: fixed;
-        top: -.7%;
-        width: 100%;
     }
 
-    .top-nav button{
+    .logout-btn button{
         text-decoration: none;
         color: #7B95F9;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        right: 0;
-        top: 1.3%;
         margin-right: 5vh;
-        position: fixed;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        position: absolute;
         transition: .25s;
         background-color: transparent;
         border: none;
@@ -120,7 +118,7 @@
         cursor: pointer;
     }
 
-    .top-nav button:hover{
+    .logout-btn button:hover{
         color: #1f1f1f;
     }
 
@@ -128,15 +126,16 @@
         text-decoration: none;
         color: #7B95F9;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        margin-top: .5vh;
         margin-left: 2.5vh;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        position: absolute;
         transition: .25s;
         background-color: transparent;
         border: none;
-        left: 0;
         font-size: 15px;
         cursor: pointer;
-        position: relative;
     }
 
     .nav-btn button:hover{
@@ -204,7 +203,7 @@
     <div class="top-nav" id="top-nav">
         <div class="nav-btn"><button id="nav-btn"><i class="fas fa-bars"></i></button></div>
         <h3>Hello {{ Auth::user()->role->role_name }} ID: {{ Auth::user()->username }}</h3>
-        <form action="{{ route('logout') }}" method="POST">
+        <form action="{{ route('logout') }}" method="POST" class="logout-btn">
             @csrf
             <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </form>
@@ -217,6 +216,7 @@
         document.getElementById("main").style.left = document.getElementById("side-nav").offsetWidth + "px";
         document.getElementById("main").style.width = `calc(100% - ${document.getElementById("side-nav").offsetWidth}px)`;
         document.getElementById("top-nav").style.left = document.getElementById("side-nav").offsetWidth + "px";
+        document.getElementById("top-nav").style.width = `calc(100% - ${document.getElementById("side-nav").offsetWidth}px)`;
     }
 
     window.addEventListener('resize', openNav);
@@ -226,7 +226,9 @@
     function closeNav() {
         document.getElementById("side-nav").style.left = "-100vh";
         document.getElementById("main").style.left = "0";
+        document.getElementById("main").style.width = `calc(100% + ${document.getElementById("side-nav").offsetWidth}px)`;
         document.getElementById("top-nav").style.left = "0";
+        document.getElementById("top-nav").style.width = `calc(100% + ${document.getElementById("side-nav").offsetWidth}px)`;
     }
 
     window.addEventListener("DOMContentLoaded", adjustHeight);
@@ -234,7 +236,7 @@
 
     function adjustHeight() {
         const topnav = document.getElementById("top-nav");
-        const content = document.getElementById("main-content");
+        const content = document.getElementById("main");
         content.style.height = `calc(100vh - ${topnav.offsetHeight}px)`;
     }
 

@@ -9,7 +9,7 @@
 <style>
     .comp-profile{
         margin-left: 5vh;
-        margin-top: 10vh;
+        margin-top: 5vh;
     }
 
     .comp-profile img{
@@ -26,7 +26,7 @@
         text-align: center;
         margin-left: auto;
         margin-right: auto;
-        margin-bottom: 5vh;
+        margin-bottom: 2.5vh;
         border-radius: 20px;
     }
 
