@@ -3,12 +3,13 @@
     .side-nav{
         left: -100vh;
         position: fixed;
+        top: 0;
         height: 100vh;
         width: auto;
-        background-color: #f8f8f8;
+        background-color: #1f1f1f;
         border-right: #969696 3px solid;
         padding: 5vh;
-        z-index: 1;
+        z-index: 0;
         transition: all .5s ease-in-out;
         overflow: auto;
     }
@@ -86,11 +87,13 @@
     .top-nav{
         position: fixed;
         top: 0;
-        height: 5vh;
+        height: auto;
+        padding: 1vh;
         width: 100%;
         border-bottom: #969696 3px solid;
-        z-index: 1;
+        z-index: 0;
         transition: all .5s ease-in-out;
+        background-color: #1f1f1f;
     }
 
     .top-nav h3{
@@ -125,7 +128,7 @@
         text-decoration: none;
         color: #7B95F9;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        margin-top: .7%;
+        margin-top: .5vh;
         margin-left: 2.5vh;
         transition: .25s;
         background-color: transparent;
@@ -224,6 +227,15 @@
         document.getElementById("side-nav").style.left = "-100vh";
         document.getElementById("main").style.left = "0";
         document.getElementById("top-nav").style.left = "0";
+    }
+
+    window.addEventListener("DOMContentLoaded", adjustHeight);
+    window.addEventListener("resize", adjustHeight);
+
+    function adjustHeight() {
+        const topnav = document.getElementById("top-nav");
+        const content = document.getElementById("main-content");
+        content.style.height = `calc(100vh - ${topnav.offsetHeight}px)`;
     }
 
     document.getElementById("nav-btn").addEventListener("click", function () {

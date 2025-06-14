@@ -4,7 +4,6 @@ body{
 }
 
 .main{
-    height: auto;
     position: relative;
     transition: all .5s ease-in-out;
     width: 100%;
