@@ -24,6 +24,7 @@
         width: auto;
         display: flex;
         flex-direction: column;
+        margin-bottom: 10vh;
     }
 
     .side-nav-links span{
@@ -150,8 +151,6 @@
                 <div class="side-nav-links">
                     <li class="{{ Route::currentRouteName() === 'leader.dashboard' ? 'active' : '' }}"><span><i class="fas fa-home"></i><a href="{{route('leader.dashboard')}}"> Dashboard</a></span></li>
                     <li class="{{ Route::currentRouteName() === 'mvt.create' ? 'active' : '' }}"><span><i class="fas fa-file-signature"></i><a href="{{route('mvt.create')}}"> Card Movement Parts</a></span></li>
-                </div>
-                <div class="side-nav-links">
                     <h4>Management Sparepart</h4>
                     <li class="{{ Route::currentRouteName() === 'parts.index' ? 'active' : '' }}"><span><i class="fas fa-list"></i>
                         <form method="GET" action="{{route('parts.index')}}">
@@ -166,37 +165,31 @@
                     @if (Auth::user()->role->role_name === 'Leader')
                         <li class="{{ Route::currentRouteName() === 'parts.create' ? 'active' : '' }}"><span><i class="fas fa-box-open"></i><a href="{{route('parts.create')}}"> Register Sparepart</a></span></li>
                     @endif
-                </div>
-                <div class="side-nav-links">
                     <h4>Management Warehouse</h4>
                     <li class="{{ Route::currentRouteName() === 'wh.index' ? 'active' : '' }}"><span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span></li>
                     @if (Auth::user()->role->role_name === 'Leader')
                         <li class="{{ Route::currentRouteName() === 'wh.create' ? 'active' : '' }}"><span><i class="fas fa-plus"></i><a href="{{route('wh.create')}}"> Register Warehouse</a></span></li>
                     @endif
-                </div>
-                <div class="side-nav-links">
                     <h4>Management Supplier</h4>
                     <li class="{{ Route::currentRouteName() === 'supplier.index' ? 'active' : '' }}"><span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span></li>
                     @if (Auth::user()->role->role_name === 'Leader')
                         <li class="{{ Route::currentRouteName() === 'supplier.create' ? 'active' : '' }}"><span><i class="fas fa-user-plus"></i><a href="{{route('supplier.create')}}"> Register Supplier</a></span></li>
                     @endif
+            @if (Auth::user()->role->role_name === 'Leader')
+                    <h4>Monitoring System</h4>
+                    <li class="{{ Route::currentRouteName() === 'auth.index' ? 'active' : '' }}"><span><i class="fas fa-file-alt"></i><a href="{{ route('auth.index') }}"> Activity Logs</a></span></li>
+                    <li class="{{ Route::currentRouteName() === 'reports.daily' ? 'active' : '' }}"><span><i class="fas fa-calendar-alt"></i>
+                        <form method="GET" action="{{ route('reports.daily') }}">
+                            <select name="plant_id" onchange="this.form.submit()">
+                                <option value="all" disabled selected>Daily Reports</option>
+                                @foreach ($plants as $plant)
+                                    <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                    </span></li>
                 </div>
-                @if (Auth::user()->role->role_name === 'Leader')
-                    <div class="side-nav-links">
-                        <h4>Monitoring System</h4>
-                        <li class="{{ Route::currentRouteName() === 'auth.index' ? 'active' : '' }}"><span><i class="fas fa-file-alt"></i><a href="{{ route('auth.index') }}"> Activity Logs</a></span></li>
-                        <li class="{{ Route::currentRouteName() === 'reports.daily' ? 'active' : '' }}"><span><i class="fas fa-calendar-alt"></i>
-                            <form method="GET" action="{{ route('reports.daily') }}">
-                                <select name="plant_id" onchange="this.form.submit()">
-                                    <option value="all" disabled selected>Daily Reports</option>
-                                    @foreach ($plants as $plant)
-                                        <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
-                                    @endforeach
-                                </select>
-                            </form>
-                        </span></li>
-                    </div>
-                @endif
+            @endif
             </ul>
         </div>
     </div>

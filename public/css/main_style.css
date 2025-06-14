@@ -8,6 +8,7 @@ body{
     position: fixed;
     transition: all .5s ease-in-out;
     max-height: 100%;
+    overflow-y: auto;
 }
 
 .header{
