@@ -12,11 +12,11 @@ body{
 }
 
 .header{
-    margin-top: 5vh;
+    margin-top: 10vh;
     margin-left: 2.5vh;
     padding: 10px;
     margin-right: 7.5vh;
-    width: 90%;
+    width: auto;
 }
 
 .header h4{

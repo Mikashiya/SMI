@@ -11,7 +11,7 @@
     }
 
     .filter-btn:hover{
-        box-shadow: 4px 4px #7B95F9;
+        background-color: rgba(107, 107, 107, 0.3);
     }
 
     .filter-icon{
@@ -20,7 +20,7 @@
     }
 
     .filter-overlay{
-        top: 20%;
+        top: 10%;
         position: absolute;
         display: none;
         background-color: #ebebeb;
