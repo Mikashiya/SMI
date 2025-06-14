@@ -5,9 +5,10 @@ body{
 
 .main{
     height: auto;
-    position: absolute;
-    transition: .5s;
-    max-width: 100vw;
+    position: relative;
+    transition: all .5s ease-in-out;
+    width: 100%;
+    max-width: 100%;
 }
 
 .header{

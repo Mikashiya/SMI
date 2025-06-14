@@ -17,7 +17,7 @@
         <div class="form-sect">
             <form action="{{ route('supplier.store') }}" method="POST">
                 @csrf
-                <div class="upper-row">
+                <div class="form-mvt">
                     <div class="col">
                         <label for="spl_name">Supplier Name</label><br>
                         <input type="text" placeholder="Input" name="spl_name">

@@ -18,6 +18,14 @@ return new class extends Migration
             $table->string('from_loc')->nullable();
             $table->string('to_loc')->nullable();
             $table->text('desc')->nullable();
+            $table->string('pic_wh')->nullable();
+            $table->string('pic_item')->nullable();
+            $table->string('price')->nullable();
+            $table->string('supplier')->nullable();
+            $table->string('part_use')->nullable();
+            $table->date('date_in')->nullable();
+            $table->date('date_out')->nullable();
+            $table->date('date_transfer')->nullable();
             $table->char('id_alct', 9);
             $table->foreign('id_alct')->references('id_alct')->on('allocations');
             $table->timestamps();

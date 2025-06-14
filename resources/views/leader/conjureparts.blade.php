@@ -18,7 +18,7 @@
             <form action="{{ route('parts.update', $parts->id_alct) }}" method="POST">
                 @method('PUT')
                 @csrf
-                <div class="upper-row">
+                <div class="form-mvt">
                     <div class="col">
                         <label for="part_id">Part ID</label><br>
                         <input type="text" value="{{ $parts->id_alct }}" name="part_id">
@@ -42,8 +42,6 @@
                         <label for="usage">Usage</label><br>
                         <input type="text" value="{{ $parts->usage }}" name="usage">
                     </div>
-                </div>
-                <div class="middle-row">
                     <div class="col">
                         <label for="part_name">Part Name</label><br>
                         <input type="text" value="{{ $parts->spareparts->part_name }}" name="part_name">
@@ -68,11 +66,9 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="lower-row">
                     <div class="col">
                         <label for="price">Price</label><br>
-                        <input type="text" value="{{ $parts->spareparts->price }}" name="price" style="width: 30vh;">
+                        <input type="text" value="{{ $parts->spareparts->price }}" name="price">
                     </div>
                     <div class="col">
                         <label for="e_stock">Stock Balance</label><br>
@@ -84,7 +80,7 @@
                     </div>
                     <div class="col">
                         <label for="note">Note</label><br>
-                        <textarea name="note" id="" value="{{ $parts->note }}" style="width: 80vh;"></textarea>
+                        <textarea name="note" id="" value="{{ $parts->note }}"></textarea>
                     </div>
                 </div>
                 <input type="submit" value="Submit" class="regist-btn">

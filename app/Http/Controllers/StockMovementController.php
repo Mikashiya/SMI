@@ -22,49 +22,116 @@ class StockMovementController extends Controller
      */
     public function create()
     {
-        //
+        // Get the transaction type from the request
+        $transactionType = request()->route('transactionType');
+        //dd($transactionType);
+        // Retrieve all parts (allocations) to display in the form
+        $parts = allocations::all();
+        // Pass the parts and transaction type to the view
+        return view('leader.partmovements', compact('parts', 'transactionType'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $parts)
+    public function store(Request $request)
     {
+        //dd($request->all());
+        // Validate the request data
         $request->validate([
-            'id_alct'=>'required',
-            'mvt_type'=>'required',
-            'qty'=>'required|numeric',
+            'part_id' => 'required|exists:allocations,id_alct',
+            'date' => 'required|date',
+            'mvt_type' => 'required|in:in,out,transfer',
+            'qty' => 'required|integer|min:1',
+            'from_loc' => 'nullable|string|max:255',    
+            'to_loc' => 'nullable|string|max:255',
+            'desc' => 'nullable|string|max:500',
+            'pic_wh' => 'nullable|string|max:255',
+            'pic_item' => 'nullable|string|max:255',
+            'price' => 'nullable|numeric|min:0',
+            'supplier' => 'nullable|string|max:255',
+            'part_use' => 'nullable|string|max:255',
+            'date_in' => 'nullable|date',
+            'date_out' => 'nullable|date',
+            'date_transfer' => 'nullable|date',
         ]);
 
-        DB::beginTransaction();
-        try{
-
-            $parts = allocations::where('id_alct', $parts)->get();
-
-            $qty = $request->qty;
-
-            if($parts->e_stock >= $qty){
-                $stockmovements = stockmovements::create([
-                    'id_alct'=>$request->id_alct,
-                    'mvt_type'=>$request->mvt_type,
-                    'qty'=>$request->qty,
-                    'from_loc'=>$request->from_loc,
-                    'to_loc'=>$request->to_loc,
-                    'desc'=>$request->desc,
-
-                ]);
-                DB::commit();
-
-                $parts->decrement('e_stock', $qty);
-            }
-            else{
-                return back()->with('error', 'Stock Not Sufficient');
-            }
-        } 
-        catch (\Exception $e) {
-            DB::rollBack(); // Batalkan semua perubahan jika ada error
-            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        // Create a new stock movement record
+        $stockMovement = new stockmovements();
+        $stockMovement->id_alct = $request->part_id; // Assuming $parts is an instance of allocations
+        if (!$stockMovement->id_alct) {
+            return back()->with('error', 'Part not found!');
         }
+        // Set the stock movement details
+        $stockMovement->mvt_type = $request->mvt_type;
+        $stockMovement->qty = $request->qty;
+        $stockMovement->from_loc = $request->part_id; // Assuming from_loc is the same as part_id
+        $stockMovement->to_loc = $request->to_loc;
+        $stockMovement->desc = $request->desc;
+        $stockMovement->pic_wh = $request->pic_wh;
+        $stockMovement->pic_item = $request->pic_item;
+        $stockMovement->price = $request->price;
+        $stockMovement->supplier = $request->supplier;
+        $stockMovement->part_use = $request->part_use;
+        // Save the stock movement record
+        if ($request->mvt_type === 'in') {
+            $stockMovement->date_in = $request->date;
+        } elseif ($request->mvt_type === 'out') {
+            $stockMovement->date_out = $request->date;
+        } elseif ($request->mvt_type === 'transfer') {
+            $stockMovement->date_transfer = $request->date;
+        }
+        $stockMovement->save();
+
+        // Update the allocation status if necessary
+        $allocation = allocations::find($request->part_id);
+        if ($allocation) {
+            // Example logic to update allocation status based on movement type
+            if ($request->mvt_type === 'in') {
+                $allocation->e_stock = $allocation->e_stock + $request->qty;
+            } elseif ($request->mvt_type === 'out') {
+
+                if ($allocation->e_stock < $request->qty) {
+                    return back()->with('error', 'Stok tidak mencukupi untuk pengeluaran!');
+                }
+
+                $allocation->e_stock = $allocation->e_stock - $request->qty;
+            } elseif ($request->mvt_type === "transfer") {
+
+                // Handle transfer logic
+                if ($request->to_loc === null) {
+                    return back()->with('error', 'Lokasi tujuan tidak boleh kosong untuk transfer!');
+                }
+                // Ensure both origin and destination stocks exist
+                if ($request->part_id === $request->to_loc) {
+                    return back()->with('error', 'Lokasi asal dan tujuan tidak boleh sama!');
+                }
+                try {
+                    $originStock = allocations::where('id_alct', $request->part_id)
+                        ->firstOrFail();
+                    $destinationStock = allocations::where('id_alct', $request->to_loc)
+                        ->firstOrFail();
+                } catch (\Exception $e) {
+                    return back()->with('error', 'Stok asal atau tujuan tidak ditemukan!');
+                }
+                
+                // Check if the origin stock has enough quantity for transfer
+
+                if ($originStock->e_stock >= $request->qty) {
+                    $originStock->e_stock -= $request->qty; // Kurangi stok asal
+                    $destinationStock->e_stock += $request->qty; // Tambah stok tujuan
+                    $originStock->save();
+                    $destinationStock->save();
+
+                } else {
+                    return back()->with('error', 'Stok tidak mencukupi untuk transfer!');
+                }
+            }
+            // Save the updated allocation
+            $allocation->save();
+        }
+        // Optionally, you can return the created stock movement
+        return redirect()->back()->with('success', 'Stock movement created successfully', ['data' => $stockMovement]);
     }
 
     /**

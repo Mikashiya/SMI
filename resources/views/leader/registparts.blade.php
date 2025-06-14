@@ -17,7 +17,7 @@
         <div class="form-sect">
             <form action="{{ route('parts.store') }}" method="POST">
                 @csrf
-                <div class="upper-row-parts">
+                <div class="form-mvt">
                     <div class="col">
                         <label for="part_id">Part ID</label><br>
                         <input type="text" placeholder="Input" name="part_id">
@@ -46,8 +46,6 @@
                         <label for="usage">Usage</label><br>
                         <input type="text" placeholder="Input" name="usage">
                     </div>
-                </div>
-                <div class="middle-row">
                     <div class="col">
                         <label for="part_name">Part Name</label><br>
                         <input type="text" placeholder="Input" name="part_name">
@@ -68,8 +66,6 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="lower-row">
                     <div class="col">
                         <label for="price">Price</label><br>
                         <input type="text" placeholder="Input" name="price">

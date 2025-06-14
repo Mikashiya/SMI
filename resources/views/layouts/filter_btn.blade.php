@@ -2,8 +2,6 @@
     .filter-btn{
         padding: 5px;
         right: 1.5%;
-        position: absolute;
-        top: 18%;
         background-color: #ebebeb;
         border: #424242 1px solid;
         cursor: pointer;
@@ -13,7 +11,7 @@
     }
 
     .filter-btn:hover{
-        box-shadow: 4px 4px #424242;
+        box-shadow: 4px 4px #7B95F9;
     }
 
     .filter-icon{
@@ -22,7 +20,7 @@
     }
 
     .filter-overlay{
-        top: 30%;
+        top: 20%;
         position: absolute;
         display: none;
         background-color: #ebebeb;
@@ -30,7 +28,7 @@
         padding: 5px;
         z-index: 1;
         box-shadow: #969696;
-        margin-left: 3px;
+        margin-left: 30vh;
     }
 
     .filter-overlay p{

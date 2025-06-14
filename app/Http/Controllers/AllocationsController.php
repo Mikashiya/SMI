@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\allocations;
 use App\Models\warehouses;
 use App\Models\spareparts;
+use App\Models\stockmovements;
 use App\Models\suppliers;
 use App\Models\wh_locs;
 use Illuminate\Http\Request;
@@ -147,6 +148,24 @@ class AllocationsController extends Controller
             'usage'=>$request->usage,
             'reminder'=>$request->f_stock < $request->s_stock ? 'NG' : 'OK'
         ]);
+
+        $smvt = stockmovements::create([
+            'mvt_type' => 'in',
+            'qty' => $request->f_stock,
+            'from_loc' => null, // Assuming no from location for inbound
+            'to_loc' => $warehouses->id_wh,
+            'desc' => 'Inbound stock for sparepart: ' . $spareparts->part_name,
+            'pic_wh' => $request->pic_wh,
+            'pic_item' => $request->pic_order,
+            'price' => $request->price,
+            'supplier' => $supplier->spl_name,
+            'part_use' => $request->usage,
+            'date_in' => $request->date_in,
+            // Assuming id_alct is the allocation ID
+            'id_alct' => $allocations->id_alct
+        ]);
+        // Commit the transaction
+        //DB::commit();
        
         // Log activity
         $data = allocations::where('id_alct', $request->part_id)->with('spareparts', 'warehouses')->first();
@@ -170,7 +189,7 @@ class AllocationsController extends Controller
 
         return redirect()->back()->with('success', 'New part has been added');
         
-        dd(session()->all());
+        //dd(session()->all());
     }
 
     /**

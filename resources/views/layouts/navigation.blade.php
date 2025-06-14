@@ -9,7 +9,7 @@
         border-right: #969696 3px solid;
         padding: 5vh;
         z-index: 1;
-        transition: .5s;
+        transition: all .5s ease-in-out;
         overflow: auto;
     }
 
@@ -90,7 +90,7 @@
         width: 100%;
         border-bottom: #969696 3px solid;
         z-index: 1;
-        transition: .5s;
+        transition: all .5s ease-in-out;
     }
 
     .top-nav h3{
@@ -147,6 +147,7 @@
             <ul>
                 <div class="side-nav-links">
                     <li class="{{ Route::currentRouteName() === 'leader.dashboard' ? 'active' : '' }}"><span><i class="fas fa-home"></i><a href="{{route('leader.dashboard')}}"> Dashboard</a></span></li>
+                    <li class="{{ Route::currentRouteName() === 'mvt.create' ? 'active' : '' }}"><span><i class="fas fa-file-signature"></i><a href="{{route('mvt.create')}}"> Card Movement Parts</a></span></li>
                 </div>
                 <div class="side-nav-links">
                     <h4>Management Sparepart</h4>
@@ -161,7 +162,7 @@
                         </form>
                     </span></li>
                     @if (Auth::user()->role->role_name === 'Leader')
-                        <li class="{{ Route::currentRouteName() === 'parts.create' ? 'active' : '' }}"><span><i class="fas fa-file-signature"></i><a href="{{route('parts.create')}}"> Register Sparepart</a></span></li>
+                        <li class="{{ Route::currentRouteName() === 'parts.create' ? 'active' : '' }}"><span><i class="fas fa-box-open"></i><a href="{{route('parts.create')}}"> Register Sparepart</a></span></li>
                     @endif
                 </div>
                 <div class="side-nav-links">
@@ -182,7 +183,16 @@
                     <div class="side-nav-links">
                         <h4>Monitoring System</h4>
                         <li class="{{ Route::currentRouteName() === 'auth.index' ? 'active' : '' }}"><span><i class="fas fa-file-alt"></i><a href="{{ route('auth.index') }}"> Activity Logs</a></span></li>
-                        <li><span><i class="fas fa-calendar-alt"></i><a href="#"> Daily Reports</a></span></li>
+                        <li class="{{ Route::currentRouteName() === 'reports.daily' ? 'active' : '' }}"><span><i class="fas fa-calendar-alt"></i>
+                            <form method="GET" action="{{ route('reports.daily') }}">
+                                <select name="plant_id" onchange="this.form.submit()">
+                                    <option value="all" disabled selected>Daily Reports</option>
+                                    @foreach ($plants as $plant)
+                                        <option value="{{ $plant->id_whlocs }}">{{ $plant->location }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </span></li>
                     </div>
                 @endif
             </ul>
@@ -202,8 +212,13 @@
     function openNav() {
         document.getElementById("side-nav").style.left = "0";
         document.getElementById("main").style.left = document.getElementById("side-nav").offsetWidth + "px";
+        document.getElementById("main").style.width = `calc(100% - ${document.getElementById("side-nav").offsetWidth}px)`;
         document.getElementById("top-nav").style.left = document.getElementById("side-nav").offsetWidth + "px";
     }
+
+    window.addEventListener('resize', openNav);
+    window.addEventListener('DOMContentLoaded', openNav);
+
 
     function closeNav() {
         document.getElementById("side-nav").style.left = "-100vh";

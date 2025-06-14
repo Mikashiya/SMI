@@ -6,6 +6,8 @@ use App\Http\Controllers\WarehousesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReportController;
+use App\Http\Controllers\StockMovementController;
 use Illuminate\Support\Facades\Auth;
 
 Route::resource('/auth', AuthController::class)->only(['index']);
@@ -19,11 +21,12 @@ Route::get('/unauthorized', function () {
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard/leader', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
-    Route::get('/dashboard/staff', function() { return view('staff.dashboard'); })->middleware('auth')->name('staff.dashboard');
+    Route::get('/dashboard', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
     Route::resource('/parts', AllocationsController::class);
     Route::resource('/wh', WarehousesController::class);
     Route::resource('/supplier', SupplierController::class);
+    Route::resource('/mvt', StockMovementController::class);
+    Route::get('/reports/daily', [ReportController::class, 'daily'])->name('reports.daily');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

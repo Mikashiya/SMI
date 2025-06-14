@@ -17,7 +17,7 @@
         <div class="form-sect">
             <form action="{{ route('wh.store') }}" method="POST">
                 @csrf
-                <div class="upper-row">
+                <div class="form-mvt">
                     <div class="col">
                         <label for="wh_type">WH Type</label><br>
                         <select name="wh_type">
@@ -41,8 +41,6 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="middle-row">
                     <div class="col">
                         <label for="shelf_count">Shelf Count</label><br>
                         <input type="text" placeholder="Input" name="shelf_count">
