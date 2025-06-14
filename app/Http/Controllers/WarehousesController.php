@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\warehouses;
 use App\Models\wh_locs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class WarehousesController extends Controller
@@ -66,6 +67,17 @@ class WarehousesController extends Controller
             DB::rollBack(); // Batalkan semua perubahan jika ada error
             return redirect()->back()->with('error', 'Error:' . $e->getMessage());
         }
+
+        $user = Auth::user();
+
+        // Log aktivitas create
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'create',
+            $warehouses['id_wh'] ?? null,
+            'Creating warehouse',
+        );
 
         return redirect()->back()->with('success', 'Warehouse created successfully');
     }
@@ -141,6 +153,17 @@ class WarehousesController extends Controller
             return redirect()->back()->with('error', 'Error:' . $e->getMessage());
         }
 
+        $user = Auth::user();
+
+        // Log aktivitas edit
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'edit',
+            $warehouse['id_wh'] ?? null,
+            'Editing warehouse',
+        );
+
         return redirect()->back()->with('success', 'Warehouse updated successfully');
     }
 
@@ -163,6 +186,17 @@ class WarehousesController extends Controller
             DB::rollBack(); // Batalkan semua perubahan jika ada error
             return redirect()->back()->with('error', 'Error:' . $e->getMessage());
         }
+
+        $user = Auth::user();
+
+        // Log aktivitas delete
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'delete',
+            $warehouse['id_wh'] ?? null,
+            'Deleting warehouse'
+        );
 
         return redirect()->back()->with('success', 'Warehouse deleted successfully');
     }

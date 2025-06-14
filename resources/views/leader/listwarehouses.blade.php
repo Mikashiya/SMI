@@ -171,66 +171,7 @@
                 <p>Temperature Control:</p><input type="text" placeholder="Input.." onkeyup="filterTable(8, this.value)">
             </div>
         </div>
-        <div class="overlay" id="overlay">
-            <div class="overlay-top">
-                <h3>Warehouse Information</h3>
-                <i class="fas fa-close" onclick="overlayOff()"></i>
-            </div>
-            <div class="overlay-main">
-                <span><h4>Plant Location: </h4><p><span id="plt_loc"></span></p></span>
-                <span><h4>Warehouse Type: </h4><p><span id="wh_type"></span></p></span>
-                <span><h4>Shelf Counts: </h4><p><span id="sc"></span></p></span>
-                <span><h4>Shelf IDs/Names: </h4><p><span id="si"></span></p></span>
-                <span><h4>Cabinet Counts: </h4><p><span id="cc"></span></p></span>
-                <span><h4>Cabinet IDs/Names: </h4><p><span id="ci"></span></p></span>
-                <span><h4>Capacity: </h4><p><span id="cpt"></span></p></span>
-                <span><h4>Temperature Control: </h4><p><span id="temp_ctrl"></span></p></span>
-                <span><h4>Plant Manager: </h4><p><span id="pm"></span></p></span>
-                <span><h4>Manager Contact Information: </h4><p><span id="mci"></span></p></span>
-            </div>
-        </div>
     </section>
 </body>
 @include('layouts.swal_fire')
-<script>
-    function overlayOn(id_wh) {
-        fetch(`/wh/${id_wh}`)
-            .then(response => response.json()) // Bukan `.json()` untuk melihat isi asli
-            .then(data => {
-                document.getElementById("plt_loc").textContent = data.whlocs.location;
-                document.getElementById("wh_type").textContent = data.wh_type;
-                document.getElementById("sc").textContent = data.shelf_count;
-                document.getElementById("si").textContent = data.shelf_ids;
-                document.getElementById("cc").textContent = data.cabs_count;
-                document.getElementById("ci").textContent = data.cabs_ids;
-                document.getElementById("cpt").textContent = data.capacity;
-                document.getElementById("temp_ctrl").textContent = data.temp_ctrl;
-                document.getElementById("pm").textContent = data.whlocs.manager;
-                document.getElementById("mci").textContent = data.whlocs.ctc_info;
-
-
-                //console.log("Data asli dari API:", text); // Lihat apakah ini JSON valid atau HTML/error
-            });
-        
-        let overlay = document.getElementById("overlay");
-
-        overlay.style.display = "block"; // Pastikan elemen terlihat sebelum transisi
-        setTimeout(() => {
-            overlay.style.opacity = "1"; // Efek fade-in
-        }, 200); // Delay sedikit agar transisi bisa aktif
-
-        //document.getElementById("td-list").style.backgroundColor = "#7B95F9";
-        //console.log("Overlay sekarang seharusnya aktif!");
-    }
-
-    function overlayOff() {
-        let overlay = document.getElementById("overlay");
-
-        overlay.style.opacity = "0"; // Buat efek fade-out lebih dulu
-
-        setTimeout(() => {
-            overlay.style.display = "none"; // Sembunyikan setelah transisi selesai
-        }, 500); // Sesuaikan dengan durasi transition
-    }
-</script>
 </html>

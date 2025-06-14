@@ -1,7 +1,7 @@
 /* Overlay styles for displaying additional information */
 .overlay{
     display: none;
-    position: fixed;
+    position: absolute;
     width: 50vh;
     max-height: 100%;
     top: 0;
@@ -18,6 +18,7 @@
     height: 5vh;
     display: block;
     margin-bottom: 5vh;
+    margin-top: 10vh;
     position: sticky;
     top: 0;
     background-color: #ebebeb;
@@ -83,6 +84,13 @@
 }
 
 .part-in{
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #f8f8f8;
+    margin-bottom: 3vh;
+}
+
+.part-transfer{
     padding: 5px;
     border-radius: 3px;
     background-color: #f8f8f8;

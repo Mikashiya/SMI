@@ -40,7 +40,28 @@ class AllocationsController extends Controller
                 $q->where('id_whlocs', $plantId);
             })->get();
         }
+
+        $idAlct = $request->query('id_alct') ?? null;
         
+        $latestMovements = stockmovements::selectRaw("
+            ANY_VALUE(id_smvt) AS id_smvt,
+            mvt_type,
+            MAX(date_in) AS latest_date_in,
+            MAX(date_out) AS latest_date_out,
+            MAX(date_transfer) AS latest_date_transfer,
+            ANY_VALUE(qty) AS qty,
+            ANY_VALUE(part_use) AS part_use,
+            ANY_VALUE(pic_wh) AS pic_wh,
+            ANY_VALUE(pic_item) AS pic_item,
+            ANY_VALUE(supplier) AS supplier,
+            ANY_VALUE(to_loc) AS to_loc,
+            ANY_VALUE(price) AS price,
+            ANY_VALUE(description) AS description
+        ")->where('id_alct', $idAlct)
+        ->groupBy('mvt_type', 'id_alct')
+        ->get();
+
+
 
         //dd($warehouses);
         //dd($request->all());
@@ -49,7 +70,7 @@ class AllocationsController extends Controller
 
         $allocations = collect($allocations);
 
-        return view('leader.listspareparts', compact('allocations', 'plants'));
+        return view('leader.listspareparts', compact('allocations', 'plants', 'latestMovements'));
     }
 
     /**
@@ -154,7 +175,7 @@ class AllocationsController extends Controller
             'qty' => $request->f_stock,
             'from_loc' => null, // Assuming no from location for inbound
             'to_loc' => $warehouses->id_wh,
-            'desc' => 'Inbound stock for sparepart: ' . $spareparts->part_name,
+            'description' => 'Inbound stock for sparepart: ' . $spareparts->part_name,
             'pic_wh' => $request->pic_wh,
             'pic_item' => $request->pic_order,
             'price' => $request->price,
@@ -196,8 +217,8 @@ class AllocationsController extends Controller
      * Display the specified resource.
      */
     public function show($parts) {
-        $allocations = allocations::where('id_alct', $parts)->with('spareparts.supplier', 'warehouses.whlocs')->first();
-
+        $allocations = allocations::where('id_alct', $parts)->with('spareparts.supplier', 'warehouses.whlocs', 'stc_mvt')->first();
+        
         if (!$allocations) {
             return response()->json(['error' => 'Allocation not found'], 404);
         }

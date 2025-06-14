@@ -229,8 +229,10 @@
 
     function adjustHeight() {
         const topnav = document.getElementById("top-nav");
-        const content = document.getElementById("main");
-        content.style.height = `calc(100vh - ${topnav.offsetHeight}px)`;
+        const main = document.getElementById("main");
+        const overlay = document.getElementById("overlay");
+        main.style.height = `calc(100vh - ${topnav.offsetHeight}px)`;
+        overlay.style.height = `calc(100vh - ${topnav.offsetHeight}px)`;
     }
 
     document.getElementById("nav-btn").addEventListener("click", function () {

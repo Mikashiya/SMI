@@ -18,10 +18,7 @@ class AuthController extends Controller
      */
     public function index()
     {
-
-        
-
-        $actlogs = ActivityLog::with('custom_users')->get();
+        $actlogs = ActivityLog::with('custom_users')->orderBy('created_at', 'desc')->get();
 
         return view('leader.actlog', compact('actlogs'));
     }

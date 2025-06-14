@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\suppliers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SupplierController extends Controller
 {
@@ -37,6 +38,17 @@ class SupplierController extends Controller
 
         suppliers::create($validatedData);
 
+        $user = Auth::user();
+
+        // Log aktivitas create
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'create',
+            $validatedData['id_spl'] ?? null,
+            'Adding supplier',
+        );
+
         return redirect()->route('supplier.index')->with('success', 'Supplier created successfully.');
     }
 
@@ -56,6 +68,8 @@ class SupplierController extends Controller
         $supplier = suppliers::findOrFail($spl);
 
         return view('leader.conjurespl', compact('supplier'));
+
+        
     }
 
     /**
@@ -71,6 +85,17 @@ class SupplierController extends Controller
         $supplier = suppliers::findOrFail($spl);
         $supplier->update($validatedData);
 
+        $user = Auth::user();
+
+        // Log aktivitas edit
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'edit',
+            $validatedData['id_spl'] ?? null,
+            'Editing supplier'
+        );
+
         return redirect()->route('supplier.index')->with('success', 'Supplier updated successfully.');
     }
 
@@ -81,6 +106,17 @@ class SupplierController extends Controller
     {
         $supplier = suppliers::findOrFail($spl);
         $supplier->delete();
+
+        $user = Auth::user();
+
+        // Log aktivitas delete
+        \App\Models\ActivityLog::record(
+            $user->id,
+            $user->role->role_name ?? 'guest',
+            'delete',
+            $supplier->id_spl,
+            'Deleting supplier'
+        );
 
         return redirect()->route('supplier.index')->with('success', 'Supplier deleted successfully.');
     }

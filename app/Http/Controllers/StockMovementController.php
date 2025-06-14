@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\allocations;
 use App\Models\stockmovements;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StockMovementController extends Controller
@@ -45,7 +46,7 @@ class StockMovementController extends Controller
             'qty' => 'required|integer|min:1',
             'from_loc' => 'nullable|string|max:255',    
             'to_loc' => 'nullable|string|max:255',
-            'desc' => 'nullable|string|max:500',
+            'description' => 'nullable|string|max:500',
             'pic_wh' => 'nullable|string|max:255',
             'pic_item' => 'nullable|string|max:255',
             'price' => 'nullable|numeric|min:0',
@@ -67,7 +68,7 @@ class StockMovementController extends Controller
         $stockMovement->qty = $request->qty;
         $stockMovement->from_loc = $request->part_id; // Assuming from_loc is the same as part_id
         $stockMovement->to_loc = $request->to_loc;
-        $stockMovement->desc = $request->desc;
+        $stockMovement->description = $request->desc;
         $stockMovement->pic_wh = $request->pic_wh;
         $stockMovement->pic_item = $request->pic_item;
         $stockMovement->price = $request->price;
@@ -129,6 +130,17 @@ class StockMovementController extends Controller
             }
             // Save the updated allocation
             $allocation->save();
+
+            $user = Auth::user();
+
+            // Log aktivitas create
+            \App\Models\ActivityLog::record(
+                $user->id,
+                $user->role->role_name ?? 'guest',
+                'create',
+                $stockMovement['id_alct'] ?? null,
+                'Creating stock movement',
+            );
         }
         // Optionally, you can return the created stock movement
         return redirect()->back()->with('success', 'Stock movement created successfully', ['data' => $stockMovement]);

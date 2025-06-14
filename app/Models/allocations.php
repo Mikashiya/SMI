@@ -24,6 +24,6 @@ class allocations extends Model
     protected $table = 'allocations';
 
     public function stc_mvt(){
-        return $this->hasMany(stockmovements::class);
+        return $this->hasMany(stockmovements::class , 'id_alct', 'id_alct');
     }
 }

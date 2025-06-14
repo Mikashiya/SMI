@@ -13,12 +13,12 @@ class ReportController extends Controller
         $plantId = $request->input('plant_id');
 
         if (!$plantId || $plantId == 'all') {
-            $movements = stockmovements::with(['allocations.warehouses'])->get();
+            $movements = stockmovements::with(['allocations.warehouses'])->orderBy('created_at', 'desc')->get();
         } else {
             $movements = stockmovements::with(['allocations.warehouses'])
                 ->whereHas('allocations.warehouses', function ($q) use ($plantId) {
                     $q->where('id_whlocs', $plantId);
-                })->get();
+                })->orderBy('created_at', 'desc')->get();
         }
         
 

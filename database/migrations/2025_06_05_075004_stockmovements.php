@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('qty');
             $table->string('from_loc')->nullable();
             $table->string('to_loc')->nullable();
-            $table->text('desc')->nullable();
+            $table->text('description')->nullable();
             $table->string('pic_wh')->nullable();
             $table->string('pic_item')->nullable();
             $table->string('price')->nullable();

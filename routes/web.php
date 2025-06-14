@@ -14,12 +14,6 @@ Route::resource('/auth', AuthController::class)->only(['index']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-
-Route::get('/unauthorized', function () {
-    return view('unauthorized');
-})->name('unauthorized');
-
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
     Route::resource('/parts', AllocationsController::class);
