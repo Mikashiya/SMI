@@ -6,15 +6,18 @@ use App\Http\Controllers\WarehousesController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StockMovementController;
 use App\Http\Middleware\AuthMiddleware;
 use App\Http\Middleware\ReportMiddleware;
+use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Auth;
 
 Route::resource('/auth', AuthController::class)->only(['index']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
 
 Route::middleware([AuthMiddleware::class, ReportMiddleware::class])->group(function () {
     Route::get('/dashboard', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
@@ -23,6 +26,7 @@ Route::middleware([AuthMiddleware::class, ReportMiddleware::class])->group(funct
     Route::resource('/supplier', SupplierController::class);
     Route::resource('/mvt', StockMovementController::class);
     Route::get('/reports/daily', [ReportController::class, 'daily'])->name('reports.daily');
+    Route::post('/backup/manual', [BackupController::class, 'run'])->name('backup.manual')->middleware(AuthMiddleware::class, 'App\Http\Middleware\RoleMiddleware:Leader');
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

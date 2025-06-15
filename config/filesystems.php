@@ -30,7 +30,7 @@ return [
 
     'disks' => [
 
-        'local' => [
+        'Beta' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),
             'serve' => true,

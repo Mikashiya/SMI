@@ -18,6 +18,7 @@ class RoleMiddleware
         if (Auth::check() && Auth::user()->role->role_name == $role) {
             return $next($request);
         }
-        return redirect('/unauthorized');
+        abort(403, 'Unauthorized action.');
+
     }
 }

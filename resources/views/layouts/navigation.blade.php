@@ -142,6 +142,28 @@
     .nav-btn button:hover{
         color: #1f1f1f;
     }
+    
+    .backup-btn button{
+        text-decoration: none;
+        color: #7B95F9;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin-left: 2.5vh;
+        top: 50%;
+        right: 30%;
+        transform: translateY(-50%);
+        position: absolute;
+        transition: .25s;
+        background-color: transparent;
+        border: none;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .backup-btn button:hover{
+        color: #1f1f1f;
+    }
+
+    
 </style>
 <section>
     <div class="side-nav" id="side-nav">
@@ -197,6 +219,15 @@
     <div class="top-nav" id="top-nav">
         <div class="nav-btn"><button id="nav-btn"><i class="fas fa-bars"></i></button></div>
         <h3>Hello {{ Auth::user()->role->role_name }} ID: {{ Auth::user()->username }}</h3>
+        @if (Auth::user()->role->role_name === 'Leader')
+            <div class="backup-btn">
+                <form action="{{ route('backup.manual') }}" method="POST">
+                    @method('POST')
+                    @csrf
+                    <button class="btn btn-warning" class="backup-btn"><i class="fas fa-database"></i> Backup Manual</button>
+                </form>
+            </div>
+        @endif
         <form action="{{ route('logout') }}" method="POST" class="logout-btn">
             @csrf
             <button type="submit" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -225,9 +256,6 @@
         document.getElementById("top-nav").style.width = `calc(100% + ${document.getElementById("side-nav").offsetWidth}px)`;
     }
 
-    window.addEventListener("DOMContentLoaded", adjustHeight);
-    window.addEventListener("resize", adjustHeight);
-
     function adjustHeight() {
         const topnav = document.getElementById("top-nav");
         const main = document.getElementById("main");
@@ -235,6 +263,9 @@
         main.style.height = `calc(100% - ${topnav.offsetHeight}px)`;
         overlay.style.height = `calc(100% - ${topnav.offsetHeight}px)`;
     }
+
+    window.addEventListener("DOMContentLoaded", adjustHeight);
+    window.addEventListener("resize", adjustHeight);
 
     document.getElementById("nav-btn").addEventListener("click", function () {
         let sidebar = document.getElementById("side-nav");
@@ -255,6 +286,28 @@
             Swal.fire({
                 title: "WARNING",
                 html: `<p>Are you sure want to logout?</p>`,
+                showCancelButton: true,
+                confirmButtonText: "Proceed",
+                cancelButtonText: "Cancel",
+                customClass:{
+                    popup: 'custom-font'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+
+    document.querySelectorAll('.backup-btn').forEach(button => {
+        //console.log("Event listener aktif!"); // Debug sebelum eksekusi
+        button.addEventListener('click', function(event) {
+            event.preventDefault();
+            let form = this.querySelector("form");
+            Swal.fire({
+                title: "WARNING",
+                html: `<p>Are you sure want to backup data?</p>`,
                 showCancelButton: true,
                 confirmButtonText: "Proceed",
                 cancelButtonText: "Cancel",

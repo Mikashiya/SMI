@@ -7,6 +7,21 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+@if(session('status'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Backup Success!',
+        text: "Backup Time: {{ session('status', 'backup_time') }} Have a nice day",
+        timer: 3000,
+        showConfirmButton: false,
+        customClass:{
+            popup: 'custom-font'
+        }
+    });
+    </script>
+@endif
+
 @if(session('success'))
     <script>
         Swal.fire({
