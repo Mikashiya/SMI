@@ -41,25 +41,8 @@ class AllocationsController extends Controller
             })->get();
         }
 
-        $idAlct = $request->query('id_alct') ?? null;
         
-        $latestMovements = stockmovements::selectRaw("
-            ANY_VALUE(id_smvt) AS id_smvt,
-            mvt_type,
-            MAX(date_in) AS latest_date_in,
-            MAX(date_out) AS latest_date_out,
-            MAX(date_transfer) AS latest_date_transfer,
-            ANY_VALUE(qty) AS qty,
-            ANY_VALUE(part_use) AS part_use,
-            ANY_VALUE(pic_wh) AS pic_wh,
-            ANY_VALUE(pic_item) AS pic_item,
-            ANY_VALUE(supplier) AS supplier,
-            ANY_VALUE(to_loc) AS to_loc,
-            ANY_VALUE(price) AS price,
-            ANY_VALUE(description) AS description
-        ")->where('id_alct', $idAlct)
-        ->groupBy('mvt_type', 'id_alct')
-        ->get();
+        
 
 
 
@@ -70,7 +53,7 @@ class AllocationsController extends Controller
 
         $allocations = collect($allocations);
 
-        return view('leader.listspareparts', compact('allocations', 'plants', 'latestMovements'));
+        return view('leader.listspareparts', compact('allocations', 'plants'));
     }
 
     /**
@@ -217,16 +200,24 @@ class AllocationsController extends Controller
      * Display the specified resource.
      */
     public function show($parts) {
-        $allocations = allocations::where('id_alct', $parts)->with('spareparts.supplier', 'warehouses.whlocs', 'stc_mvt')->first();
-        
+        //$allocations = allocations::where('id_alct', $parts)->with('spareparts.supplier', 'warehouses.whlocs', 'stc_mvt')->first();
+        $allocations = Allocations::where('id_alct', $parts)
+        ->with([
+            'spareparts.supplier',
+            'warehouses.whlocs',
+            'stc_mvt'])->first();
+
         if (!$allocations) {
             return response()->json(['error' => 'Allocation not found'], 404);
         }
 
         $allocations->reminder = ($allocations->e_stock < $allocations->s_stock) ? 'NG' : 'OK';
 
+        
+
 
         return response()->json($allocations);
+
     }
 
     /**
@@ -306,6 +297,8 @@ class AllocationsController extends Controller
      */
     public function destroy($parts)
 {
+        stockmovements::where('id_alct', $parts)->delete();
+
         $allocation = allocations::where('id_alct', $parts)->first(); // Pastikan pakai id_alct
 
         if (!$allocation) {

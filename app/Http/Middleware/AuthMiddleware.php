@@ -16,6 +16,7 @@ class AuthMiddleware
      */
     public function handle($request, Closure $next)
     {
+
         //dd('Middleware AUTH berjalan! User:', Auth::user());
         if (!Auth::check()) {
             return redirect()->route('login'); // Redirect kalau belum login
@@ -32,7 +33,7 @@ class AuthMiddleware
             'Entering ' . $request->path() . ' page'
         );
         // Log informasi user yang sedang aktif
-        \Illuminate\Support\Facades\Log::info('AUTH Middleware aktif, user: ' . (Auth::user()->id ?? 'Guest'));
+        //\Illuminate\Support\Facades\Log::info('AUTH Middleware aktif, user: ' . (Auth::user()->id ?? 'Guest'));
 
         return $next($request);
     }

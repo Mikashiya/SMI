@@ -15,7 +15,8 @@
             <h4>Edit Warehouse</h4>
         </div>
         <div class="form-sect">
-            <form action="{{ route('wh.store') }}" method="POST">
+            <form action="{{ route('wh.update', $warehouse->id_wh) }}" method="POST">
+                @method('PUT')
                 @csrf
                 <div class="upper-row">
                     <div class="col">

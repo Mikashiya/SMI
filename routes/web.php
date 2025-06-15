@@ -8,13 +8,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\StockMovementController;
+use App\Http\Middleware\AuthMiddleware;
 use Illuminate\Support\Facades\Auth;
 
 Route::resource('/auth', AuthController::class)->only(['index']);
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware([AuthMiddleware::class])->group(function () {
     Route::get('/dashboard', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
     Route::resource('/parts', AllocationsController::class);
     Route::resource('/wh', WarehousesController::class);

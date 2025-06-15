@@ -16,6 +16,7 @@
         </div>
         <div class="form-sect">
             <form action="{{ route('supplier.update', $supplier->id_spl) }}" method="POST">
+                @method('PUT')
                 @csrf
                 <div class="upper-row">
                     <div class="col">

@@ -29,7 +29,7 @@
                                     </span>
                                 </th>
                                 <th>
-                                    User ID
+                                    Transaction Type
                                     <span class="filter-container">
                                         <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
                                     </span>
@@ -95,7 +95,7 @@
                                     </span>
                                 </th>
                                 <th>
-                                    Date outbound
+                                    Date Outbound
                                     <span class="filter-container">
                                         <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
                                     </span>
@@ -144,28 +144,43 @@
                         <p>No:</p><input type="text" placeholder="Input.." onkeyup="filterTable(0, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-1">
-                        <p>User ID:</p><input type="text" placeholder="Input.." onkeyup="filterTable(1, this.value)">
+                        <p>Transaction Type:</p><input type="text" placeholder="Input.." onkeyup="filterTable(1, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-2">
-                        <p>User Role:</p><input type="text" placeholder="Input.." onkeyup="filterTable(2, this.value)">
+                        <p>Part ID:</p><input type="text" placeholder="Input.." onkeyup="filterTable(2, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-3">
-                        <p>Action:</p><input type="text" placeholder="Input.." onkeyup="filterTable(3, this.value)">
+                        <p>Quantity:</p><input type="text" placeholder="Input.." onkeyup="filterTable(3, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-4">
-                        <p>Target:</p><input type="text" placeholder="Input.." onkeyup="filterTable(4, this.value)">
+                        <p>(Transfer) From ID:</p><input type="text" placeholder="Input.." onkeyup="filterTable(4, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-5">
-                        <p>Description:</p><input type="text" placeholder="Input.." onkeyup="filterTable(5, this.value)">
+                        <p>(Transfer) To ID:</p><input type="text" placeholder="Input.." onkeyup="filterTable(5, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-6">
-                        <p>IP Address:</p><input type="text" placeholder="Input.." onkeyup="filterTable(6, this.value)">
+                        <p>Part Usage:</p><input type="text" placeholder="Input.." onkeyup="filterTable(6, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-7">
-                        <p>User Agent:</p><input type="text" placeholder="Input.." onkeyup="filterTable(7, this.value)">
+                        <p>PIC Warehouse:</p><input type="text" placeholder="Input.." onkeyup="filterTable(7, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-8">
-                        <p>Date Time:</p><input type="text" placeholder="Input.." onkeyup="filterTable(8, this.value)">
+                        <p>PIC Request:</p><input type="text" placeholder="Input.." onkeyup="filterTable(8, this.value)">
+                    </div>
+                    <div class="filter-overlay" id="filter-9">
+                        <p>Price:</p><input type="text" placeholder="Input.." onkeyup="filterTable(9, this.value)">
+                    </div>
+                    <div class="filter-overlay" id="filter-10">
+                        <p>Supplier:</p><input type="text" placeholder="Input.." onkeyup="filterTable(10, this.value)">
+                    </div>
+                    <div class="filter-overlay" id="filter-11">
+                        <p>Date Inbound:</p><input type="text" placeholder="Input.." onkeyup="filterTable(11, this.value)">
+                    </div>
+                    <div class="filter-overlay" id="filter-12">
+                        <p>Date Outbound:</p><input type="text" placeholder="Input.." onkeyup="filterTable(12, this.value)">
+                    </div>
+                    <div class="filter-overlay" id="filter-13">
+                        <p>Description:</p><input type="text" placeholder="Input.." onkeyup="filterTable(13, this.value)">
                     </div>
                 </div>
             @endif

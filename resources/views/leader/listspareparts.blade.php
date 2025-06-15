@@ -115,7 +115,7 @@
                         </thead>
                         <tbody>
                             @forelse($allocations->where('warehouses.id_whlocs', $plant->id_whlocs) as $parts)
-                                <tr data-id_alct="{{ $parts->id_alct }}">
+                                <tr>
                                     <td onclick="overlayOn('{{ $parts->id_alct }}')"></td>
                                     <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->id_alct }}</td>
                                     <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_name ?? 'Not Found' }}</td>
@@ -209,38 +209,34 @@
                 <h3>Part Movement Information</h3>
                 <div class="overlay-note">
                     <div class="overlay-note">
-                        @foreach($latestMovements as $movement)
-                            <div class="part-{{ strtolower($movement->mvt_type) }}">
-                                <h4>Part {{ strtoupper($movement->mvt_type) }}</h4>
-                                @if($movement->latest_date_in)
-                                    <span><h4>Last Date In: </h4><p>{{ $movement->latest_date_in }}</p></span>
-                                    <span><h4>Stock: </h4><p>{{ $movement->qty ?? 'N/A' }}</p></span>
-                                    <span><h4>Part Usage: </h4><p>{{ $movement->part_use ?? 'N/A' }}</p></span>
-                                    <span><h4>PIC WH: </h4><p>{{ $movement->pic_wh ?? 'N/A' }}</p></span>
-                                    <span><h4>PIC Request: </h4><p>{{ $movement->pic_item ?? 'N/A' }}</p></span>
-                                    <span><h4>Price: </h4><p>{{ $movement->price ?? 'N/A' }}</p></span>
-                                    <span><h4>Supplier: </h4><p>{{ $movement->supplier ?? 'N/A' }}</p></span>
-                                    <span><h4>Note: </h4><p>{{ $movement->description ?? 'N/A' }}</p></span>
-                                @endif
-                                @if($movement->latest_date_out)
-                                    <span><h4>Last Date Out: </h4><p>{{ $movement->latest_date_out }}</p></span>
-                                    <span><h4>Stock: </h4><p>{{ $movement->qty ?? 'N/A' }}</p></span>
-                                    <span><h4>Part Usage: </h4><p>{{ $movement->part_use ?? 'N/A' }}</p></span>
-                                    <span><h4>PIC WH: </h4><p>{{ $movement->pic_wh ?? 'N/A' }}</p></span>
-                                    <span><h4>PIC Request: </h4><p>{{ $movement->pic_item ?? 'N/A' }}</p></span>
-                                    <span><h4>Note: </h4><p>{{ $movement->description ?? 'N/A' }}</p></span>
-                                @endif
-                                @if($movement->latest_date_transfer)
-                                    <span><h4>Last Date Transfer: </h4><p>{{ $movement->latest_date_transfer }}</p></span>
-                                    <span><h4>Stock: </h4><p>{{ $movement->qty ?? 'N/A' }}</p></span>
-                                    <span><h4>To Location ID: </h4><p>{{ $movement->to_loc ?? 'N/A' }}</p></span>
-                                    <span><h4>PIC WH: </h4><p>{{ $movement->pic_wh ?? 'N/A' }}</p></span>
-                                    <span><h4>PIC Request: </h4><p>{{ $movement->pic_item ?? 'N/A' }}</p></span>
-                                    <span><h4>Part Usage: </h4><p>{{ $movement->part_use ?? 'N/A' }}</p></span>
-                                    <span><h4>Note: </h4><p>{{ $movement->description ?? 'N/A' }}</p></span>
-                                @endif
-                            </div>
-                        @endforeach
+                        <div class="part-in">
+                            <h4>Part In</h4>
+                            <span><h4>Last Date In: </h4><p><span id="date_in_in"></span></p></span>
+                            <span><h4>Stock: </h4><p><span id="stock-in"></span></p></span>
+                            <span><h4>Part Usage: </h4><p><span id="part-use-in"></span></p></span>
+                            <span><h4>PIC WH: </h4><p><span id="pic-wh-in"></span></p></span>
+                            <span><h4>PIC Request: </h4><p><span id="pic-req-in"></span></p></span>
+                            <span><h4>Note: </h4><p><span id="part-desc-in"></span></p></span>
+                        </div>
+                        <div class="part-out">
+                            <h4>Part Out</h4>
+                            <span><h4>Last Date Out: </h4><p><span id="date_out_out"></span></p></span>
+                            <span><h4>Stock: </h4><p><span id="stock-out"></span></p></span>
+                            <span><h4>Part Usage: </h4><p><span id="part-use-out"></span></p></span>
+                            <span><h4>PIC WH: </h4><p><span id="pic-wh-out"></span></p></span>
+                            <span><h4>PIC Request: </h4><p><span id="pic-req-out"></span></p></span>
+                            <span><h4>Note: </h4><p><span id="part-desc-out"></span></p></span> 
+                        </div>
+                        <div class="part-transfer">
+                            <h4>Part Transfer</h4>
+                            <span><h4>Last Date Transfer: </h4><p><span id="date_transfer_transfer"></span></p></span>
+                            <span><h4>Stock: </h4><p><span id="stock-transfer"></span></p></span>
+                            <span><h4>To Location ID: </h4><p><span id="part-loc-transfer"></span></p></span>
+                            <span><h4>PIC WH: </h4><p><span id="pic-wh-transfer"></span></p></span>
+                            <span><h4>PIC Request: </h4><p><span id="pic-req-transfer"></span></p></span>
+                            <span><h4>Part Usage: </h4><p><span id="part-use-transfer"></span></p></span>
+                            <span><h4>Note: </h4><p><span id="part-desc-transfer"></span></p></span>   
+                        </div>
                     </div>
                 </div>
             </div>
@@ -256,6 +252,8 @@
         fetch(`/parts/${id_alct}`)
             .then(response => response.json()) // Bukan `.json()` untuk melihat isi asli
             .then(data => {
+                
+                console.log('Debugging data:', data);
                 document.getElementById("part_id").textContent = data.id_alct;
                 document.getElementById("part_name").textContent = data.spareparts.part_name;
                 document.getElementById("part_type").textContent = data.spareparts.part_type;
@@ -271,6 +269,27 @@
                 document.getElementById("wh_loc").textContent = data.warehouses.whlocs.location;
                 document.getElementById("spl_name").textContent = data.spareparts.supplier.spl_name;
 
+
+                data.stc_mvt.forEach(stc_mvt =>{
+                    document.getElementById(`stock-${stc_mvt.mvt_type}`).textContent = stc_mvt.qty ?? 'N/A';
+                    document.getElementById(`pic-wh-${stc_mvt.mvt_type}`).textContent = stc_mvt.pic_wh ?? 'N/A';
+                    document.getElementById(`pic-req-${stc_mvt.mvt_type}`).textContent = stc_mvt.pic_item ?? 'N/A';
+                    document.getElementById(`part-desc-${stc_mvt.mvt_type}`).textContent = stc_mvt.description ?? 'N/A';
+                    document.getElementById(`part-use-${stc_mvt.mvt_type}`).textContent = stc_mvt.part_use ?? 'N/A';
+                    document.getElementById(`part-loc-transfer`).textContent = stc_mvt.to_loc ?? 'N/A';
+
+                    if (stc_mvt.date_in) {
+                        document.getElementById(`date_in_${stc_mvt.mvt_type}`).textContent = stc_mvt.date_in;
+                    }
+                    if (stc_mvt.date_out) {
+                        document.getElementById(`date_out_${stc_mvt.mvt_type}`).textContent = stc_mvt.date_out;
+                    }
+                    if (stc_mvt.date_transfer) {
+                        document.getElementById(`date_transfer_${stc_mvt.mvt_type}`).textContent = stc_mvt.date_transfer;
+                    }
+
+
+                })
                 
             });
 
