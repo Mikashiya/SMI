@@ -165,19 +165,21 @@
                     @if (Auth::user()->role->role_name === 'Leader')
                         <li class="{{ Route::currentRouteName() === 'parts.create' ? 'active' : '' }}"><span><i class="fas fa-box-open"></i><a href="{{route('parts.create')}}"> Register Sparepart</a></span></li>
                     @endif
-                    <h4>Management Warehouse</h4>
-                    <li class="{{ Route::currentRouteName() === 'wh.index' ? 'active' : '' }}"><span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span></li>
                     @if (Auth::user()->role->role_name === 'Leader')
+                        <h4>Management Warehouse</h4>
+                        <li class="{{ Route::currentRouteName() === 'wh.index' ? 'active' : '' }}"><span><i class="fas fa-warehouse"></i><a href="{{route('wh.index')}}"> List Warehouse</a></span></li>
+                    
                         <li class="{{ Route::currentRouteName() === 'wh.create' ? 'active' : '' }}"><span><i class="fas fa-plus"></i><a href="{{route('wh.create')}}"> Register Warehouse</a></span></li>
                     @endif
-                    <h4>Management Supplier</h4>
-                    <li class="{{ Route::currentRouteName() === 'supplier.index' ? 'active' : '' }}"><span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span></li>
                     @if (Auth::user()->role->role_name === 'Leader')
+                        <h4>Management Supplier</h4>
+                        <li class="{{ Route::currentRouteName() === 'supplier.index' ? 'active' : '' }}"><span><i class="fas fa-users"></i><a href="{{route('supplier.index')}}"> List Supplier</a></span></li>
                         <li class="{{ Route::currentRouteName() === 'supplier.create' ? 'active' : '' }}"><span><i class="fas fa-user-plus"></i><a href="{{route('supplier.create')}}"> Register Supplier</a></span></li>
                     @endif
-            @if (Auth::user()->role->role_name === 'Leader')
                     <h4>Monitoring System</h4>
+                @if (Auth::user()->role->role_name === 'Leader')
                     <li class="{{ Route::currentRouteName() === 'auth.index' ? 'active' : '' }}"><span><i class="fas fa-file-alt"></i><a href="{{ route('auth.index') }}"> Activity Logs</a></span></li>
+                @endif
                     <li class="{{ Route::currentRouteName() === 'reports.daily' ? 'active' : '' }}"><span><i class="fas fa-calendar-alt"></i>
                         <form method="GET" action="{{ route('reports.daily') }}">
                             <select name="plant_id" onchange="this.form.submit()">
@@ -189,7 +191,6 @@
                         </form>
                     </span></li>
                 </div>
-            @endif
             </ul>
         </div>
     </div>
@@ -231,8 +232,8 @@
         const topnav = document.getElementById("top-nav");
         const main = document.getElementById("main");
         const overlay = document.getElementById("overlay");
-        main.style.height = `calc(100vh - ${topnav.offsetHeight}px)`;
-        overlay.style.height = `calc(100vh - ${topnav.offsetHeight}px)`;
+        main.style.height = `calc(100% - ${topnav.offsetHeight}px)`;
+        overlay.style.height = `calc(100% - ${topnav.offsetHeight}px)`;
     }
 
     document.getElementById("nav-btn").addEventListener("click", function () {

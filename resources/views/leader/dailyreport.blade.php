@@ -8,13 +8,22 @@
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="{{ asset('css/table_sect.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form_sect.css') }}">
 <link rel="stylesheet" href="{{ asset('css/main_style.css') }}">
 <body>
     @include('layouts.navigation')
     <section class="main" id="main">
-        <div class="header">
-            <h4>Daily Reports {{ $plants->firstWhere('id_whlocs', request('id_whlocs'))?->location ?? 'All Plants' }}</h4>
+        <div class="header" id="plantId">
+            <h4>Daily Reports {{ $plants->firstWhere('id_whlocs', request('plant_id'))?->location ?? 'All Plants' }}</h4>
             @include('layouts.filter_btn')
+        </div>
+        <div class="form-sect">
+            <form method="GET" action="{{ route('reports.daily') }}">
+                <label for="date">Filter by Date:</label>
+                <input type="date" name="date" id="date" value="{{ request('date') ?? now()->toDateString() }}">
+                <input type="hidden" name="plant_id" value="{{ request('plant_id') ?? session('plant_id') }}">
+                <input type="submit" value="Filter" class="regis-btn">
+            </form>
         </div>
         @foreach($plants as $plant)
             @if(request('plant_id') == 'all' || request('plant_id') == $plant->id_whlocs)
@@ -188,4 +197,15 @@
     </section>
 </body>
 @include('layouts.swal_fire')
+<script>
+    function plantId(id_whlocs){
+        fetch(`/reports/daily/${id_whlocs}`)
+            .then(response => response.json()) // Bukan `.json()` untuk melihat isi asli
+            .then(data => {
+                document.getElementById("plant_id").textContent = data.location;
+
+                //console.log("Data asli dari API:", text); // Lihat apakah ini JSON valid atau HTML/error
+            });
+    }
+</script>
 </html>

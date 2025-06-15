@@ -9,12 +9,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <link rel="stylesheet" href="{{ asset('css/table_sect.css') }}">
 <link rel="stylesheet" href="{{ asset('css/main_style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/form_sect.css') }}">
 <body>
     @include('layouts.navigation')
     <section class="main" id="main">
         <div class="header">
             <h4>Activity Logs</h4>
             @include('layouts.filter_btn')
+        </div>
+        <div class="form-sect">
+            <form method="GET" action="{{ route('auth.index') }}">
+                <label for="date">Filter by Date:</label>
+                <input type="date" name="date" id="date" value="{{ request('date') ?? now()->toDateString() }}">
+                <input type="submit" value="Filter" class="regis-btn">
+            </form>
         </div>
         <div class="table-sect">
             <table>

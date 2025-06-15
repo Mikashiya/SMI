@@ -56,7 +56,9 @@
                     <option value="" disabled selected>Select Transaction Type</option>
                     <option value="in">In</option>
                     <option value="out">Out</option>
-                    <option value="transfer">Transfer</option>
+                    @if (Auth::user()->role->role_name === 'Leader')
+                        <option value="transfer">Transfer</option>
+                    @endif
                 </select>
                 <div>
                     <div id="formIn" style="display: none;">@include('layouts.part_in')</div>

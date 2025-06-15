@@ -66,21 +66,21 @@ class StockMovementController extends Controller
         // Set the stock movement details
         $stockMovement->mvt_type = $request->mvt_type;
         $stockMovement->qty = $request->qty;
-        $stockMovement->from_loc = $request->part_id; // Assuming from_loc is the same as part_id
-        $stockMovement->to_loc = $request->to_loc;
         $stockMovement->description = $request->desc;
         $stockMovement->pic_wh = $request->pic_wh;
         $stockMovement->pic_item = $request->pic_item;
-        $stockMovement->price = $request->price;
-        $stockMovement->supplier = $request->supplier;
         $stockMovement->part_use = $request->part_use;
         // Save the stock movement record
         if ($request->mvt_type === 'in') {
             $stockMovement->date_in = $request->date;
+            $stockMovement->price = $request->price;
+            $stockMovement->supplier = $request->supplier;
         } elseif ($request->mvt_type === 'out') {
             $stockMovement->date_out = $request->date;
         } elseif ($request->mvt_type === 'transfer') {
             $stockMovement->date_transfer = $request->date;
+            $stockMovement->from_loc = $request->part_id; // Assuming from_loc is the same as part_id
+            $stockMovement->to_loc = $request->to_loc;
         }
         $stockMovement->save();
 
