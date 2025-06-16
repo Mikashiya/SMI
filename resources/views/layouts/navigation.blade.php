@@ -100,7 +100,7 @@
     .top-nav h3{
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #7B95F9;
-        margin-left: 7.5vh;
+        margin-left: 15vh;
     }
 
     .logout-btn button{
@@ -125,7 +125,6 @@
 
     .nav-btn button{
         text-decoration: none;
-        color: #7B95F9;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         margin-left: 2.5vh;
         top: 50%;
@@ -137,6 +136,7 @@
         border: none;
         font-size: 15px;
         cursor: pointer;
+        color: #7B95F9;
     }
 
     .nav-btn button:hover{
@@ -149,7 +149,7 @@
             <img src="{{asset('img/logo.png')}}" alt="Logo">
             <ul>
                 <div class="side-nav-links">
-                    <li class="{{ Route::currentRouteName() === 'leader.dashboard' ? 'active' : '' }}"><span><i class="fas fa-home"></i><a href="{{route('leader.dashboard')}}"> Dashboard</a></span></li>
+                    <li class="{{ Route::currentRouteName() === 'main.dashboard' ? 'active' : '' }}"><span><i class="fas fa-home"></i><a href="{{route('main.dashboard')}}"> Dashboard</a></span></li>
                     <li class="{{ Route::currentRouteName() === 'mvt.create' ? 'active' : '' }}"><span><i class="fas fa-file-signature"></i><a href="{{route('mvt.create')}}"> Card Movement Parts</a></span></li>
                     <h4>Management Sparepart</h4>
                     <li class="{{ Route::currentRouteName() === 'parts.index' ? 'active' : '' }}"><span><i class="fas fa-list"></i>

@@ -88,37 +88,37 @@
                                 <th>
                                     Price
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(0)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(9)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Supplier
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(10)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Date Inbound
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(11)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Date Outbound
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(12)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Date Transfer
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(13)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Description
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(14)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                             </tr>
@@ -140,7 +140,7 @@
                                     <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->date_in }}</td>
                                     <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->date_out }}</td>
                                     <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->date_transfer }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->desc }}</td>
+                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->description }}</td>
                                 </tr>
                             @empty
                                 <td colspan="15">Empty</td>

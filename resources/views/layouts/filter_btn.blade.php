@@ -20,15 +20,14 @@
     }
 
     .filter-overlay{
-        top: 10%;
         position: absolute;
         display: none;
-        background-color: #ebebeb;
+        background-color: #f8f8f8;
         border: #969696 2px solid;
         padding: 5px;
         z-index: 1;
         box-shadow: #969696;
-        margin-left: 30vh;
+        width: auto;
     }
 
     .filter-overlay p{

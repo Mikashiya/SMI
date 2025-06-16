@@ -2,7 +2,7 @@
 .overlay{
     display: none;
     position: absolute;
-    width: 50vh;
+    width: auto;
     max-height: 100%;
     top: 0;
     right: 0;
@@ -33,10 +33,9 @@
 
 .overlay-top i{
     color: #424242;
-    top: 2vh;
-    right: 2.5vh;
-    position: absolute;
+    float: right;
     padding: 5px;
+    margin: 2.5vh;
     border-radius: 2px;
     transition: .5s;
     cursor: pointer;

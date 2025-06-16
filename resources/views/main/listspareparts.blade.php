@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="{{ asset('css/main_style.css') }}">
 <style>
     .table-sect th:nth-child(1){
-        width: 6vh;
+        width: auto;
     }
 
     .table-sect th:nth-child(8), .table-sect th:nth-child(9), .table-sect th:nth-child(10){
@@ -20,11 +20,11 @@
     }
 
     .table-sect th:nth-child(2){
-        width: 10vh;
+        width: auto;
     }
 
     .table-sect th:nth-child(11){
-        width: 20vh;
+        width: auto;
      }
 
     .table-sect th:nth-child(3), .table-sect th:nth-child(5), .table-sect th:nth-child(6){

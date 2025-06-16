@@ -16,7 +16,7 @@ class WarehousesController extends Controller
     public function index()
     {
         $warehouses = warehouses::all();
-        return view('leader.listwarehouses', compact('warehouses'));
+        return view('main.listwarehouses', compact('warehouses'));
 
     }
 
@@ -26,7 +26,7 @@ class WarehousesController extends Controller
     public function create()
     {
         $choices = wh_locs::pluck('location', 'id_whlocs');
-        return view('leader.registwh', compact('choices'));
+        return view('main.registwh', compact('choices'));
     }
 
     /**
@@ -112,7 +112,7 @@ class WarehousesController extends Controller
         $selectedType = $warehouse->wh_type ?? null;
 
         $choices = wh_locs::pluck('location', 'id_whlocs');
-        return view('leader.conjurewh', compact('warehouse', 'choices', 'selectedLoc', 'selectedType'));
+        return view('main.conjurewh', compact('warehouse', 'choices', 'selectedLoc', 'selectedType'));
     }
 
     /**

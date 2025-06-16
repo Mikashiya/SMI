@@ -137,7 +137,7 @@
                             @endif
                         </tr>
                     @empty
-                        <td colspan="11">Empty</td>
+                        <td colspan="9">Empty</td>
                     @endforelse
                 </tbody>
             </table>

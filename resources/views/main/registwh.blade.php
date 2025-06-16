@@ -12,7 +12,7 @@
     @include('layouts.navigation')
     <section class="main" id="main">
         <div class="header">
-            <h4>Register New Part</h4>
+            <h4>Register New Warehouse</h4>
         </div>
         <div class="form-sect">
             <form action="{{ route('wh.store') }}" method="POST">

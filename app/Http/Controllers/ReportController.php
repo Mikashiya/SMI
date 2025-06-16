@@ -55,6 +55,6 @@ class ReportController extends Controller
 
         //$movements = collect($movements);
 
-        return view('leader.dailyreport', compact('movements', 'plantId', 'date'));
+        return view('main.dailyreport', compact('movements', 'plantId', 'date'));
     }
 }

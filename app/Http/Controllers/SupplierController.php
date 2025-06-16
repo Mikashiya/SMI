@@ -15,7 +15,7 @@ class SupplierController extends Controller
     {
         $supplier = suppliers::all();
 
-        return view('leader.listsuppliers', compact('supplier'));
+        return view('main.listsuppliers', compact('supplier'));
     }
 
     /**
@@ -23,7 +23,7 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        return view('leader.registspl');
+        return view('main.registspl');
     }
 
     /**
@@ -67,7 +67,7 @@ class SupplierController extends Controller
     {
         $supplier = suppliers::findOrFail($spl);
 
-        return view('leader.conjurespl', compact('supplier'));
+        return view('main.conjurespl', compact('supplier'));
 
         
     }

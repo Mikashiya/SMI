@@ -98,7 +98,7 @@
                             <td onclick="overlayOn('{{ $act->id }}')">{{ $act->created_at }}</td>
                         </tr>
                     @empty
-                        <td colspan="11">Empty</td>
+                        <td colspan="9">Empty</td>
                     @endforelse
                 </tbody>
             </table>
