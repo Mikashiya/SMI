@@ -20,7 +20,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 
 Route::middleware([AuthMiddleware::class, ReportMiddleware::class])->group(function () {
-    Route::get('/dashboard', function() { return view('leader.dashboard'); })->middleware('auth')->name('leader.dashboard');
+    Route::get('/dashboard', function() { return view('main.dashboard'); })->middleware('auth')->name('main.dashboard');
     Route::resource('/parts', AllocationsController::class);
     Route::resource('/wh', WarehousesController::class);
     Route::resource('/supplier', SupplierController::class);

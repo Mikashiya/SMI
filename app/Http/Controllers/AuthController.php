@@ -27,7 +27,7 @@ class AuthController extends Controller
 
         $actlogs = ActivityLog::with('custom_users')->orderBy('created_at', 'desc')->whereDate('created_at', $date)->get();
 
-        return view('leader.actlog', compact('actlogs', 'date'));
+        return view('main.actlog', compact('actlogs', 'date'));
     }
 
     /**
@@ -74,9 +74,9 @@ class AuthController extends Controller
 
             // Redirect sesuai role
             if ($user->role->role_name == 'Leader') {
-                return redirect()->route('leader.dashboard');
+                return redirect()->route('main.dashboard');
             } elseif ($user->role->role_name == 'Staff') {
-                return redirect()->route('leader.dashboard');
+                return redirect()->route('main.dashboard');
             }
         }
         //dd($request->all());

@@ -108,15 +108,15 @@
                 <tbody>
                     @forelse($warehouses as $wh)
                         <tr>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')"></td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ optional($wh->whlocs)->location ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->wh_type }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->shelf_count }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->shelf_ids }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->cabs_count }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->cabs_ids }}</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->capacity }} Items</td>
-                            <td onclick="overlayOn('{{ $wh->id_wh }}')">{{ $wh->temp_ctrl }}</td>
+                            <td></td>
+                            <td>{{ optional($wh->whlocs)->location ?? 'Not Found' }}</td>
+                            <td>{{ $wh->wh_type }}</td>
+                            <td>{{ $wh->shelf_count }}</td>
+                            <td>{{ $wh->shelf_ids }}</td>
+                            <td>{{ $wh->cabs_count }}</td>
+                            <td>{{ $wh->cabs_ids }}</td>
+                            <td>{{ $wh->capacity }} Items</td>
+                            <td>{{ $wh->temp_ctrl }}</td>
                             @if (Auth::user()->role->role_name === 'Leader')
                                 <td style="cursor:default;">
                                     <span style="float: left;">
@@ -137,7 +137,7 @@
                             @endif
                         </tr>
                     @empty
-                        <td colspan="11">Empty</td>
+                        <td colspan="9">Empty</td>
                     @endforelse
                 </tbody>
             </table>

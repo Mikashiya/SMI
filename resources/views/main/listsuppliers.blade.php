@@ -79,7 +79,7 @@
                             @endif
                         </tr>
                     @empty
-                        <td colspan="11">Empty</td>
+                        <td colspan="3">Empty</td>
                     @endforelse
                 </tbody>
             </table>

@@ -33,18 +33,24 @@ class AllocationsController extends Controller
         $plantId = wh_locs::where('id_whlocs', $request->query('id_whlocs'))->value('id_whlocs');
 
         if(!$plantId || $plantId == 'all'){
-            $allocations = allocations::with('spareparts', 'warehouses')->get();
+            $allocations = allocations::with('spareparts', 'warehouses')->get()->map(function ($allocations){
+                $allocations->reminder = ($allocations->e_stock < $allocations->s_stock) ? 'NG' : 'OK';
+                return $allocations;
+            });
         }
         else{
             $allocations = allocations::with('spareparts')->whereHas('warehouses', function ($q) use ($plantId) {
                 $q->where('id_whlocs', $plantId);
-            })->get();
+            })->get()->map(function ($allocations){
+                $allocations->reminder = ($allocations->e_stock < $allocations->s_stock) ? 'NG' : 'OK';
+                return $allocations;
+            });
         }
 
         
         
 
-
+        
 
         //dd($warehouses);
         //dd($request->all());
@@ -53,7 +59,7 @@ class AllocationsController extends Controller
 
         $allocations = collect($allocations);
 
-        return view('leader.listspareparts', compact('allocations', 'plants'));
+        return view('main.listspareparts', compact('allocations', 'plants'));
     }
 
     /**
@@ -65,7 +71,7 @@ class AllocationsController extends Controller
         $choices = warehouses::select(DB::raw("CONCAT(wh_type, ' - ', (SELECT location FROM whlocs WHERE whlocs.id_whlocs = warehouses.id_whlocs)) AS wh_display"), 'id_wh')->get()->pluck('wh_display', 'id_wh');
 
         $spl = suppliers::get()->pluck('spl_name', 'id_spl');
-        return view('leader.registparts', compact('choices', 'spl'));
+        return view('main.registparts', compact('choices', 'spl'));
 
     }
 
@@ -153,11 +159,12 @@ class AllocationsController extends Controller
             'reminder'=>$request->f_stock < $request->s_stock ? 'NG' : 'OK'
         ]);
 
+
         $smvt = stockmovements::create([
             'mvt_type' => 'in',
             'qty' => $request->f_stock,
             'from_loc' => null, // Assuming no from location for inbound
-            'to_loc' => $warehouses->id_wh,
+            'to_loc' => null, // Assuming no to location for inbound
             'description' => 'Inbound stock for sparepart: ' . $spareparts->part_name,
             'pic_wh' => $request->pic_wh,
             'pic_item' => $request->pic_order,
@@ -166,8 +173,10 @@ class AllocationsController extends Controller
             'part_use' => $request->usage,
             'date_in' => $request->date_in,
             // Assuming id_alct is the allocation ID
-            'id_alct' => $allocations->id_alct
+            'id_alct' => $allocations->id_alct,
+            'user_id' => Auth::id(),
         ]);
+
         // Commit the transaction
         //DB::commit();
        
@@ -235,7 +244,7 @@ class AllocationsController extends Controller
 
         $selectedSpl = $parts->spareparts->supplier->id_spl ?? null;
 
-        return view('leader.conjureparts', compact('choices', 'parts', 'selectedLoc', 'spl', 'selectedSpl'));
+        return view('main.conjureparts', compact('choices', 'parts', 'selectedLoc', 'spl', 'selectedSpl'));
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use Illuminate\Support\Facades\Hash;
 
 class CustomUser extends Authenticatable
 {
@@ -17,6 +17,7 @@ class CustomUser extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
     protected $primaryKey = 'id';
 
     public function role()
@@ -28,6 +29,21 @@ class CustomUser extends Authenticatable
     {
         return $this->hasMany(ActivityLog::class, 'user_id', 'id');
     }
+
+    public function stc_mvt()
+    {
+        return $this->hasMany(stockmovements::class, 'user_id', 'user_id');
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = Hash::make($value);
+    }
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
 
     public function isLeader()
     {

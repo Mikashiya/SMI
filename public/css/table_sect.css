@@ -1,5 +1,5 @@
 .table-sect{
-    margin-top: 10vh;
+    margin-top: 15vh;
     max-height: 50vh;
     margin-left: 3px;
     margin-bottom: 10vh;
@@ -24,6 +24,7 @@
     z-index: 0;
     top: 0;
     height: 3vh;
+    width: auto;
 }
 
 .table-sect tbody{
@@ -46,9 +47,9 @@
 .table-sect td{
     border: #969696 1px solid;
     padding: 5px;
-    cursor: pointer;
     text-align: center;
     background-color: #f8f8f8;
+    height: 5vh;
 }
 
 .table-sect td i{
@@ -59,7 +60,7 @@
 
 .table-sect td span{
     display: flex; 
-    max-height: 3vh;
+    height: auto;
     padding: 5px;
     transition: .5s;
     border-radius: 5px;

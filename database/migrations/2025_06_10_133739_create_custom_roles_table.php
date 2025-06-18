@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('custom_roles', function (Blueprint $table) {
             $table->id(); // Primary key for the roles table
-            $table->string('role_name', 50)->unique(); // Unique role name
-            $table->string('description', 255)->nullable(); // Optional description of the role
+            $table->string('role_name', 10)->unique(); // Unique role name
+            $table->text('description')->nullable(); // Optional description of the role
             $table->boolean('is_active')->default(true); // Active status of the role
             $table->timestamps();
         });

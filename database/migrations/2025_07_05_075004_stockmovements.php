@@ -15,19 +15,21 @@ return new class extends Migration
             $table->id('id_smvt');
             $table->enum('mvt_type', ['in', 'out', 'transfer']);
             $table->integer('qty');
-            $table->string('from_loc')->nullable();
-            $table->string('to_loc')->nullable();
+            $table->string('from_loc', 9)->nullable();
+            $table->string('to_loc', 9)->nullable();
             $table->text('description')->nullable();
-            $table->string('pic_wh')->nullable();
-            $table->string('pic_item')->nullable();
-            $table->string('price')->nullable();
-            $table->string('supplier')->nullable();
-            $table->string('part_use')->nullable();
+            $table->string('pic_wh', 30);
+            $table->string('pic_item', 30);
+            $table->decimal('price', 12, 2)->nullable();
+            $table->string('supplier', 30)->nullable();
+            $table->string('part_use', 50)->nullable();
             $table->date('date_in')->nullable();
             $table->date('date_out')->nullable();
             $table->date('date_transfer')->nullable();
             $table->char('id_alct', 9);
             $table->foreign('id_alct')->references('id_alct')->on('allocations');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('custom_users');
             $table->timestamps();
         });
     }

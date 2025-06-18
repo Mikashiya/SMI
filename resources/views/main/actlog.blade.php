@@ -87,18 +87,18 @@
                 <tbody>
                     @forelse($actlogs as $act)
                         <tr>
-                            <td onclick="overlayOn('{{ $act->id }}')"></td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ optional($act->custom_users)->username ?? 'Not Found' }}</td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ $act->role }}</td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ $act->action }}</td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ $act->target }}</td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ $act->description }}</td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ $act->ip_address }}</td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ $act->user_agent }}</td>
-                            <td onclick="overlayOn('{{ $act->id }}')">{{ $act->created_at }}</td>
+                            <td></td>
+                            <td>{{ optional($act->custom_users)->username ?? 'Not Found' }}</td>
+                            <td>{{ $act->role }}</td>
+                            <td>{{ $act->action }}</td>
+                            <td>{{ $act->target }}</td>
+                            <td>{{ $act->description }}</td>
+                            <td>{{ $act->ip_address }}</td>
+                            <td>{{ $act->user_agent }}</td>
+                            <td>{{ $act->created_at }}</td>
                         </tr>
                     @empty
-                        <td colspan="11">Empty</td>
+                        <td colspan="9">Empty</td>
                     @endforelse
                 </tbody>
             </table>

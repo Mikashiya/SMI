@@ -29,7 +29,7 @@ class StockMovementController extends Controller
         // Retrieve all parts (allocations) to display in the form
         $parts = allocations::all();
         // Pass the parts and transaction type to the view
-        return view('leader.partmovements', compact('parts', 'transactionType'));
+        return view('main.partmovements', compact('parts', 'transactionType'));
     }
 
     /**
@@ -66,7 +66,7 @@ class StockMovementController extends Controller
         // Set the stock movement details
         $stockMovement->mvt_type = $request->mvt_type;
         $stockMovement->qty = $request->qty;
-        $stockMovement->description = $request->desc;
+        $stockMovement->description = $request->description;
         $stockMovement->pic_wh = $request->pic_wh;
         $stockMovement->pic_item = $request->pic_item;
         $stockMovement->part_use = $request->part_use;
@@ -82,6 +82,9 @@ class StockMovementController extends Controller
             $stockMovement->from_loc = $request->part_id; // Assuming from_loc is the same as part_id
             $stockMovement->to_loc = $request->to_loc;
         }
+
+        $stockMovement['user_id'] = Auth::id();
+
         $stockMovement->save();
 
         // Update the allocation status if necessary
@@ -143,7 +146,7 @@ class StockMovementController extends Controller
             );
         }
         // Optionally, you can return the created stock movement
-        return redirect()->back()->with('success', 'Stock movement created successfully', ['data' => $stockMovement]);
+        return redirect()->back()->with('success', 'Stock movement created successfully', ['data' => $stockMovement['id_alct']]);
     }
 
     /**

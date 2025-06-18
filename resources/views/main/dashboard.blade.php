@@ -22,7 +22,7 @@
         color: #424242;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         padding: 1px;
-        width: 15%;
+        width: auto;
         text-align: center;
         margin-left: auto;
         margin-right: auto;
@@ -37,7 +37,7 @@
         width: 90%;
         margin-left: auto;
         margin-right: auto;
-        line-height: 3vh;
+        line-height: 5vh;
     }
 </style>
 <body>
@@ -51,12 +51,12 @@
                 <img src="{{asset('img/comp.jpg')}}" alt="Company Photo">
             </div>
             <div class="title">
-                <h4>Tentang Perusahaan</h4>
+                <h4>About Company</h4>
             </div>
             <div class="text">
-                <p>PT IndoTech Parts adalah perusahaan yang bergerak di bidang sparepart  suku cadang kendaraan, baik untuk roda dua maupun roda empat. 
-                    Didirikan tahun 2025 dengan semangat untuk mendukung kemajuan industri otomotif nasional, 
-                    kami berkomitmen menyediakan sparepart berkualitas tinggi yang andal dan sesuai dengan standar internasional.
+                <p>PT IndoTech Parts is a company specializing in automotive spare parts for both two-wheeled and four-wheeled vehicles. 
+                    Established in 2025 with a vision to support the advancement of the national automotive industry, 
+                    we are committed to providing high-quality, reliable spare parts that meet international standards.
                 </p>
             </div>
         </div>
