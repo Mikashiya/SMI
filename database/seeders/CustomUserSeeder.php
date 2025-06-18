@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CustomUser;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -13,23 +14,15 @@ class CustomUserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('custom_users')->insert([
-            [
-                'username' => '00649',
-                'password' => bcrypt('test123'),
-                'id_role' => 1, // Assuming 1 is the ID for the 'leader' role
-            ],
-            [
-                'username' => '00650',
-                'password' => bcrypt('test120'),
-                'id_role' => 2, // Assuming 2 is the ID for the 'user' role
-            ],
-            [
-                'username' => '00651',
-                'password' => bcrypt('test121'),
-                'id_role' => 2, // Another user
-            ],
-        ]);
+        $users = [
+            ['username' => '00649', 'password' => 'test123', 'id_role' => 1],
+            ['username' => '00650', 'password' => 'test120', 'id_role' => 2],
+            ['username' => '00651', 'password' => 'test121', 'id_role' => 2],
+        ];
+
+        foreach ($users as $user) {
+            CustomUser::create($user); // Mutator akan hash password otomatis
+        }
         // Note: Passwords should be hashed in a real application
         // You can use Hash::make('test123') to hash the passwords before inserting
         // Example: DB::table('users')->insert(['username' => '00649', 'password' => Hash::make('test123'), 'id_role' => 1]);

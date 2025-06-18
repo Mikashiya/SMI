@@ -232,8 +232,8 @@
         const topnav = document.getElementById("top-nav");
         const main = document.getElementById("main");
         const overlay = document.getElementById("overlay");
-        main.style.height = `calc(100% - ${topnav.offsetHeight}px)`;
-        overlay.style.height = `calc(100% - ${topnav.offsetHeight}px)`;
+        main.style.height = `calc(100% + ${topnav.offsetHeight}px)`;
+        overlay.style.height = `calc(100% + ${topnav.offsetHeight}px)`;
     }
 
     document.getElementById("nav-btn").addEventListener("click", function () {

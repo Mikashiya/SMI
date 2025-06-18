@@ -20,12 +20,12 @@
     }
 
     .filter-overlay{
-        position: relative;
+        position: absolute;
         display: none;
         background-color: #f8f8f8;
         border: #969696 2px solid;
         padding: 5px;
-        z-index: 1000;
+        z-index: 1;
         box-shadow: #969696;
         width: 50vh;
     }

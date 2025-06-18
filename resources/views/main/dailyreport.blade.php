@@ -38,7 +38,7 @@
                                     </span>
                                 </th>
                                 <th>
-                                    Username PIC Reports
+                                    ID PIC Reports
                                     <span class="filter-container">
                                         <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
                                     </span>
@@ -132,22 +132,22 @@
                         <tbody>
                             @forelse($movements->where('allocations.warehouses.id_whlocs', $plant->id_whlocs) as $mvt)
                                 <tr>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')"></td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ optional($mvt->custom_users)->username ?? 'Not Found' }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->mvt_type }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ optional($mvt->allocations)->id_alct ?? 'Not Found' }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->qty }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->from_loc }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->to_loc }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->part_use }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->pic_wh }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->pic_item }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->price }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->supplier }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->date_in }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->date_out }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->date_transfer }}</td>
-                                    <td onclick="overlayOn('{{ $mvt->id }}')">{{ $mvt->description }}</td>
+                                    <td></td>
+                                    <td>{{ optional($mvt->custom_users)->username ?? 'Not Found' }}</td>
+                                    <td>{{ $mvt->mvt_type }}</td>
+                                    <td>{{ optional($mvt->allocations)->id_alct ?? 'Not Found' }}</td>
+                                    <td>{{ $mvt->qty }}</td>
+                                    <td>{{ $mvt->from_loc }}</td>
+                                    <td>{{ $mvt->to_loc }}</td>
+                                    <td>{{ $mvt->part_use }}</td>
+                                    <td>{{ $mvt->pic_wh }}</td>
+                                    <td>{{ $mvt->pic_item }}</td>
+                                    <td>{{ $mvt->price }}</td>
+                                    <td>{{ $mvt->supplier }}</td>
+                                    <td>{{ $mvt->date_in }}</td>
+                                    <td>{{ $mvt->date_out }}</td>
+                                    <td>{{ $mvt->date_transfer }}</td>
+                                    <td>{{ $mvt->description }}</td>
                                 </tr>
                             @empty
                                 <td colspan="16">Empty</td>
@@ -160,7 +160,7 @@
                         <p>No:</p><input type="text" placeholder="Input.." onkeyup="filterTable(0, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-1">
-                        <p>Username PIC Reports:</p><input type="text" placeholder="Input.." onkeyup="filterTable(1, this.value)">
+                        <p>ID PIC Reports:</p><input type="text" placeholder="Input.." onkeyup="filterTable(1, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-2">
                         <p>Transaction Type:</p><input type="text" placeholder="Input.." onkeyup="filterTable(2, this.value)">

@@ -209,35 +209,37 @@
                 <h3>Part Movement Information</h3>
                 <div class="overlay-note">
                     <div class="overlay-note">
+                    @isset($parts)
                         <div class="part-in">
                             <h4>Part In</h4>
-                            <span><h4>Last Date In: </h4><p><span id="date_in_in"></span></p></span>
-                            <span><h4>Stock: </h4><p><span id="stock-in"></span></p></span>
-                            <span><h4>Part Usage: </h4><p><span id="part-use-in"></span></p></span>
-                            <span><h4>PIC WH: </h4><p><span id="pic-wh-in"></span></p></span>
-                            <span><h4>PIC Request: </h4><p><span id="pic-req-in"></span></p></span>
-                            <span><h4>Note: </h4><p><span id="part-desc-in"></span></p></span>
+                            <span><h4>Last Date In: </h4><p><span id="date_in-{{ $parts->id_alct }}-in"></span></p></span>
+                            <span><h4>Stock: </h4><p><span id="stock-{{ $parts->id_alct }}-in"></span></p></span>
+                            <span><h4>Part Usage: </h4><p><span id="part-use-{{ $parts->id_alct }}-in"></span></p></span>
+                            <span><h4>PIC WH: </h4><p><span id="pic-wh-{{ $parts->id_alct }}-in"></span></p></span>
+                            <span><h4>PIC Request: </h4><p><span id="pic-req-{{ $parts->id_alct }}-in"></span></p></span>
+                            <span><h4>Note: </h4><p><span id="part-desc-{{ $parts->id_alct }}-in"></span></p></span>
                         </div>
                         <div class="part-out">
                             <h4>Part Out</h4>
-                            <span><h4>Last Date Out: </h4><p><span id="date_out_out"></span></p></span>
-                            <span><h4>Stock: </h4><p><span id="stock-out"></span></p></span>
-                            <span><h4>Part Usage: </h4><p><span id="part-use-out"></span></p></span>
-                            <span><h4>PIC WH: </h4><p><span id="pic-wh-out"></span></p></span>
-                            <span><h4>PIC Request: </h4><p><span id="pic-req-out"></span></p></span>
-                            <span><h4>Note: </h4><p><span id="part-desc-out"></span></p></span> 
+                            <span><h4>Last Date Out: </h4><p><span id="date_out-{{ $parts->id_alct }}-out"></span></p></span>
+                            <span><h4>Stock: </h4><p><span id="stock-{{ $parts->id_alct }}-out"></span></p></span>
+                            <span><h4>Part Usage: </h4><p><span id="part-use-{{ $parts->id_alct }}-out"></span></p></span>
+                            <span><h4>PIC WH: </h4><p><span id="pic-wh-{{ $parts->id_alct }}-out"></span></p></span>
+                            <span><h4>PIC Request: </h4><p><span id="pic-req-{{ $parts->id_alct }}-out"></span></p></span>
+                            <span><h4>Note: </h4><p><span id="part-desc-{{ $parts->id_alct }}-out"></span></p></span> 
                         </div>
                         <div class="part-transfer">
                             <h4>Part Transfer</h4>
-                            <span><h4>Last Date Transfer: </h4><p><span id="date_transfer_transfer"></span></p></span>
-                            <span><h4>Stock: </h4><p><span id="stock-transfer"></span></p></span>
-                            <span><h4>To Location ID: </h4><p><span id="part-loc-transfer"></span></p></span>
-                            <span><h4>PIC WH: </h4><p><span id="pic-wh-transfer"></span></p></span>
-                            <span><h4>PIC Request: </h4><p><span id="pic-req-transfer"></span></p></span>
-                            <span><h4>Part Usage: </h4><p><span id="part-use-transfer"></span></p></span>
-                            <span><h4>Note: </h4><p><span id="part-desc-transfer"></span></p></span>   
+                            <span><h4>Last Date Transfer: </h4><p><span id="date_transfer-{{ $parts->id_alct }}-transfer"></span></p></span>
+                            <span><h4>Stock: </h4><p><span id="stock-{{ $parts->id_alct }}-transfer"></span></p></span>
+                            <span><h4>To Location ID: </h4><p><span id="part-loc-{{ $parts->id_alct }}-transfer"></span></p></span>
+                            <span><h4>PIC WH: </h4><p><span id="pic-wh-{{ $parts->id_alct }}-transfer"></span></p></span>
+                            <span><h4>PIC Request: </h4><p><span id="pic-req-{{ $parts->id_alct }}-transfer"></span></p></span>
+                            <span><h4>Part Usage: </h4><p><span id="part-use-{{ $parts->id_alct }}-transfer"></span></p></span>
+                            <span><h4>Note: </h4><p><span id="part-desc-{{ $parts->id_alct }}-transfer"></span></p></span>   
                         </div>
                     </div>
+                @endisset
                 </div>
             </div>
         </div>
@@ -269,28 +271,25 @@
                 document.getElementById("wh_loc").textContent = data.warehouses.whlocs.location;
                 document.getElementById("spl_name").textContent = data.spareparts.supplier.spl_name;
 
+                    data.stc_mvt.forEach(stc_mvt =>{
 
-                data.stc_mvt.forEach(stc_mvt =>{
-                    document.getElementById(`stock-${stc_mvt.mvt_type}`).textContent = stc_mvt.qty ?? 'N/A';
-                    document.getElementById(`pic-wh-${stc_mvt.mvt_type}`).textContent = stc_mvt.pic_wh ?? 'N/A';
-                    document.getElementById(`pic-req-${stc_mvt.mvt_type}`).textContent = stc_mvt.pic_item ?? 'N/A';
-                    document.getElementById(`part-desc-${stc_mvt.mvt_type}`).textContent = stc_mvt.description ?? 'N/A';
-                    document.getElementById(`part-use-${stc_mvt.mvt_type}`).textContent = stc_mvt.part_use ?? 'N/A';
-                    document.getElementById(`part-loc-transfer`).textContent = stc_mvt.to_loc ?? 'N/A';
+                        document.getElementById(`stock-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.qty ?? 'N/A';
+                        document.getElementById(`pic-wh-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.pic_wh ?? 'N/A';
+                        document.getElementById(`pic-req-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.pic_item ?? 'N/A';
+                        document.getElementById(`part-desc-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.description ?? 'N/A';
+                        document.getElementById(`part-use-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.part_use ?? 'N/A';
+                        document.getElementById(`part-loc-${data.id_alct}-transfer`).textContent = stc_mvt.to_loc ?? 'N/A';
 
-                    if (stc_mvt.date_in) {
-                        document.getElementById(`date_in_${stc_mvt.mvt_type}`).textContent = stc_mvt.date_in;
-                    }
-                    if (stc_mvt.date_out) {
-                        document.getElementById(`date_out_${stc_mvt.mvt_type}`).textContent = stc_mvt.date_out;
-                    }
-                    if (stc_mvt.date_transfer) {
-                        document.getElementById(`date_transfer_${stc_mvt.mvt_type}`).textContent = stc_mvt.date_transfer;
-                    }
-
-
-                })
-                
+                        if (stc_mvt.date_in) {
+                            document.getElementById(`date_in-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.date_in;
+                        }
+                        if (stc_mvt.date_out) {
+                            document.getElementById(`date_out-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.date_out;
+                        }
+                        if (stc_mvt.date_transfer) {
+                            document.getElementById(`date_transfer-${data.id_alct}-${stc_mvt.mvt_type}`).textContent = stc_mvt.date_transfer;
+                        }
+                    })
             });
 
         let overlay = document.getElementById("overlay");

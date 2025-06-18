@@ -5,10 +5,10 @@ body{
 
 .main{
     max-width: 100%;
-    position: relative;
+    position: absolute;
     transition: all .5s ease-in-out;
-    max-height: 100%;
     overflow-y: auto;
+    max-height: 100%;
 }
 
 .header{

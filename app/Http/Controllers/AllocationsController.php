@@ -164,7 +164,7 @@ class AllocationsController extends Controller
             'mvt_type' => 'in',
             'qty' => $request->f_stock,
             'from_loc' => null, // Assuming no from location for inbound
-            'to_loc' => $warehouses->id_wh,
+            'to_loc' => null, // Assuming no to location for inbound
             'description' => 'Inbound stock for sparepart: ' . $spareparts->part_name,
             'pic_wh' => $request->pic_wh,
             'pic_item' => $request->pic_order,

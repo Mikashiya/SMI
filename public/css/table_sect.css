@@ -15,7 +15,6 @@
     width: 200%;
     height: 100%;
     gap: 0;
-    position: relative;
 }
 
 .table-sect th{
@@ -48,7 +47,6 @@
 .table-sect td{
     border: #969696 1px solid;
     padding: 5px;
-    cursor: pointer;
     text-align: center;
     background-color: #f8f8f8;
     height: 5vh;
@@ -62,7 +60,7 @@
 
 .table-sect td span{
     display: flex; 
-    max-height: 3vh;
+    height: auto;
     padding: 5px;
     transition: .5s;
     border-radius: 5px;
