@@ -51,13 +51,13 @@
                                 <th>
                                     No
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(0)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(0, event)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Part ID
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(1, event)"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>

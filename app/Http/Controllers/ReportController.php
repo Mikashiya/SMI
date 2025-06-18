@@ -24,7 +24,7 @@ class ReportController extends Controller
         ? Carbon::parse($request->input('date'))->startOfDay()
         : Carbon::today();
 
-        $query = stockmovements::with(['allocations.warehouses'])->orderBy('created_at', 'desc');
+        $query = stockmovements::with(['allocations.warehouses', 'custom_users'])->orderBy('created_at', 'desc');
 
         // Filter tanggal (selalu dipakai)
         $query->whereDate('created_at', $date);
@@ -34,9 +34,12 @@ class ReportController extends Controller
             $query->whereHas('allocations.warehouses', function ($q) use ($plantId) {
                 $q->where('id_whlocs', $plantId);
             });
+        } else {
+            return response()->json(['error' => 'Data tidak ditemukan']);
         }
 
-        $movements = $query->get();
+
+        $movements = $query->with('custom_users')->get();
 
         //if (!$plantId || $plantId == 'all') {
         //    $movements = stockmovements::with(['allocations.warehouses'])->orderBy('created_at', 'desc')->get();
@@ -53,7 +56,10 @@ class ReportController extends Controller
 
         $plants = wh_locs::all();
 
-        //$movements = collect($movements);
+        $movements = collect($movements);
+
+        //dump($movements);
+
 
         return view('main.dailyreport', compact('movements', 'plantId', 'date'));
     }

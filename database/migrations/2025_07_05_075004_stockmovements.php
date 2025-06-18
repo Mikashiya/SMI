@@ -28,6 +28,8 @@ return new class extends Migration
             $table->date('date_transfer')->nullable();
             $table->char('id_alct', 9);
             $table->foreign('id_alct')->references('id_alct')->on('allocations');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('custom_users');
             $table->timestamps();
         });
     }

@@ -20,14 +20,14 @@
     }
 
     .filter-overlay{
-        position: absolute;
+        position: relative;
         display: none;
         background-color: #f8f8f8;
         border: #969696 2px solid;
         padding: 5px;
-        z-index: 1;
+        z-index: 1000;
         box-shadow: #969696;
-        width: auto;
+        width: 50vh;
     }
 
     .filter-overlay p{
@@ -59,23 +59,45 @@
         });
     }
 
-    function toggleFilter(index) {
-        let overlay = document.getElementById(`filter-${index}`);
+    document.querySelectorAll(".filter-overlay").forEach((el, index) => {
+        el.addEventListener("click", (event) => toggleFilter(index, event));
+    });
 
-        // Cek apakah overlay sedang terlihat
+    function toggleFilter(index, event) {
+        console.log("Function dipanggil untuk index:", index);
+
+        let overlay = document.getElementById(`filter-${index}`);
+        if (!overlay) {
+            console.log("Overlay tidak ditemukan!");
+            return;
+        }
+
         let isVisible = overlay.style.display === "block";
+
+        let rect = event.target.getBoundingClientRect();
+
+        // Ambil parent terdekat yang memiliki posisi yang lebih stabil
+        let parentRect = event.target.offsetParent?.getBoundingClientRect() || { left: 0, top: 0 };
+
+        let viewportHeight = window.innerHeight;
 
         // Tutup semua overlay dulu
         document.querySelectorAll(".filter-overlay").forEach(filter => {
             filter.style.display = "none";
         });
 
-        // Jika overlay yang ditekan tadinya tertutup, maka buka kembali
         if (!isVisible) {
-            let rect = event.target.getBoundingClientRect();
+            console.log("Menampilkan overlay...");
+            
+            
+            overlay.style.left = `${event.target.offsetLeft + (event.target.offsetWidth / 2) - (overlay.offsetWidth / 2)}px`;
+            overlay.style.top = `${event.target.offsetTop + event.target.offsetHeight}px`;
+
             overlay.style.display = "block";
         }
     }
+
+    
 
     function filterTable(colIndex, value) {
         let table = document.querySelector("table");

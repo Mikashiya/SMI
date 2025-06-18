@@ -66,7 +66,7 @@ class StockMovementController extends Controller
         // Set the stock movement details
         $stockMovement->mvt_type = $request->mvt_type;
         $stockMovement->qty = $request->qty;
-        $stockMovement->description = $request->desc;
+        $stockMovement->description = $request->description;
         $stockMovement->pic_wh = $request->pic_wh;
         $stockMovement->pic_item = $request->pic_item;
         $stockMovement->part_use = $request->part_use;
@@ -82,6 +82,9 @@ class StockMovementController extends Controller
             $stockMovement->from_loc = $request->part_id; // Assuming from_loc is the same as part_id
             $stockMovement->to_loc = $request->to_loc;
         }
+
+        $stockMovement['user_id'] = Auth::id();
+
         $stockMovement->save();
 
         // Update the allocation status if necessary

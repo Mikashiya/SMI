@@ -159,6 +159,7 @@ class AllocationsController extends Controller
             'reminder'=>$request->f_stock < $request->s_stock ? 'NG' : 'OK'
         ]);
 
+
         $smvt = stockmovements::create([
             'mvt_type' => 'in',
             'qty' => $request->f_stock,
@@ -172,8 +173,10 @@ class AllocationsController extends Controller
             'part_use' => $request->usage,
             'date_in' => $request->date_in,
             // Assuming id_alct is the allocation ID
-            'id_alct' => $allocations->id_alct
+            'id_alct' => $allocations->id_alct,
+            'user_id' => Auth::id(),
         ]);
+
         // Commit the transaction
         //DB::commit();
        

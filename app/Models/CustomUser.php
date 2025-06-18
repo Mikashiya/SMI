@@ -29,6 +29,11 @@ class CustomUser extends Authenticatable
         return $this->hasMany(ActivityLog::class, 'user_id', 'id');
     }
 
+    public function stc_mvt()
+    {
+        return $this->hasMany(stockmovements::class, 'user_id', 'user_id');
+    }
+
     public function isLeader()
     {
         return $this->role && $this->role->role_name === 'Leader';

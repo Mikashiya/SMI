@@ -32,8 +32,8 @@
         <input type="text" placeholder="Input" name="supplier" required>
     </div>
     <div class="col">
-        <label for="desc">Description</label><br>
-        <textarea name="desc" placeholder="Input"></textarea>
+        <label for="description">Description</label><br>
+        <textarea name="description" placeholder="Input"></textarea>
     </div>
 </div>
 <input type="submit" value="Submit" class="regist-btn">
