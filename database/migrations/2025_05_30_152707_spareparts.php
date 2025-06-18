@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('spareparts', function(Blueprint $table){
             $table->id('id_part');
             $table->string('part_name', 30);
-            $table->string('part_type', 30);
+            $table->string('part_type', 50);
             $table->string('mfg', 30);
             $table->decimal('price', 12, 2);
             $table->unsignedBigInteger('id_spl');

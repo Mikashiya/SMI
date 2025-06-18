@@ -16,12 +16,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             // Assuming 'custom_users' is the table where user data is stored
             $table->foreign('user_id')->references('id')->on('custom_users')->onDelete('cascade');
-            $table->string('role')->nullable();
-            $table->string('action');
-            $table->string('target')->nullable();
+            $table->string('role', 10);
+            $table->string('action', 20);
+            $table->string('target', 20)->nullable();
             $table->text('description')->nullable();
-            $table->string('ip_address')->nullable();
-            $table->text('user_agent')->nullable();
+            $table->string('ip_address', 45);
+            $table->text('user_agent');
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->useCurrent();
         });

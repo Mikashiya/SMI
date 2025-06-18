@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('custom_users', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 100)->unique();
-            $table->string('password');
+            $table->string('username', 10)->unique();
+            $table->string('password', 20);
             $table->unsignedBigInteger('id_role'); // Example roles: user, admin, etc.
             $table->foreign('id_role')->references('id')->on('custom_roles');
             $table->timestamps();

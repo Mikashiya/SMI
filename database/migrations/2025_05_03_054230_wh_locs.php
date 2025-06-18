@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('id_whlocs');
             $table->string('location', 20);
             $table->string('manager', 25);
-            $table->string('ctc_info', 30);
+            $table->text('ctc_info');
             $table->timestamps();
         });
     }

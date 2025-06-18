@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('f_stock');
             $table->integer('e_stock')->default(0);
             $table->integer('s_stock')->default(3);
-            $table->string('note', 50)->nullable();
+            $table->text('note')->nullable();
             $table->string('reminder', 2);
             $table->unsignedBigInteger('id_part');
             $table->unsignedBigInteger('id_wh');
