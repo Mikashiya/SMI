@@ -32,7 +32,7 @@
     }
 
     .table-sect th:nth-child(4), .table-sect th:nth-child(7){
-        width: 50vh;
+        width: 80vh;
     }
 </style>
 <body>
@@ -51,61 +51,61 @@
                                 <th>
                                     No
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(0, event)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(0)" id="filter-icon-0"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Part ID
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(1, event)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(1)" id="filter-icon-1"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Part Name
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(2)" id="filter-icon-2"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Part Type
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(3)" id="filter-icon-3"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     MFG
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(4)" id="filter-icon-4"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Usage
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(5)" id="filter-icon-5"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Note
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(6)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(6)" id="filter-icon-6"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Stock Balance
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(7)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(7)" id="filter-icon-7"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Safety Stock
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(8)" id="filter-icon-8"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Reminder
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(9)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(9)" id="filter-icon-9"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 @if (Auth::user()->role->role_name === 'Leader')
@@ -116,7 +116,7 @@
                         <tbody>
                             @forelse($allocations->where('warehouses.id_whlocs', $plant->id_whlocs) as $parts)
                                 <tr>
-                                    <td onclick="overlayOn('{{ $parts->id_alct }}')"></td>
+                                    <td onclick="overlayOn('{{ $parts->id_alct }}')" data-value="{{ $loop->index + 1 }}"></td>
                                     <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ $parts->id_alct }}</td>
                                     <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_name ?? 'Not Found' }}</td>
                                     <td onclick="overlayOn('{{ $parts->id_alct }}')">{{ optional($parts->spareparts)->part_type ?? 'Not Found' }}</td>

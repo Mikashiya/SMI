@@ -34,97 +34,97 @@
                                 <th>
                                     No
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(0)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(0)" id="filter-icon-0"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     ID PIC Reports
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(1)" id="filter-icon-1"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Transaction Type
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(2)" id="filter-icon-2"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Part ID
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(3)" id="filter-icon-3"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Quantity
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(4)" id="filter-icon-4"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     (Transfer) From ID
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(5)" id="filter-icon-5"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     (Transfer) To ID
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(6)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(6)" id="filter-icon-6"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Part Usage
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(7)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(7)" id="filter-icon-7"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     PIC Warehouse
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(8)" id="filter-icon-8"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     PIC Request
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(9)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(9)" id="filter-icon-9"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Price
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(10)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(10)" id="filter-icon-10"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Supplier
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(11)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(11)" id="filter-icon-11"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Date Inbound
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(12)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(12)" id="filter-icon-12"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Date Outbound
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(13)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(13)" id="filter-icon-13"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Date Transfer
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(14)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(14)" id="filter-icon-14"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                                 <th>
                                     Description
                                     <span class="filter-container">
-                                        <span class="filter-icon" onclick="toggleFilter(15)"><i class="fas fa-filter"></i></span>
+                                        <span class="filter-icon" onclick="toggleFilter(15)" id="filter-icon-15"><i class="fas fa-filter"></i></span>
                                     </span>
                                 </th>
                             </tr>
@@ -199,7 +199,10 @@
                         <p>Date Outbound:</p><input type="text" placeholder="Input.." onkeyup="filterTable(13, this.value)">
                     </div>
                     <div class="filter-overlay" id="filter-14">
-                        <p>Description:</p><input type="text" placeholder="Input.." onkeyup="filterTable(14, this.value)">
+                        <p>Date Transfer:</p><input type="text" placeholder="Input.." onkeyup="filterTable(14, this.value)">
+                    </div>
+                    <div class="filter-overlay" id="filter-14">
+                        <p>Description:</p><input type="text" placeholder="Input.." onkeyup="filterTable(15, this.value)">
                     </div>
                 </div>
             @endif

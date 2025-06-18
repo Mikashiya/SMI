@@ -216,12 +216,15 @@
             </ul>
         </div>
     </div>
+    @if(session('output'))
+    <pre>{{ session('output') }}</pre>
+    @endif
     <div class="top-nav" id="top-nav">
         <div class="nav-btn"><button id="nav-btn"><i class="fas fa-bars"></i></button></div>
         <h3>Hello {{ Auth::user()->role->role_name }} ID: {{ Auth::user()->username }}</h3>
         @if (Auth::user()->role->role_name === 'Leader')
             <div class="backup-btn">
-                <form action="{{ route('backup.manual') }}" method="POST">
+                <form action="{{ route('backup.run') }}" method="POST">
                     @method('POST')
                     @csrf
                     <button class="btn btn-warning" class="backup-btn"><i class="fas fa-database"></i> Backup Manual</button>

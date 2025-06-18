@@ -31,55 +31,55 @@
                         <th>
                             No
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(0)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(0)" id="filter-icon-0"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             User ID
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(1)" id="filter-icon-1"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             User Role
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(2)" id="filter-icon-2"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             Action
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(3)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(3)" id="filter-icon-3"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             Target
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(4)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(4)" id="filter-icon-4"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             Description
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(5)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(5)" id="filter-icon-5"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             IP Address
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(6)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(6)" id="filter-icon-6"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             User Agent
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(7)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(7)" id="filter-icon-7"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             Date Time
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(8)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(8)" id="filter-icon-8"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                     </tr>

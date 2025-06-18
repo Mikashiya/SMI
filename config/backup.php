@@ -15,7 +15,15 @@ return [
                  * The list of directories and files that will be included in the backup.
                  */
                 'include' => [
-                    base_path(),
+                    base_path('app'),
+                    base_path('bootstrap'),
+                    base_path('config'),
+                    base_path('database'),
+                    base_path('lang'),
+                    base_path('public'),
+                    base_path('resources'),
+                    base_path('routes'),
+                    base_path('storage'),
                 ],
 
                 /*
@@ -26,6 +34,7 @@ return [
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
+                    base_path('../'),
                 ],
 
                 /*
@@ -151,7 +160,7 @@ return [
              * The disk names on which the backups will be stored.
              */
             'disks' => [
-                'Beta',
+                env('BACKUP_DISK', 'local'),
             ],
         ],
 

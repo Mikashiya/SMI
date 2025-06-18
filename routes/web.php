@@ -26,7 +26,10 @@ Route::middleware([AuthMiddleware::class, ReportMiddleware::class])->group(funct
     Route::resource('/supplier', SupplierController::class);
     Route::resource('/mvt', StockMovementController::class);
     Route::get('/reports/daily', [ReportController::class, 'daily'])->name('reports.daily');
-    Route::post('/backup/manual', [BackupController::class, 'run'])->name('backup.manual')->middleware(AuthMiddleware::class, 'App\Http\Middleware\RoleMiddleware:Leader');
+    Route::post('/backup/manual', [BackupController::class, 'run'])
+    ->name('backup.run')
+    ->middleware(['auth', RoleMiddleware::class . ':Leader']);
+
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

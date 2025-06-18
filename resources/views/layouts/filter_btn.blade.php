@@ -14,9 +14,14 @@
         background-color: rgba(107, 107, 107, 0.3);
     }
 
+    .filter-container{
+        position: relative;
+    }
+
     .filter-icon{
         cursor: pointer;
         padding-left: 8px;
+        display: inline-flex;
     }
 
     .filter-overlay{
@@ -25,9 +30,13 @@
         background-color: #f8f8f8;
         border: #969696 2px solid;
         padding: 5px;
-        z-index: 1;
+        z-index: 2;
         box-shadow: #969696;
         width: 50vh;
+        position: absolute;
+        top: 100%;
+        left: 0;
+
     }
 
     .filter-overlay p{
@@ -59,53 +68,42 @@
         });
     }
 
-    document.querySelectorAll(".filter-overlay").forEach((el, index) => {
-        el.addEventListener("click", (event) => toggleFilter(index, event));
-    });
+    //document.querySelectorAll(".filter-overlay").forEach((el, index) => {
+    //    el.addEventListener("click", (event) => toggleFilter(index, event));
+    //});
 
-    function toggleFilter(index, event) {
-        console.log("Function dipanggil untuk index:", index);
-
+    function toggleFilter(index) {
         let overlay = document.getElementById(`filter-${index}`);
-        if (!overlay) {
-            console.log("Overlay tidak ditemukan!");
-            return;
-        }
+        let icon = document.getElementById(`filter-icon-${index}`);
+
+        if (!overlay) return;
 
         let isVisible = overlay.style.display === "block";
 
-        let rect = event.target.getBoundingClientRect();
-
-        // Ambil parent terdekat yang memiliki posisi yang lebih stabil
-        let parentRect = event.target.offsetParent?.getBoundingClientRect() || { left: 0, top: 0 };
-
-        let viewportHeight = window.innerHeight;
-
-        // Tutup semua overlay dulu
-        document.querySelectorAll(".filter-overlay").forEach(filter => {
-            filter.style.display = "none";
-        });
+        // Tutup semua overlay lain
+        document.querySelectorAll('.filter-overlay').forEach(el => el.style.display = "none");
 
         if (!isVisible) {
-            console.log("Menampilkan overlay...");
-            
-            
-            overlay.style.left = `${event.target.offsetLeft + (event.target.offsetWidth / 2) - (overlay.offsetWidth / 2)}px`;
-            overlay.style.top = `${event.target.offsetTop + event.target.offsetHeight}px`;
+            let rect = icon.getBoundingClientRect();
 
+            overlay.style.position = "fixed";  // 🚀 Kunci agar dia TIDAK "ikut" table
+            overlay.style.top = `${rect.bottom}px`;  // Di bawah ikon
+            overlay.style.left = `${rect.left}px`;   // Sejajar dengan ikon
             overlay.style.display = "block";
         }
     }
 
-    
-
     function filterTable(colIndex, value) {
         let table = document.querySelector("table");
         let rows = table.querySelectorAll("tbody tr");
-        
+
         rows.forEach(row => {
             let cell = row.cells[colIndex];
-            row.style.display = cell.textContent.toLowerCase().includes(value.toLowerCase()) ? "" : "none";
+
+            // Gunakan `data-value` agar bisa membaca nomor otomatis
+            let cellValue = cell.getAttribute("data-value") || cell.textContent.trim();
+
+            row.style.display = cellValue.includes(value.trim()) ? "" : "none";
         });
     }
 </script>

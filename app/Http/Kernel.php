@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Support\Facades\Schedule;
 
 class Kernel extends HttpKernel {
     protected $middleware = [
@@ -23,4 +24,11 @@ class Kernel extends HttpKernel {
         'plant' => \App\Http\Middleware\ReportMiddleware::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->command('backup:run')->everyMinute();
+
+    }
+
 }

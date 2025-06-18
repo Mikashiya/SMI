@@ -25,6 +25,7 @@
     top: 0;
     height: 3vh;
     width: auto;
+    white-space: nowrap;
 }
 
 .table-sect tbody{

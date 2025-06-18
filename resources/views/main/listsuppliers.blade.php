@@ -33,19 +33,19 @@
                         <th>
                             No
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(0)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(0)" id="filter-icon-0"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             Nama Supplier
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(1)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(1)" id="filter-icon-1"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         <th>
                             Contact Information
                             <span class="filter-container">
-                                <span class="filter-icon" onclick="toggleFilter(2)"><i class="fas fa-filter"></i></span>
+                                <span class="filter-icon" onclick="toggleFilter(2)" id="filter-icon-2"><i class="fas fa-filter"></i></span>
                             </span>
                         </th>
                         @if (Auth::user()->role->role_name === 'Leader')
